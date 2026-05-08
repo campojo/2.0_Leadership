@@ -1,0 +1,7 @@
+.DS_Store
+node_modules/
+.env
+.env.*
+
+# Original source materials are local working inputs, not needed for the hosted prototype.
+source-files/

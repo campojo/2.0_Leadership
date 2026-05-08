@@ -1,0 +1,2331 @@
+{
+  "styles": [
+    "Autocratic",
+    "Charismatic",
+    "Democratic",
+    "Laissez-Faire",
+    "Servant",
+    "Situational",
+    "Transactional",
+    "Transformational"
+  ],
+  "questions": [
+    {
+      "id": "q_transformational_001",
+      "style": "Transformational",
+      "approach": "Positive",
+      "direction": "positive",
+      "source": "Questions 2.0 (5).xlsx:Questions",
+      "text": "I often communicate a clear and inspiring vision of the future."
+    },
+    {
+      "id": "q_transformational_002",
+      "style": "Transformational",
+      "approach": "Positive",
+      "direction": "positive",
+      "source": "Questions 2.0 (5).xlsx:Questions",
+      "text": "I frequently share a compelling vision that motivates the team toward a common goal."
+    },
+    {
+      "id": "q_transformational_003",
+      "style": "Transformational",
+      "approach": "Positive",
+      "direction": "positive",
+      "source": "Questions 2.0 (5).xlsx:Questions",
+      "text": "I consistently share a clear and inspiring vision."
+    },
+    {
+      "id": "q_transformational_004",
+      "style": "Transformational",
+      "approach": "Positive",
+      "direction": "positive",
+      "source": "Questions 2.0 (5).xlsx:Questions",
+      "text": "I regularly outline a future direction that energizes and guides the team."
+    },
+    {
+      "id": "q_transformational_005",
+      "style": "Transformational",
+      "approach": "Positive",
+      "direction": "positive",
+      "source": "Questions 2.0 (5).xlsx:Questions",
+      "text": "I communicate a future outlook that provides a sense of purpose and direction for the team."
+    },
+    {
+      "id": "q_transformational_006",
+      "style": "Transformational",
+      "approach": "Positive",
+      "direction": "positive",
+      "source": "Questions 2.0 (5).xlsx:Questions",
+      "text": "I set a clear vision that helps team members understand their role in achieving future goals."
+    },
+    {
+      "id": "q_transformational_007",
+      "style": "Transformational",
+      "approach": "Positive",
+      "direction": "positive",
+      "source": "Questions 2.0 (5).xlsx:Questions",
+      "text": "I motivate team members to achieve more than they originally thought possible."
+    },
+    {
+      "id": "q_transformational_008",
+      "style": "Transformational",
+      "approach": "Positive",
+      "direction": "positive",
+      "source": "Questions 2.0 (5).xlsx:Questions",
+      "text": "I inspire team members to surpass their own expectations and limits."
+    },
+    {
+      "id": "q_transformational_009",
+      "style": "Transformational",
+      "approach": "Positive",
+      "direction": "positive",
+      "source": "Questions 2.0 (5).xlsx:Questions",
+      "text": "I consistently encourage the team to exceed basic expectations."
+    },
+    {
+      "id": "q_transformational_010",
+      "style": "Transformational",
+      "approach": "Positive",
+      "direction": "positive",
+      "source": "Questions 2.0 (5).xlsx:Questions",
+      "text": "I empower team members to achieve at levels higher than they believed they could."
+    },
+    {
+      "id": "q_transformational_011",
+      "style": "Transformational",
+      "approach": "Positive",
+      "direction": "positive",
+      "source": "Questions 2.0 (5).xlsx:Questions",
+      "text": "I drive team members to reach achievements that exceed their original targets."
+    },
+    {
+      "id": "q_transformational_012",
+      "style": "Transformational",
+      "approach": "Positive",
+      "direction": "positive",
+      "source": "Questions 2.0 (5).xlsx:Questions",
+      "text": "I challenge the team to realize their full potential and go beyond perceived limitations."
+    },
+    {
+      "id": "q_transformational_013",
+      "style": "Transformational",
+      "approach": "Positive",
+      "direction": "positive",
+      "source": "Questions 2.0 (5).xlsx:Questions",
+      "text": "I take time to understand the individual needs and aspirations of team members."
+    },
+    {
+      "id": "q_transformational_014",
+      "style": "Transformational",
+      "approach": "Positive",
+      "direction": "positive",
+      "source": "Questions 2.0 (5).xlsx:Questions",
+      "text": "I show interest in the personal and professional goals of each team member."
+    },
+    {
+      "id": "q_transformational_015",
+      "style": "Transformational",
+      "approach": "Positive",
+      "direction": "positive",
+      "source": "Questions 2.0 (5).xlsx:Questions",
+      "text": "I consistently make time to understand individual goals."
+    },
+    {
+      "id": "q_transformational_016",
+      "style": "Transformational",
+      "approach": "Positive",
+      "direction": "positive",
+      "source": "Questions 2.0 (5).xlsx:Questions",
+      "text": "I engage with team members to understand their personal career goals and aspirations."
+    },
+    {
+      "id": "q_transformational_017",
+      "style": "Transformational",
+      "approach": "Positive",
+      "direction": "positive",
+      "source": "Questions 2.0 (5).xlsx:Questions",
+      "text": "I take time to connect with team members to discuss their individual interests and development needs."
+    },
+    {
+      "id": "q_transformational_018",
+      "style": "Transformational",
+      "approach": "Positive",
+      "direction": "positive",
+      "source": "Questions 2.0 (5).xlsx:Questions",
+      "text": "I actively seek to understand what drives and satisfies each team member."
+    },
+    {
+      "id": "q_transformational_019",
+      "style": "Transformational",
+      "approach": "Positive",
+      "direction": "positive",
+      "source": "Questions 2.0 (5).xlsx:Questions",
+      "text": "I encourage innovation and creative problem-solving within the team."
+    },
+    {
+      "id": "q_transformational_020",
+      "style": "Transformational",
+      "approach": "Positive",
+      "direction": "positive",
+      "source": "Questions 2.0 (5).xlsx:Questions",
+      "text": "I promote an environment where team members feel free to share new ideas and solutions."
+    },
+    {
+      "id": "q_transformational_021",
+      "style": "Transformational",
+      "approach": "Positive",
+      "direction": "positive",
+      "source": "Questions 2.0 (5).xlsx:Questions",
+      "text": "I consistently support creative thinking and experimentation to solve problems."
+    },
+    {
+      "id": "q_transformational_022",
+      "style": "Transformational",
+      "approach": "Positive",
+      "direction": "positive",
+      "source": "Questions 2.0 (5).xlsx:Questions",
+      "text": "I value innovative approaches and encourage team members to think outside the box."
+    },
+    {
+      "id": "q_transformational_023",
+      "style": "Transformational",
+      "approach": "Positive",
+      "direction": "positive",
+      "source": "Questions 2.0 (5).xlsx:Questions",
+      "text": "I foster a culture where team members are motivated to explore alternative solutions to challenges."
+    },
+    {
+      "id": "q_transformational_024",
+      "style": "Transformational",
+      "approach": "Positive",
+      "direction": "positive",
+      "source": "Questions 2.0 (5).xlsx:Questions",
+      "text": "I am open to and actively seek creative input and suggestions from the team."
+    },
+    {
+      "id": "q_transformational_025",
+      "style": "Transformational",
+      "approach": "Positive",
+      "direction": "positive",
+      "source": "Questions 2.0 (5).xlsx:Questions",
+      "text": "I recognize and reward individual accomplishments and efforts."
+    },
+    {
+      "id": "q_transformational_026",
+      "style": "Transformational",
+      "approach": "Positive",
+      "direction": "positive",
+      "source": "Questions 2.0 (5).xlsx:Questions",
+      "text": "I acknowledge and appreciate the hard work and achievements of team members."
+    },
+    {
+      "id": "q_transformational_027",
+      "style": "Transformational",
+      "approach": "Positive",
+      "direction": "positive",
+      "source": "Questions 2.0 (5).xlsx:Questions",
+      "text": "I frequently recognize team accomplishments."
+    },
+    {
+      "id": "q_transformational_028",
+      "style": "Transformational",
+      "approach": "Positive",
+      "direction": "positive",
+      "source": "Questions 2.0 (5).xlsx:Questions",
+      "text": "I regularly celebrate individual efforts and milestones."
+    },
+    {
+      "id": "q_transformational_029",
+      "style": "Transformational",
+      "approach": "Positive",
+      "direction": "positive",
+      "source": "Questions 2.0 (5).xlsx:Questions",
+      "text": "I show gratitude and offer praise for the accomplishments of team members."
+    },
+    {
+      "id": "q_transformational_030",
+      "style": "Transformational",
+      "approach": "Positive",
+      "direction": "positive",
+      "source": "Questions 2.0 (5).xlsx:Questions",
+      "text": "I ensure that team members feel valued for their specific achievements and contributions."
+    },
+    {
+      "id": "q_transactional_001",
+      "style": "Transactional",
+      "approach": "Positive",
+      "direction": "positive",
+      "source": "Questions 2.0 (5).xlsx:Questions",
+      "text": "I set clear goals and expectations and provide rewards when they are met."
+    },
+    {
+      "id": "q_transactional_002",
+      "style": "Transactional",
+      "approach": "Positive",
+      "direction": "positive",
+      "source": "Questions 2.0 (5).xlsx:Questions",
+      "text": "I communicate specific objectives and acknowledge team members when those objectives are achieved."
+    },
+    {
+      "id": "q_transactional_003",
+      "style": "Transactional",
+      "approach": "Positive",
+      "direction": "positive",
+      "source": "Questions 2.0 (5).xlsx:Questions",
+      "text": "I consistently define clear goals upfront."
+    },
+    {
+      "id": "q_transactional_004",
+      "style": "Transactional",
+      "approach": "Positive",
+      "direction": "positive",
+      "source": "Questions 2.0 (5).xlsx:Questions",
+      "text": "I establish clear performance targets and offer recognition or rewards for meeting them."
+    },
+    {
+      "id": "q_transactional_005",
+      "style": "Transactional",
+      "approach": "Positive",
+      "direction": "positive",
+      "source": "Questions 2.0 (5).xlsx:Questions",
+      "text": "I clearly connect goals to rewards."
+    },
+    {
+      "id": "q_transactional_006",
+      "style": "Transactional",
+      "approach": "Positive",
+      "direction": "positive",
+      "source": "Questions 2.0 (5).xlsx:Questions",
+      "text": "I set measurable targets and provide positive reinforcement when these targets are met."
+    },
+    {
+      "id": "q_transactional_007",
+      "style": "Transactional",
+      "approach": "Positive",
+      "direction": "positive",
+      "source": "Questions 2.0 (5).xlsx:Questions",
+      "text": "I actively monitor performance and intervene when standards are not met."
+    },
+    {
+      "id": "q_transactional_008",
+      "style": "Transactional",
+      "approach": "Positive",
+      "direction": "positive",
+      "source": "Questions 2.0 (5).xlsx:Questions",
+      "text": "I keep track of team performance and step in when outcomes fall short of expectations."
+    },
+    {
+      "id": "q_transactional_009",
+      "style": "Transactional",
+      "approach": "Positive",
+      "direction": "positive",
+      "source": "Questions 2.0 (5).xlsx:Questions",
+      "text": "I consistently track team performance."
+    },
+    {
+      "id": "q_transactional_010",
+      "style": "Transactional",
+      "approach": "Positive",
+      "direction": "positive",
+      "source": "Questions 2.0 (5).xlsx:Questions",
+      "text": "I regularly review team progress and take action if performance does not meet the set standards."
+    },
+    {
+      "id": "q_transactional_011",
+      "style": "Transactional",
+      "approach": "Positive",
+      "direction": "positive",
+      "source": "Questions 2.0 (5).xlsx:Questions",
+      "text": "I closely supervise work output and address issues if team performance is lacking."
+    },
+    {
+      "id": "q_transactional_012",
+      "style": "Transactional",
+      "approach": "Positive",
+      "direction": "positive",
+      "source": "Questions 2.0 (5).xlsx:Questions",
+      "text": "I am vigilant about team performance and take corrective measures when standards are not being met."
+    },
+    {
+      "id": "q_transactional_013",
+      "style": "Transactional",
+      "approach": "Positive",
+      "direction": "positive",
+      "source": "Questions 2.0 (5).xlsx:Questions",
+      "text": "I primarily focus on task completion and adherence to established procedures."
+    },
+    {
+      "id": "q_transactional_014",
+      "style": "Transactional",
+      "approach": "Positive",
+      "direction": "positive",
+      "source": "Questions 2.0 (5).xlsx:Questions",
+      "text": "I place a strong emphasis on getting tasks done according to set guidelines."
+    },
+    {
+      "id": "q_transactional_015",
+      "style": "Transactional",
+      "approach": "Positive",
+      "direction": "positive",
+      "source": "Questions 2.0 (5).xlsx:Questions",
+      "text": "I consistently emphasize task completion."
+    },
+    {
+      "id": "q_transactional_016",
+      "style": "Transactional",
+      "approach": "Positive",
+      "direction": "positive",
+      "source": "Questions 2.0 (5).xlsx:Questions",
+      "text": "I prioritize the completion of tasks and ensure that team members follow standard procedures."
+    },
+    {
+      "id": "q_transactional_017",
+      "style": "Transactional",
+      "approach": "Positive",
+      "direction": "positive",
+      "source": "Questions 2.0 (5).xlsx:Questions",
+      "text": "I am mainly concerned with making sure tasks are completed correctly and in line with company protocols."
+    },
+    {
+      "id": "q_transactional_018",
+      "style": "Transactional",
+      "approach": "Positive",
+      "direction": "positive",
+      "source": "Questions 2.0 (5).xlsx:Questions",
+      "text": "I emphasize meeting deadlines and following established rules and procedures."
+    },
+    {
+      "id": "q_transactional_019",
+      "style": "Transactional",
+      "approach": "Positive",
+      "direction": "positive",
+      "source": "Questions 2.0 (5).xlsx:Questions",
+      "text": "I use incentives effectively to motivate the team."
+    },
+    {
+      "id": "q_transactional_020",
+      "style": "Transactional",
+      "approach": "Positive",
+      "direction": "positive",
+      "source": "Questions 2.0 (5).xlsx:Questions",
+      "text": "I apply rewards to drive team motivation and performance."
+    },
+    {
+      "id": "q_transactional_021",
+      "style": "Transactional",
+      "approach": "Positive",
+      "direction": "positive",
+      "source": "Questions 2.0 (5).xlsx:Questions",
+      "text": "I consistently use incentives to motivate."
+    },
+    {
+      "id": "q_transactional_022",
+      "style": "Transactional",
+      "approach": "Positive",
+      "direction": "positive",
+      "source": "Questions 2.0 (5).xlsx:Questions",
+      "text": "I leverage incentives to encourage team members to achieve their goals."
+    },
+    {
+      "id": "q_transactional_023",
+      "style": "Transactional",
+      "approach": "Positive",
+      "direction": "positive",
+      "source": "Questions 2.0 (5).xlsx:Questions",
+      "text": "I motivate the team by offering appropriate rewards for good performance."
+    },
+    {
+      "id": "q_transactional_024",
+      "style": "Transactional",
+      "approach": "Positive",
+      "direction": "positive",
+      "source": "Questions 2.0 (5).xlsx:Questions",
+      "text": "I use various incentives to boost morale and drive productivity within the team."
+    },
+    {
+      "id": "q_transactional_025",
+      "style": "Transactional",
+      "approach": "Positive",
+      "direction": "positive",
+      "source": "Questions 2.0 (5).xlsx:Questions",
+      "text": "I provide corrective feedback when necessary."
+    },
+    {
+      "id": "q_transactional_026",
+      "style": "Transactional",
+      "approach": "Positive",
+      "direction": "positive",
+      "source": "Questions 2.0 (5).xlsx:Questions",
+      "text": "I offer feedback to correct issues and improve performance when needed."
+    },
+    {
+      "id": "q_transactional_027",
+      "style": "Transactional",
+      "approach": "Positive",
+      "direction": "positive",
+      "source": "Questions 2.0 (5).xlsx:Questions",
+      "text": "I consistently provide timely corrective feedback."
+    },
+    {
+      "id": "q_transactional_028",
+      "style": "Transactional",
+      "approach": "Positive",
+      "direction": "positive",
+      "source": "Questions 2.0 (5).xlsx:Questions",
+      "text": "I address problems directly by providing constructive feedback to guide improvements."
+    },
+    {
+      "id": "q_transactional_029",
+      "style": "Transactional",
+      "approach": "Positive",
+      "direction": "positive",
+      "source": "Questions 2.0 (5).xlsx:Questions",
+      "text": "I give corrective feedback to help team members adjust their approach and meet expectations."
+    },
+    {
+      "id": "q_transactional_030",
+      "style": "Transactional",
+      "approach": "Positive",
+      "direction": "positive",
+      "source": "Questions 2.0 (5).xlsx:Questions",
+      "text": "I regularly provide feedback to help team members improve their performance."
+    },
+    {
+      "id": "q_servant_001",
+      "style": "Servant",
+      "approach": "Positive",
+      "direction": "positive",
+      "source": "Questions 2.0 (5).xlsx:Questions",
+      "text": "I prioritize the needs and well-being of the team over my own interests."
+    },
+    {
+      "id": "q_servant_002",
+      "style": "Servant",
+      "approach": "Positive",
+      "direction": "positive",
+      "source": "Questions 2.0 (5).xlsx:Questions",
+      "text": "I put the welfare of the team before my personal gains."
+    },
+    {
+      "id": "q_servant_003",
+      "style": "Servant",
+      "approach": "Positive",
+      "direction": "positive",
+      "source": "Questions 2.0 (5).xlsx:Questions",
+      "text": "I consistently prioritize team needs over personal preferences."
+    },
+    {
+      "id": "q_servant_004",
+      "style": "Servant",
+      "approach": "Positive",
+      "direction": "positive",
+      "source": "Questions 2.0 (5).xlsx:Questions",
+      "text": "I am more concerned with the team's well-being than my own personal agenda."
+    },
+    {
+      "id": "q_servant_005",
+      "style": "Servant",
+      "approach": "Positive",
+      "direction": "positive",
+      "source": "Questions 2.0 (5).xlsx:Questions",
+      "text": "I consistently place the needs of the team above my own interests."
+    },
+    {
+      "id": "q_servant_006",
+      "style": "Servant",
+      "approach": "Positive",
+      "direction": "positive",
+      "source": "Questions 2.0 (5).xlsx:Questions",
+      "text": "I demonstrate a commitment to the team's welfare, even at the expense of my own preferences."
+    },
+    {
+      "id": "q_servant_007",
+      "style": "Servant",
+      "approach": "Positive",
+      "direction": "positive",
+      "source": "Questions 2.0 (5).xlsx:Questions",
+      "text": "I actively listen to the concerns and suggestions of team members."
+    },
+    {
+      "id": "q_servant_008",
+      "style": "Servant",
+      "approach": "Positive",
+      "direction": "positive",
+      "source": "Questions 2.0 (5).xlsx:Questions",
+      "text": "I show genuine interest in hearing what team members have to say."
+    },
+    {
+      "id": "q_servant_009",
+      "style": "Servant",
+      "approach": "Positive",
+      "direction": "positive",
+      "source": "Questions 2.0 (5).xlsx:Questions",
+      "text": "I actively seek out team concerns."
+    },
+    {
+      "id": "q_servant_010",
+      "style": "Servant",
+      "approach": "Positive",
+      "direction": "positive",
+      "source": "Questions 2.0 (5).xlsx:Questions",
+      "text": "I take time to listen carefully to the ideas and concerns raised by team members."
+    },
+    {
+      "id": "q_servant_011",
+      "style": "Servant",
+      "approach": "Positive",
+      "direction": "positive",
+      "source": "Questions 2.0 (5).xlsx:Questions",
+      "text": "I value input from team members and listen attentively to their feedback."
+    },
+    {
+      "id": "q_servant_012",
+      "style": "Servant",
+      "approach": "Positive",
+      "direction": "positive",
+      "source": "Questions 2.0 (5).xlsx:Questions",
+      "text": "I encourage team members to share their thoughts and listen with an open mind."
+    },
+    {
+      "id": "q_servant_013",
+      "style": "Servant",
+      "approach": "Positive",
+      "direction": "positive",
+      "source": "Questions 2.0 (5).xlsx:Questions",
+      "text": "I take actions that demonstrate care and support for team members’ personal growth."
+    },
+    {
+      "id": "q_servant_014",
+      "style": "Servant",
+      "approach": "Positive",
+      "direction": "positive",
+      "source": "Questions 2.0 (5).xlsx:Questions",
+      "text": "I actively support the development and growth of each team member."
+    },
+    {
+      "id": "q_servant_015",
+      "style": "Servant",
+      "approach": "Positive",
+      "direction": "positive",
+      "source": "Questions 2.0 (5).xlsx:Questions",
+      "text": "I invest time and effort into helping team members grow personally and professionally."
+    },
+    {
+      "id": "q_servant_016",
+      "style": "Servant",
+      "approach": "Positive",
+      "direction": "positive",
+      "source": "Questions 2.0 (5).xlsx:Questions",
+      "text": "I provide opportunities and resources for team members to enhance their skills and knowledge."
+    },
+    {
+      "id": "q_servant_017",
+      "style": "Servant",
+      "approach": "Positive",
+      "direction": "positive",
+      "source": "Questions 2.0 (5).xlsx:Questions",
+      "text": "I take steps to foster the personal development of team members."
+    },
+    {
+      "id": "q_servant_018",
+      "style": "Servant",
+      "approach": "Positive",
+      "direction": "positive",
+      "source": "Questions 2.0 (5).xlsx:Questions",
+      "text": "I show a commitment to the personal and career growth of my team members."
+    },
+    {
+      "id": "q_servant_019",
+      "style": "Servant",
+      "approach": "Positive",
+      "direction": "positive",
+      "source": "Questions 2.0 (5).xlsx:Questions",
+      "text": "I foster a sense of community and collaboration within the team."
+    },
+    {
+      "id": "q_servant_020",
+      "style": "Servant",
+      "approach": "Positive",
+      "direction": "positive",
+      "source": "Questions 2.0 (5).xlsx:Questions",
+      "text": "I promote teamwork and a collaborative spirit among team members."
+    },
+    {
+      "id": "q_servant_021",
+      "style": "Servant",
+      "approach": "Positive",
+      "direction": "positive",
+      "source": "Questions 2.0 (5).xlsx:Questions",
+      "text": "I encourage a sense of belonging and unity within the team."
+    },
+    {
+      "id": "q_servant_022",
+      "style": "Servant",
+      "approach": "Positive",
+      "direction": "positive",
+      "source": "Questions 2.0 (5).xlsx:Questions",
+      "text": "I create an environment where team members feel connected and work well together."
+    },
+    {
+      "id": "q_servant_023",
+      "style": "Servant",
+      "approach": "Positive",
+      "direction": "positive",
+      "source": "Questions 2.0 (5).xlsx:Questions",
+      "text": "I build a strong team culture that values cooperation and mutual support."
+    },
+    {
+      "id": "q_servant_024",
+      "style": "Servant",
+      "approach": "Positive",
+      "direction": "positive",
+      "source": "Questions 2.0 (5).xlsx:Questions",
+      "text": "I actively cultivate a collaborative and inclusive atmosphere within the team."
+    },
+    {
+      "id": "q_servant_025",
+      "style": "Servant",
+      "approach": "Positive",
+      "direction": "positive",
+      "source": "Questions 2.0 (5).xlsx:Questions",
+      "text": "I encourage team members to take ownership of their work and empower them to make decisions."
+    },
+    {
+      "id": "q_servant_026",
+      "style": "Servant",
+      "approach": "Positive",
+      "direction": "positive",
+      "source": "Questions 2.0 (5).xlsx:Questions",
+      "text": "I trust team members to take responsibility for their tasks and make independent decisions."
+    },
+    {
+      "id": "q_servant_027",
+      "style": "Servant",
+      "approach": "Positive",
+      "direction": "positive",
+      "source": "Questions 2.0 (5).xlsx:Questions",
+      "text": "I empower team members to have autonomy over their work and choices."
+    },
+    {
+      "id": "q_servant_028",
+      "style": "Servant",
+      "approach": "Positive",
+      "direction": "positive",
+      "source": "Questions 2.0 (5).xlsx:Questions",
+      "text": "I foster a sense of ownership among team members by allowing them to take initiative."
+    },
+    {
+      "id": "q_servant_029",
+      "style": "Servant",
+      "approach": "Positive",
+      "direction": "positive",
+      "source": "Questions 2.0 (5).xlsx:Questions",
+      "text": "I support team members in making decisions related to their work areas."
+    },
+    {
+      "id": "q_servant_030",
+      "style": "Servant",
+      "approach": "Positive",
+      "direction": "positive",
+      "source": "Questions 2.0 (5).xlsx:Questions",
+      "text": "I encourage independence by letting team members handle their tasks and decisions."
+    },
+    {
+      "id": "q_autocratic_001",
+      "style": "Autocratic",
+      "approach": "Positive",
+      "direction": "positive",
+      "source": "Questions 2.0 (5).xlsx:Questions",
+      "text": "I am open and honest about my strengths and weaknesses."
+    },
+    {
+      "id": "q_autocratic_002",
+      "style": "Autocratic",
+      "approach": "Positive",
+      "direction": "positive",
+      "source": "Questions 2.0 (5).xlsx:Questions",
+      "text": "I openly acknowledge my own strengths and areas for improvement."
+    },
+    {
+      "id": "q_autocratic_003",
+      "style": "Autocratic",
+      "approach": "Positive",
+      "direction": "positive",
+      "source": "Questions 2.0 (5).xlsx:Questions",
+      "text": "I am transparent about what I excel at and where I need development."
+    },
+    {
+      "id": "q_autocratic_004",
+      "style": "Autocratic",
+      "approach": "Positive",
+      "direction": "positive",
+      "source": "Questions 2.0 (5).xlsx:Questions",
+      "text": "I do not hide my limitations and am honest about my capabilities."
+    },
+    {
+      "id": "q_autocratic_005",
+      "style": "Autocratic",
+      "approach": "Positive",
+      "direction": "positive",
+      "source": "Questions 2.0 (5).xlsx:Questions",
+      "text": "I am candid about both my skills and my shortcomings."
+    },
+    {
+      "id": "q_autocratic_006",
+      "style": "Autocratic",
+      "approach": "Positive",
+      "direction": "positive",
+      "source": "Questions 2.0 (5).xlsx:Questions",
+      "text": "I communicate openly about my strengths as well as my weaknesses."
+    },
+    {
+      "id": "q_autocratic_007",
+      "style": "Autocratic",
+      "approach": "Positive",
+      "direction": "positive",
+      "source": "Questions 2.0 (5).xlsx:Questions",
+      "text": "I consistently share information and the rationale behind decisions."
+    },
+    {
+      "id": "q_autocratic_008",
+      "style": "Autocratic",
+      "approach": "Positive",
+      "direction": "positive",
+      "source": "Questions 2.0 (5).xlsx:Questions",
+      "text": "I provide clear explanations for the decisions I make."
+    },
+    {
+      "id": "q_autocratic_009",
+      "style": "Autocratic",
+      "approach": "Positive",
+      "direction": "positive",
+      "source": "Questions 2.0 (5).xlsx:Questions",
+      "text": "I regularly communicate the reasons behind my choices and actions."
+    },
+    {
+      "id": "q_autocratic_010",
+      "style": "Autocratic",
+      "approach": "Positive",
+      "direction": "positive",
+      "source": "Questions 2.0 (5).xlsx:Questions",
+      "text": "I am transparent about decision-making processes and the information that guides them."
+    },
+    {
+      "id": "q_autocratic_011",
+      "style": "Autocratic",
+      "approach": "Positive",
+      "direction": "positive",
+      "source": "Questions 2.0 (5).xlsx:Questions",
+      "text": "I ensure that team members understand the logic behind important decisions."
+    },
+    {
+      "id": "q_autocratic_012",
+      "style": "Autocratic",
+      "approach": "Positive",
+      "direction": "positive",
+      "source": "Questions 2.0 (5).xlsx:Questions",
+      "text": "I consistently explain the factors influencing my decisions."
+    },
+    {
+      "id": "q_autocratic_013",
+      "style": "Autocratic",
+      "approach": "Positive",
+      "direction": "positive",
+      "source": "Questions 2.0 (5).xlsx:Questions",
+      "text": "I seek feedback from others and demonstrate a willingness to learn and improve."
+    },
+    {
+      "id": "q_autocratic_014",
+      "style": "Autocratic",
+      "approach": "Positive",
+      "direction": "positive",
+      "source": "Questions 2.0 (5).xlsx:Questions",
+      "text": "I regularly ask for input and am open to making changes based on feedback."
+    },
+    {
+      "id": "q_autocratic_015",
+      "style": "Autocratic",
+      "approach": "Positive",
+      "direction": "positive",
+      "source": "Questions 2.0 (5).xlsx:Questions",
+      "text": "I value feedback from team members and show a desire to grow from it."
+    },
+    {
+      "id": "q_autocratic_016",
+      "style": "Autocratic",
+      "approach": "Positive",
+      "direction": "positive",
+      "source": "Questions 2.0 (5).xlsx:Questions",
+      "text": "I actively solicit feedback and am receptive to suggestions for improvement."
+    },
+    {
+      "id": "q_autocratic_017",
+      "style": "Autocratic",
+      "approach": "Positive",
+      "direction": "positive",
+      "source": "Questions 2.0 (5).xlsx:Questions",
+      "text": "I demonstrate a commitment to personal development by seeking feedback from others."
+    },
+    {
+      "id": "q_autocratic_018",
+      "style": "Autocratic",
+      "approach": "Positive",
+      "direction": "positive",
+      "source": "Questions 2.0 (5).xlsx:Questions",
+      "text": "I am eager to learn from team members and adapt based on their feedback."
+    },
+    {
+      "id": "q_autocratic_019",
+      "style": "Autocratic",
+      "approach": "Positive",
+      "direction": "positive",
+      "source": "Questions 2.0 (5).xlsx:Questions",
+      "text": "I act in accordance with my values and ethical principles, even under pressure."
+    },
+    {
+      "id": "q_autocratic_020",
+      "style": "Autocratic",
+      "approach": "Positive",
+      "direction": "positive",
+      "source": "Questions 2.0 (5).xlsx:Questions",
+      "text": "I maintain my ethical standards, even when faced with difficult situations."
+    },
+    {
+      "id": "q_autocratic_021",
+      "style": "Autocratic",
+      "approach": "Positive",
+      "direction": "positive",
+      "source": "Questions 2.0 (5).xlsx:Questions",
+      "text": "I consistently behave according to my core values, regardless of the circumstances."
+    },
+    {
+      "id": "q_autocratic_022",
+      "style": "Autocratic",
+      "approach": "Positive",
+      "direction": "positive",
+      "source": "Questions 2.0 (5).xlsx:Questions",
+      "text": "I uphold my principles, even when it might be easier not to."
+    },
+    {
+      "id": "q_autocratic_023",
+      "style": "Autocratic",
+      "approach": "Positive",
+      "direction": "positive",
+      "source": "Questions 2.0 (5).xlsx:Questions",
+      "text": "I stick to my moral beliefs, even in challenging or stressful situations."
+    },
+    {
+      "id": "q_autocratic_024",
+      "style": "Autocratic",
+      "approach": "Positive",
+      "direction": "positive",
+      "source": "Questions 2.0 (5).xlsx:Questions",
+      "text": "I demonstrate integrity by adhering to my ethical convictions, no matter the pressure."
+    },
+    {
+      "id": "q_autocratic_025",
+      "style": "Autocratic",
+      "approach": "Positive",
+      "direction": "positive",
+      "source": "Questions 2.0 (5).xlsx:Questions",
+      "text": "I am a role model for integrity and ethical behavior."
+    },
+    {
+      "id": "q_autocratic_026",
+      "style": "Autocratic",
+      "approach": "Positive",
+      "direction": "positive",
+      "source": "Questions 2.0 (5).xlsx:Questions",
+      "text": "I exemplify honesty and ethical conduct in all my actions."
+    },
+    {
+      "id": "q_autocratic_027",
+      "style": "Autocratic",
+      "approach": "Positive",
+      "direction": "positive",
+      "source": "Questions 2.0 (5).xlsx:Questions",
+      "text": "I consistently act as an example of integrity for others to follow."
+    },
+    {
+      "id": "q_autocratic_028",
+      "style": "Autocratic",
+      "approach": "Positive",
+      "direction": "positive",
+      "source": "Questions 2.0 (5).xlsx:Questions",
+      "text": "I serve as a model of ethical behavior for the team."
+    },
+    {
+      "id": "q_autocratic_029",
+      "style": "Autocratic",
+      "approach": "Positive",
+      "direction": "positive",
+      "source": "Questions 2.0 (5).xlsx:Questions",
+      "text": "I demonstrate high ethical standards, setting a positive example for others."
+    },
+    {
+      "id": "q_autocratic_030",
+      "style": "Autocratic",
+      "approach": "Positive",
+      "direction": "positive",
+      "source": "Questions 2.0 (5).xlsx:Questions",
+      "text": "My behavior reflects strong moral principles that others look up to."
+    },
+    {
+      "id": "q_situational_001",
+      "style": "Situational",
+      "approach": "Positive",
+      "direction": "positive",
+      "source": "Questions 2.0 (5).xlsx:Questions",
+      "text": "I adjust my leadership style based on the needs and abilities of team members."
+    },
+    {
+      "id": "q_situational_002",
+      "style": "Situational",
+      "approach": "Positive",
+      "direction": "positive",
+      "source": "Questions 2.0 (5).xlsx:Questions",
+      "text": "I modify my leadership approach to fit the specific needs and skills of individual team members."
+    },
+    {
+      "id": "q_situational_003",
+      "style": "Situational",
+      "approach": "Positive",
+      "direction": "positive",
+      "source": "Questions 2.0 (5).xlsx:Questions",
+      "text": "I actively provide development opportunities."
+    },
+    {
+      "id": "q_situational_004",
+      "style": "Situational",
+      "approach": "Positive",
+      "direction": "positive",
+      "source": "Questions 2.0 (5).xlsx:Questions",
+      "text": "I change my leadership methods according to the unique requirements and competencies of team members."
+    },
+    {
+      "id": "q_situational_005",
+      "style": "Situational",
+      "approach": "Positive",
+      "direction": "positive",
+      "source": "Questions 2.0 (5).xlsx:Questions",
+      "text": "I consistently focus on professional growth."
+    },
+    {
+      "id": "q_situational_006",
+      "style": "Situational",
+      "approach": "Positive",
+      "direction": "positive",
+      "source": "Questions 2.0 (5).xlsx:Questions",
+      "text": "I tailor my style of leadership to align with the varying needs and capabilities of my team."
+    },
+    {
+      "id": "q_situational_007",
+      "style": "Situational",
+      "approach": "Positive",
+      "direction": "positive",
+      "source": "Questions 2.0 (5).xlsx:Questions",
+      "text": "I provide more direction and supervision to less experienced team members."
+    },
+    {
+      "id": "q_situational_008",
+      "style": "Situational",
+      "approach": "Positive",
+      "direction": "positive",
+      "source": "Questions 2.0 (5).xlsx:Questions",
+      "text": "I actively encourage collaboration across the team."
+    },
+    {
+      "id": "q_situational_009",
+      "style": "Situational",
+      "approach": "Positive",
+      "direction": "positive",
+      "source": "Questions 2.0 (5).xlsx:Questions",
+      "text": "I consistently promote cross-team efforts."
+    },
+    {
+      "id": "q_situational_010",
+      "style": "Situational",
+      "approach": "Positive",
+      "direction": "positive",
+      "source": "Questions 2.0 (5).xlsx:Questions",
+      "text": "I take a more supportive and less directive approach with experienced team members."
+    },
+    {
+      "id": "q_situational_011",
+      "style": "Situational",
+      "approach": "Positive",
+      "direction": "positive",
+      "source": "Questions 2.0 (5).xlsx:Questions",
+      "text": "I adopt a more facilitative and less controlling style when working with experienced team members."
+    },
+    {
+      "id": "q_situational_012",
+      "style": "Situational",
+      "approach": "Positive",
+      "direction": "positive",
+      "source": "Questions 2.0 (5).xlsx:Questions",
+      "text": "I consistently demonstrate full transparency."
+    },
+    {
+      "id": "q_situational_013",
+      "style": "Situational",
+      "approach": "Positive",
+      "direction": "positive",
+      "source": "Questions 2.0 (5).xlsx:Questions",
+      "text": "I provide guidance in a more collaborative and less prescriptive manner to seasoned team members."
+    },
+    {
+      "id": "q_situational_014",
+      "style": "Situational",
+      "approach": "Positive",
+      "direction": "positive",
+      "source": "Questions 2.0 (5).xlsx:Questions",
+      "text": "I maintain consistency between words and actions."
+    },
+    {
+      "id": "q_situational_015",
+      "style": "Situational",
+      "approach": "Positive",
+      "direction": "positive",
+      "source": "Questions 2.0 (5).xlsx:Questions",
+      "text": "I use a supportive and hands-off approach with team members who have more experience."
+    },
+    {
+      "id": "q_situational_016",
+      "style": "Situational",
+      "approach": "Positive",
+      "direction": "positive",
+      "source": "Questions 2.0 (5).xlsx:Questions",
+      "text": "I assess the development levels of team members before deciding on an approach."
+    },
+    {
+      "id": "q_situational_017",
+      "style": "Situational",
+      "approach": "Positive",
+      "direction": "positive",
+      "source": "Questions 2.0 (5).xlsx:Questions",
+      "text": "I evaluate the developmental stages of team members prior to selecting my leadership strategy."
+    },
+    {
+      "id": "q_situational_018",
+      "style": "Situational",
+      "approach": "Positive",
+      "direction": "positive",
+      "source": "Questions 2.0 (5).xlsx:Questions",
+      "text": "I actively strengthen trust within the team."
+    },
+    {
+      "id": "q_situational_019",
+      "style": "Situational",
+      "approach": "Positive",
+      "direction": "positive",
+      "source": "Questions 2.0 (5).xlsx:Questions",
+      "text": "I consider the skill levels and growth stages of team members before determining how to lead them."
+    },
+    {
+      "id": "q_situational_020",
+      "style": "Situational",
+      "approach": "Positive",
+      "direction": "positive",
+      "source": "Questions 2.0 (5).xlsx:Questions",
+      "text": "I consistently foster open and honest dialogue."
+    },
+    {
+      "id": "q_situational_021",
+      "style": "Situational",
+      "approach": "Positive",
+      "direction": "positive",
+      "source": "Questions 2.0 (5).xlsx:Questions",
+      "text": "I gauge the progress and capabilities of team members before choosing my approach to leadership."
+    },
+    {
+      "id": "q_situational_022",
+      "style": "Situational",
+      "approach": "Positive",
+      "direction": "positive",
+      "source": "Questions 2.0 (5).xlsx:Questions",
+      "text": "I adapt my approach based on feedback and the evolving situation."
+    },
+    {
+      "id": "q_situational_023",
+      "style": "Situational",
+      "approach": "Positive",
+      "direction": "positive",
+      "source": "Questions 2.0 (5).xlsx:Questions",
+      "text": "I adjust my leadership tactics in response to feedback and changing circumstances."
+    },
+    {
+      "id": "q_situational_024",
+      "style": "Situational",
+      "approach": "Positive",
+      "direction": "positive",
+      "source": "Questions 2.0 (5).xlsx:Questions",
+      "text": "I consistently celebrate team successes."
+    },
+    {
+      "id": "q_situational_025",
+      "style": "Situational",
+      "approach": "Positive",
+      "direction": "positive",
+      "source": "Questions 2.0 (5).xlsx:Questions",
+      "text": "I modify my approach as needed, taking into account feedback and the dynamics of the situation."
+    },
+    {
+      "id": "q_situational_026",
+      "style": "Situational",
+      "approach": "Positive",
+      "direction": "positive",
+      "source": "Questions 2.0 (5).xlsx:Questions",
+      "text": "I actively recognize group accomplishments."
+    },
+    {
+      "id": "q_situational_027",
+      "style": "Situational",
+      "approach": "Positive",
+      "direction": "positive",
+      "source": "Questions 2.0 (5).xlsx:Questions",
+      "text": "I respond to feedback and situational changes by altering my leadership strategy."
+    },
+    {
+      "id": "q_charismatic_001",
+      "style": "Charismatic",
+      "approach": "Positive",
+      "direction": "positive",
+      "source": "Questions 2.0 (5).xlsx:Questions",
+      "text": "I have a charismatic personality that naturally attracts people."
+    },
+    {
+      "id": "q_charismatic_002",
+      "style": "Charismatic",
+      "approach": "Positive",
+      "direction": "positive",
+      "source": "Questions 2.0 (5).xlsx:Questions",
+      "text": "My presence and demeanor naturally draw people towards me."
+    },
+    {
+      "id": "q_charismatic_003",
+      "style": "Charismatic",
+      "approach": "Positive",
+      "direction": "positive",
+      "source": "Questions 2.0 (5).xlsx:Questions",
+      "text": "I actively promote new ideas."
+    },
+    {
+      "id": "q_charismatic_004",
+      "style": "Charismatic",
+      "approach": "Positive",
+      "direction": "positive",
+      "source": "Questions 2.0 (5).xlsx:Questions",
+      "text": "My magnetic personality makes me a natural focal point for others."
+    },
+    {
+      "id": "q_charismatic_005",
+      "style": "Charismatic",
+      "approach": "Positive",
+      "direction": "positive",
+      "source": "Questions 2.0 (5).xlsx:Questions",
+      "text": "I consistently encourage creative input."
+    },
+    {
+      "id": "q_charismatic_006",
+      "style": "Charismatic",
+      "approach": "Positive",
+      "direction": "positive",
+      "source": "Questions 2.0 (5).xlsx:Questions",
+      "text": "People are naturally drawn to me because of my charming and engaging nature."
+    },
+    {
+      "id": "q_charismatic_007",
+      "style": "Charismatic",
+      "approach": "Positive",
+      "direction": "positive",
+      "source": "Questions 2.0 (5).xlsx:Questions",
+      "text": "My speeches or presentations are captivating and persuasive."
+    },
+    {
+      "id": "q_charismatic_008",
+      "style": "Charismatic",
+      "approach": "Positive",
+      "direction": "positive",
+      "source": "Questions 2.0 (5).xlsx:Questions",
+      "text": "My presentations consistently hold the audience's attention and influence their views."
+    },
+    {
+      "id": "q_charismatic_009",
+      "style": "Charismatic",
+      "approach": "Positive",
+      "direction": "positive",
+      "source": "Questions 2.0 (5).xlsx:Questions",
+      "text": "I clearly connect team work to organizational goals."
+    },
+    {
+      "id": "q_charismatic_010",
+      "style": "Charismatic",
+      "approach": "Positive",
+      "direction": "positive",
+      "source": "Questions 2.0 (5).xlsx:Questions",
+      "text": "My speeches are engaging and effectively persuade listeners."
+    },
+    {
+      "id": "q_charismatic_011",
+      "style": "Charismatic",
+      "approach": "Positive",
+      "direction": "positive",
+      "source": "Questions 2.0 (5).xlsx:Questions",
+      "text": "I consistently link tasks to the bigger picture."
+    },
+    {
+      "id": "q_charismatic_012",
+      "style": "Charismatic",
+      "approach": "Positive",
+      "direction": "positive",
+      "source": "Questions 2.0 (5).xlsx:Questions",
+      "text": "I have a talent for delivering talks that are both compelling and convincing."
+    },
+    {
+      "id": "q_charismatic_013",
+      "style": "Charismatic",
+      "approach": "Positive",
+      "direction": "positive",
+      "source": "Questions 2.0 (5).xlsx:Questions",
+      "text": "Team members often look to me for motivation and inspiration."
+    },
+    {
+      "id": "q_charismatic_014",
+      "style": "Charismatic",
+      "approach": "Positive",
+      "direction": "positive",
+      "source": "Questions 2.0 (5).xlsx:Questions",
+      "text": "I am frequently sought out by team members for motivational support and encouragement."
+    },
+    {
+      "id": "q_charismatic_015",
+      "style": "Charismatic",
+      "approach": "Positive",
+      "direction": "positive",
+      "source": "Questions 2.0 (5).xlsx:Questions",
+      "text": "I consistently project confidence in decisions."
+    },
+    {
+      "id": "q_charismatic_016",
+      "style": "Charismatic",
+      "approach": "Positive",
+      "direction": "positive",
+      "source": "Questions 2.0 (5).xlsx:Questions",
+      "text": "Team members regularly turn to me for inspiration and drive."
+    },
+    {
+      "id": "q_charismatic_017",
+      "style": "Charismatic",
+      "approach": "Positive",
+      "direction": "positive",
+      "source": "Questions 2.0 (5).xlsx:Questions",
+      "text": "I maintain clear and confident direction for the team."
+    },
+    {
+      "id": "q_charismatic_018",
+      "style": "Charismatic",
+      "approach": "Positive",
+      "direction": "positive",
+      "source": "Questions 2.0 (5).xlsx:Questions",
+      "text": "I am a primary source of motivation and inspiration for the team."
+    },
+    {
+      "id": "q_charismatic_019",
+      "style": "Charismatic",
+      "approach": "Positive",
+      "direction": "positive",
+      "source": "Questions 2.0 (5).xlsx:Questions",
+      "text": "I am viewed as a figure of influence within the team or organization."
+    },
+    {
+      "id": "q_charismatic_020",
+      "style": "Charismatic",
+      "approach": "Positive",
+      "direction": "positive",
+      "source": "Questions 2.0 (5).xlsx:Questions",
+      "text": "I hold significant sway and am seen as a powerful figure within the organization."
+    },
+    {
+      "id": "q_charismatic_021",
+      "style": "Charismatic",
+      "approach": "Positive",
+      "direction": "positive",
+      "source": "Questions 2.0 (5).xlsx:Questions",
+      "text": "I clearly prioritize tasks for the team."
+    },
+    {
+      "id": "q_charismatic_022",
+      "style": "Charismatic",
+      "approach": "Positive",
+      "direction": "positive",
+      "source": "Questions 2.0 (5).xlsx:Questions",
+      "text": "My role is perceived as influential and impactful within the team or company."
+    },
+    {
+      "id": "q_charismatic_023",
+      "style": "Charismatic",
+      "approach": "Positive",
+      "direction": "positive",
+      "source": "Questions 2.0 (5).xlsx:Questions",
+      "text": "I efficiently manage meetings and deadlines."
+    },
+    {
+      "id": "q_charismatic_024",
+      "style": "Charismatic",
+      "approach": "Positive",
+      "direction": "positive",
+      "source": "Questions 2.0 (5).xlsx:Questions",
+      "text": "I am regarded as a prominent figure of influence among team members and within the organization."
+    },
+    {
+      "id": "q_charismatic_025",
+      "style": "Charismatic",
+      "approach": "Positive",
+      "direction": "positive",
+      "source": "Questions 2.0 (5).xlsx:Questions",
+      "text": "I encourage team members to align their values with those of the organization."
+    },
+    {
+      "id": "q_charismatic_026",
+      "style": "Charismatic",
+      "approach": "Positive",
+      "direction": "positive",
+      "source": "Questions 2.0 (5).xlsx:Questions",
+      "text": "I promote the alignment of personal values with the organization’s core principles."
+    },
+    {
+      "id": "q_charismatic_027",
+      "style": "Charismatic",
+      "approach": "Positive",
+      "direction": "positive",
+      "source": "Questions 2.0 (5).xlsx:Questions",
+      "text": "I consistently act upon team feedback."
+    },
+    {
+      "id": "q_charismatic_028",
+      "style": "Charismatic",
+      "approach": "Positive",
+      "direction": "positive",
+      "source": "Questions 2.0 (5).xlsx:Questions",
+      "text": "I actively support team members in aligning their values with organizational goals."
+    },
+    {
+      "id": "q_charismatic_029",
+      "style": "Charismatic",
+      "approach": "Positive",
+      "direction": "positive",
+      "source": "Questions 2.0 (5).xlsx:Questions",
+      "text": "I frequently show responsiveness to team input."
+    },
+    {
+      "id": "q_charismatic_030",
+      "style": "Charismatic",
+      "approach": "Positive",
+      "direction": "positive",
+      "source": "Questions 2.0 (5).xlsx:Questions",
+      "text": "I emphasize the importance of aligning personal values with those of the organization."
+    },
+    {
+      "id": "q_democratic_001",
+      "style": "Democratic",
+      "approach": "Positive",
+      "direction": "positive",
+      "source": "Questions 2.0 (5).xlsx:Questions",
+      "text": "I regularly involve team members in decision-making processes."
+    },
+    {
+      "id": "q_democratic_002",
+      "style": "Democratic",
+      "approach": "Positive",
+      "direction": "positive",
+      "source": "Questions 2.0 (5).xlsx:Questions",
+      "text": "I consistently include team members in the decision-making process."
+    },
+    {
+      "id": "q_democratic_003",
+      "style": "Democratic",
+      "approach": "Positive",
+      "direction": "positive",
+      "source": "Questions 2.0 (5).xlsx:Questions",
+      "text": "I consistently champion change."
+    },
+    {
+      "id": "q_democratic_004",
+      "style": "Democratic",
+      "approach": "Positive",
+      "direction": "positive",
+      "source": "Questions 2.0 (5).xlsx:Questions",
+      "text": "I frequently engage team members when making decisions."
+    },
+    {
+      "id": "q_democratic_005",
+      "style": "Democratic",
+      "approach": "Positive",
+      "direction": "positive",
+      "source": "Questions 2.0 (5).xlsx:Questions",
+      "text": "I ensure team members feel fully supported during transitions."
+    },
+    {
+      "id": "q_democratic_006",
+      "style": "Democratic",
+      "approach": "Positive",
+      "direction": "positive",
+      "source": "Questions 2.0 (5).xlsx:Questions",
+      "text": "I make an effort to involve team members in key decisions."
+    },
+    {
+      "id": "q_democratic_007",
+      "style": "Democratic",
+      "approach": "Positive",
+      "direction": "positive",
+      "source": "Questions 2.0 (5).xlsx:Questions",
+      "text": "I ensure that all team members have the opportunity to voice their opinions."
+    },
+    {
+      "id": "q_democratic_008",
+      "style": "Democratic",
+      "approach": "Positive",
+      "direction": "positive",
+      "source": "Questions 2.0 (5).xlsx:Questions",
+      "text": "I guarantee that every team member can express their views."
+    },
+    {
+      "id": "q_democratic_009",
+      "style": "Democratic",
+      "approach": "Positive",
+      "direction": "positive",
+      "source": "Questions 2.0 (5).xlsx:Questions",
+      "text": "I consistently strengthen accountability across the team."
+    },
+    {
+      "id": "q_democratic_010",
+      "style": "Democratic",
+      "approach": "Positive",
+      "direction": "positive",
+      "source": "Questions 2.0 (5).xlsx:Questions",
+      "text": "I make sure all team members are given a chance to share their opinions."
+    },
+    {
+      "id": "q_democratic_011",
+      "style": "Democratic",
+      "approach": "Positive",
+      "direction": "positive",
+      "source": "Questions 2.0 (5).xlsx:Questions",
+      "text": "I consistently follow up on commitments."
+    },
+    {
+      "id": "q_democratic_012",
+      "style": "Democratic",
+      "approach": "Positive",
+      "direction": "positive",
+      "source": "Questions 2.0 (5).xlsx:Questions",
+      "text": "Every team member has the opportunity to voice their thoughts thanks to my efforts."
+    },
+    {
+      "id": "q_democratic_013",
+      "style": "Democratic",
+      "approach": "Positive",
+      "direction": "positive",
+      "source": "Questions 2.0 (5).xlsx:Questions",
+      "text": "I value diverse perspectives and incorporate them into decision-making."
+    },
+    {
+      "id": "q_democratic_014",
+      "style": "Democratic",
+      "approach": "Positive",
+      "direction": "positive",
+      "source": "Questions 2.0 (5).xlsx:Questions",
+      "text": "I respect and integrate a variety of viewpoints in my decision-making."
+    },
+    {
+      "id": "q_democratic_015",
+      "style": "Democratic",
+      "approach": "Positive",
+      "direction": "positive",
+      "source": "Questions 2.0 (5).xlsx:Questions",
+      "text": "I actively promote diversity and inclusion."
+    },
+    {
+      "id": "q_democratic_016",
+      "style": "Democratic",
+      "approach": "Positive",
+      "direction": "positive",
+      "source": "Questions 2.0 (5).xlsx:Questions",
+      "text": "I consider and include different perspectives when making decisions."
+    },
+    {
+      "id": "q_democratic_017",
+      "style": "Democratic",
+      "approach": "Positive",
+      "direction": "positive",
+      "source": "Questions 2.0 (5).xlsx:Questions",
+      "text": "I seize opportunities to highlight diverse perspectives."
+    },
+    {
+      "id": "q_democratic_018",
+      "style": "Democratic",
+      "approach": "Positive",
+      "direction": "positive",
+      "source": "Questions 2.0 (5).xlsx:Questions",
+      "text": "Diverse opinions are valued and used in my decision-making process."
+    },
+    {
+      "id": "q_democratic_019",
+      "style": "Democratic",
+      "approach": "Positive",
+      "direction": "positive",
+      "source": "Questions 2.0 (5).xlsx:Questions",
+      "text": "I handle conflicts within the team by facilitating open discussion."
+    },
+    {
+      "id": "q_democratic_020",
+      "style": "Democratic",
+      "approach": "Positive",
+      "direction": "positive",
+      "source": "Questions 2.0 (5).xlsx:Questions",
+      "text": "I manage team conflicts by encouraging open dialogue among members."
+    },
+    {
+      "id": "q_democratic_021",
+      "style": "Democratic",
+      "approach": "Positive",
+      "direction": "positive",
+      "source": "Questions 2.0 (5).xlsx:Questions",
+      "text": "I consistently define clear team goals."
+    },
+    {
+      "id": "q_democratic_022",
+      "style": "Democratic",
+      "approach": "Positive",
+      "direction": "positive",
+      "source": "Questions 2.0 (5).xlsx:Questions",
+      "text": "I resolve team disputes through open and transparent discussions."
+    },
+    {
+      "id": "q_democratic_023",
+      "style": "Democratic",
+      "approach": "Positive",
+      "direction": "positive",
+      "source": "Questions 2.0 (5).xlsx:Questions",
+      "text": "I ensure all team members are clear about key objectives."
+    },
+    {
+      "id": "q_democratic_024",
+      "style": "Democratic",
+      "approach": "Positive",
+      "direction": "positive",
+      "source": "Questions 2.0 (5).xlsx:Questions",
+      "text": "Open discussion is my approach to handling conflicts within the team."
+    },
+    {
+      "id": "q_democratic_025",
+      "style": "Democratic",
+      "approach": "Positive",
+      "direction": "positive",
+      "source": "Questions 2.0 (5).xlsx:Questions",
+      "text": "Team members feel their input is valued and has an impact on decisions."
+    },
+    {
+      "id": "q_democratic_026",
+      "style": "Democratic",
+      "approach": "Positive",
+      "direction": "positive",
+      "source": "Questions 2.0 (5).xlsx:Questions",
+      "text": "Team members believe that their contributions are appreciated and influence decisions."
+    },
+    {
+      "id": "q_democratic_027",
+      "style": "Democratic",
+      "approach": "Positive",
+      "direction": "positive",
+      "source": "Questions 2.0 (5).xlsx:Questions",
+      "text": "I consistently model healthy stress management."
+    },
+    {
+      "id": "q_democratic_028",
+      "style": "Democratic",
+      "approach": "Positive",
+      "direction": "positive",
+      "source": "Questions 2.0 (5).xlsx:Questions",
+      "text": "The input of team members is recognized and makes a difference in decision-making."
+    },
+    {
+      "id": "q_democratic_029",
+      "style": "Democratic",
+      "approach": "Positive",
+      "direction": "positive",
+      "source": "Questions 2.0 (5).xlsx:Questions",
+      "text": "I respond to high-pressure situations with balance."
+    },
+    {
+      "id": "q_democratic_030",
+      "style": "Democratic",
+      "approach": "Positive",
+      "direction": "positive",
+      "source": "Questions 2.0 (5).xlsx:Questions",
+      "text": "Team members perceive that their feedback is valued and affects how decisions are made."
+    },
+    {
+      "id": "q_laissez_faire_001",
+      "style": "Laissez-Faire",
+      "approach": "Positive",
+      "direction": "positive",
+      "source": "Questions 2.0 (5).xlsx:Questions",
+      "text": "I give team members a high level of autonomy in their work."
+    },
+    {
+      "id": "q_laissez_faire_002",
+      "style": "Laissez-Faire",
+      "approach": "Positive",
+      "direction": "positive",
+      "source": "Questions 2.0 (5).xlsx:Questions",
+      "text": "I allow team members significant freedom in how they perform their tasks."
+    },
+    {
+      "id": "q_laissez_faire_003",
+      "style": "Laissez-Faire",
+      "approach": "Positive",
+      "direction": "positive",
+      "source": "Questions 2.0 (5).xlsx:Questions",
+      "text": "I ensure balanced delegation across the team."
+    },
+    {
+      "id": "q_laissez_faire_004",
+      "style": "Laissez-Faire",
+      "approach": "Positive",
+      "direction": "positive",
+      "source": "Questions 2.0 (5).xlsx:Questions",
+      "text": "Team members are granted considerable independence to manage their own work."
+    },
+    {
+      "id": "q_laissez_faire_005",
+      "style": "Laissez-Faire",
+      "approach": "Positive",
+      "direction": "positive",
+      "source": "Questions 2.0 (5).xlsx:Questions",
+      "text": "I consistently distribute work evenly."
+    },
+    {
+      "id": "q_laissez_faire_006",
+      "style": "Laissez-Faire",
+      "approach": "Positive",
+      "direction": "positive",
+      "source": "Questions 2.0 (5).xlsx:Questions",
+      "text": "I provide team members with the liberty to make decisions about their work processes."
+    },
+    {
+      "id": "q_laissez_faire_007",
+      "style": "Laissez-Faire",
+      "approach": "Positive",
+      "direction": "positive",
+      "source": "Questions 2.0 (5).xlsx:Questions",
+      "text": "I am hands-off and allow team members to manage their own tasks."
+    },
+    {
+      "id": "q_laissez_faire_008",
+      "style": "Laissez-Faire",
+      "approach": "Positive",
+      "direction": "positive",
+      "source": "Questions 2.0 (5).xlsx:Questions",
+      "text": "I take a hands-off approach, letting team members handle their own assignments."
+    },
+    {
+      "id": "q_laissez_faire_009",
+      "style": "Laissez-Faire",
+      "approach": "Positive",
+      "direction": "positive",
+      "source": "Questions 2.0 (5).xlsx:Questions",
+      "text": "I consistently demonstrate professionalism."
+    },
+    {
+      "id": "q_laissez_faire_010",
+      "style": "Laissez-Faire",
+      "approach": "Positive",
+      "direction": "positive",
+      "source": "Questions 2.0 (5).xlsx:Questions",
+      "text": "Team members are given the responsibility to manage their tasks with minimal interference from me."
+    },
+    {
+      "id": "q_laissez_faire_011",
+      "style": "Laissez-Faire",
+      "approach": "Positive",
+      "direction": "positive",
+      "source": "Questions 2.0 (5).xlsx:Questions",
+      "text": "I maintain a consistently professional tone and behavior."
+    },
+    {
+      "id": "q_laissez_faire_012",
+      "style": "Laissez-Faire",
+      "approach": "Positive",
+      "direction": "positive",
+      "source": "Questions 2.0 (5).xlsx:Questions",
+      "text": "The leader refrains from direct involvement, allowing team members to oversee their own work."
+    },
+    {
+      "id": "q_laissez_faire_013",
+      "style": "Laissez-Faire",
+      "approach": "Positive",
+      "direction": "positive",
+      "source": "Questions 2.0 (5).xlsx:Questions",
+      "text": "I provide minimal guidance and intervention."
+    },
+    {
+      "id": "q_laissez_faire_014",
+      "style": "Laissez-Faire",
+      "approach": "Positive",
+      "direction": "positive",
+      "source": "Questions 2.0 (5).xlsx:Questions",
+      "text": "I offer limited direction and only intervene when absolutely necessary."
+    },
+    {
+      "id": "q_laissez_faire_015",
+      "style": "Laissez-Faire",
+      "approach": "Positive",
+      "direction": "positive",
+      "source": "Questions 2.0 (5).xlsx:Questions",
+      "text": "I actively promote continuous improvement."
+    },
+    {
+      "id": "q_laissez_faire_016",
+      "style": "Laissez-Faire",
+      "approach": "Positive",
+      "direction": "positive",
+      "source": "Questions 2.0 (5).xlsx:Questions",
+      "text": "Team members receive sparse guidance and little interference from me."
+    },
+    {
+      "id": "q_laissez_faire_017",
+      "style": "Laissez-Faire",
+      "approach": "Positive",
+      "direction": "positive",
+      "source": "Questions 2.0 (5).xlsx:Questions",
+      "text": "I provide frequent opportunities for process reviews."
+    },
+    {
+      "id": "q_laissez_faire_018",
+      "style": "Laissez-Faire",
+      "approach": "Positive",
+      "direction": "positive",
+      "source": "Questions 2.0 (5).xlsx:Questions",
+      "text": "My role involves minimal oversight and intervention in team members' work."
+    },
+    {
+      "id": "q_laissez_faire_019",
+      "style": "Laissez-Faire",
+      "approach": "Positive",
+      "direction": "positive",
+      "source": "Questions 2.0 (5).xlsx:Questions",
+      "text": "Team members are encouraged to make decisions independently."
+    },
+    {
+      "id": "q_laissez_faire_020",
+      "style": "Laissez-Faire",
+      "approach": "Positive",
+      "direction": "positive",
+      "source": "Questions 2.0 (5).xlsx:Questions",
+      "text": "I motivate team members to make their own decisions without waiting for approval."
+    },
+    {
+      "id": "q_laissez_faire_021",
+      "style": "Laissez-Faire",
+      "approach": "Positive",
+      "direction": "positive",
+      "source": "Questions 2.0 (5).xlsx:Questions",
+      "text": "I consistently demonstrate empathy for individual challenges."
+    },
+    {
+      "id": "q_laissez_faire_022",
+      "style": "Laissez-Faire",
+      "approach": "Positive",
+      "direction": "positive",
+      "source": "Questions 2.0 (5).xlsx:Questions",
+      "text": "Team members are supported in taking responsibility for their own decision-making."
+    },
+    {
+      "id": "q_laissez_faire_023",
+      "style": "Laissez-Faire",
+      "approach": "Positive",
+      "direction": "positive",
+      "source": "Questions 2.0 (5).xlsx:Questions",
+      "text": "I show strong understanding of personal circumstances."
+    },
+    {
+      "id": "q_laissez_faire_024",
+      "style": "Laissez-Faire",
+      "approach": "Positive",
+      "direction": "positive",
+      "source": "Questions 2.0 (5).xlsx:Questions",
+      "text": "The leader fosters an environment where team members are empowered to decide on their own."
+    },
+    {
+      "id": "q_laissez_faire_025",
+      "style": "Laissez-Faire",
+      "approach": "Positive",
+      "direction": "positive",
+      "source": "Questions 2.0 (5).xlsx:Questions",
+      "text": "I trust the team to achieve goals without constant oversight."
+    },
+    {
+      "id": "q_laissez_faire_026",
+      "style": "Laissez-Faire",
+      "approach": "Positive",
+      "direction": "positive",
+      "source": "Questions 2.0 (5).xlsx:Questions",
+      "text": "I have confidence in the team's ability to reach goals without needing constant supervision."
+    },
+    {
+      "id": "q_laissez_faire_027",
+      "style": "Laissez-Faire",
+      "approach": "Positive",
+      "direction": "positive",
+      "source": "Questions 2.0 (5).xlsx:Questions",
+      "text": "I consistently recognize individual contributions."
+    },
+    {
+      "id": "q_laissez_faire_028",
+      "style": "Laissez-Faire",
+      "approach": "Positive",
+      "direction": "positive",
+      "source": "Questions 2.0 (5).xlsx:Questions",
+      "text": "I believe in the team's capacity to meet objectives independently, with minimal check-ins."
+    },
+    {
+      "id": "q_laissez_faire_029",
+      "style": "Laissez-Faire",
+      "approach": "Positive",
+      "direction": "positive",
+      "source": "Questions 2.0 (5).xlsx:Questions",
+      "text": "I actively highlight personal achievements."
+    },
+    {
+      "id": "q_laissez_faire_030",
+      "style": "Laissez-Faire",
+      "approach": "Positive",
+      "direction": "positive",
+      "source": "Questions 2.0 (5).xlsx:Questions",
+      "text": "Team members are trusted to accomplish their goals without my continual oversight."
+    }
+  ],
+  "scoreDescriptions": {
+    "Autocratic": {
+      "high": "Leaders who score high in the autocratic style tend to make unilateral decisions, maintaining firm control over all aspects of the organization. They value efficiency, structure, and authority, preferring to keep all decision-making to themselves. This often results in a highly structured environment with clear expectations and minimal input from others. While they can drive fast results, their approach may lead to a lack of creativity and lower employee morale due to limited autonomy.",
+      "moderate": "Leaders with a moderate autocratic score balance control and delegation. They may take the lead in decision-making but occasionally seek input from their team. These leaders aim for efficiency and clarity but recognize the value of some collaboration, allowing for a degree of team autonomy without relinquishing overall control. This can result in a balanced work environment, where expectations are clear but some room for flexibility exists.",
+      "low": "A low score in the autocratic style indicates a leader who prefers a more democratic or collaborative approach. They are likely to involve their team in decision-making and may avoid strict control. They trust their team's capabilities and focus on creating a supportive environment where input is encouraged, which can foster a more creative and inclusive atmosphere but may sometimes struggle with efficiency due to the lack of clear authority."
+    },
+    "Democratic": {
+      "high": "A leader with a high score in the democratic style actively seeks input from team members and prioritizes collaboration. They are focused on empowering their team, promoting open communication, and fostering a culture of teamwork. These leaders encourage creativity, value diverse perspectives, and focus on long-term growth, creating an environment where individuals feel highly engaged and motivated. However, decision-making can sometimes be slower due to the need for consensus.",
+      "moderate": "Leaders with a moderate democratic score make efforts to include their team in decision-making but also retain the final say. They seek collaboration but may occasionally make unilateral decisions, particularly in high-pressure situations. This balanced approach allows for flexibility while maintaining control and ensuring that team input is considered without compromising efficiency.",
+      "low": "A low score in the democratic style suggests that the leader favors a more autocratic or laissez-faire approach. While they may occasionally ask for input, they generally prefer making decisions independently. Communication may be more top-down, and the focus on teamwork and collaboration is minimal. This can lead to disengagement from team members who feel their contributions are undervalued."
+    },
+    "Laissez-Faire": {
+      "high": "Leaders who score high in laissez-faire leadership give their team a high degree of autonomy, trusting them to make decisions and manage their work independently. This hands-off approach encourages creativity and innovation, as team members are free to explore new ideas. However, this style can result in inconsistent performance, as the lack of supervision may lead to missed deadlines or a lack of accountability in less motivated teams.",
+      "moderate": "Leaders with a moderate laissez-faire score strike a balance between autonomy and guidance. They allow their team members to make decisions but provide support when needed. This approach fosters a sense of trust and independence while ensuring there is enough structure to keep projects on track. It works well in environments where teams are competent and self-motivated, but may falter when guidance or coordination is needed.",
+      "low": "A low score in laissez-faire leadership suggests a preference for more direct oversight and involvement. Leaders who score low are likely to provide clear direction, set expectations, and closely monitor performance. While this can improve accountability and structure, it may limit creativity and autonomy within the team, especially if team members are highly skilled and capable of working independently."
+    },
+    "Transactional": {
+      "high": "A high score in transactional leadership indicates a leader who prioritizes structure, rules, and performance. They focus on achieving short-term goals through clear expectations and a system of rewards and punishments. This style is effective for maintaining consistency and achieving results, but may stifle creativity and innovation as the focus remains on following processes rather than exploring new possibilities.",
+      "moderate": "Leaders with a moderate score in transactional leadership balance supervision with some flexibility. They maintain clear expectations and monitor performance but may allow for occasional deviations from the established norms if they align with broader organizational goals. This approach ensures stability while permitting some level of creativity and adaptability when necessary.",
+      "low": "A low score in transactional leadership suggests that the leader may prefer a more transformational or democratic style. They are likely to focus on long-term goals and the development of their team rather than relying on rewards or punishments for short-term performance. While this can lead to higher employee engagement and innovation, it may create challenges in maintaining consistent performance and meeting immediate objectives."
+    },
+    "Transformational": {
+      "high": "Transformational leaders who score high are highly visionary, inspiring their team with a clear, compelling future direction. They empower and develop their team members, encourage innovation, and model the values they expect from others. These leaders foster high levels of motivation, morale, and engagement, creating a dynamic and innovative environment. However, the focus on long-term vision may sometimes result in neglect of short-term objectives or operational details.",
+      "moderate": "Leaders with a moderate score in transformational leadership inspire and empower their team but may not consistently engage in the same level of deep personal development or visionary leadership. They can balance a focus on both short-term results and long-term growth, promoting a culture of motivation and growth while still ensuring that day-to-day operations are managed effectively.",
+      "low": "A low score in transformational leadership indicates that the leader may be more focused on maintaining the status quo and achieving short-term goals rather than fostering innovation and personal development. They may lack the visionary qualities that transformational leaders possess, and as a result, the team may experience lower morale and less engagement in the organization’s long-term mission."
+    },
+    "Servant": {
+      "high": "Leaders who score high in servant leadership prioritize the needs and well-being of their team members. They exhibit high levels of empathy, humility, and active listening, focusing on serving others rather than asserting authority. This creates a supportive and nurturing environment where team members feel valued and empowered. However, this selfless approach may sometimes lead to challenges in setting boundaries or making difficult decisions when needed.",
+      "moderate": "A moderate score in servant leadership indicates a leader who cares for their team's well-being but also balances the needs of the organization. They empower their team while maintaining a sense of authority and responsibility. These leaders are compassionate but may not always prioritize others over organizational goals, ensuring that both the team’s needs and the organization’s success are met.",
+      "low": "Leaders with a low score in servant leadership are less likely to prioritize the well-being of their team members. They may focus more on results and organizational success than on providing support or developing their team. While this can lead to efficient outcomes, it may also result in disengagement or burnout among team members who feel undervalued or unsupported."
+    },
+    "Charismatic": {
+      "high": "Leaders who score high in charismatic leadership are often seen as influential, magnetic figures who inspire others through their energy, vision, and strong personal presence. They have a compelling ability to motivate and engage their team, creating a sense of excitement and dedication. These leaders are typically excellent communicators and able to rally others around a shared vision, fostering strong loyalty and high morale. However, their influence can sometimes overshadow other leadership qualities, and their reliance on personal charisma may cause challenges in maintaining stability or continuity when they are absent.",
+      "moderate": "Leaders with a moderate score in charismatic leadership are somewhat influential but may not possess the same overwhelming presence or magnetic personality as those with high scores. They can inspire and motivate their team, but they may need to rely on other leadership styles, such as transactional or transformational, to achieve results. These leaders use their charm strategically, often to foster engagement and inspire confidence but do not depend entirely on personal charisma to lead effectively.",
+      "low": "A low score in charismatic leadership suggests that the leader may not be as naturally influential or able to inspire others through their presence alone. These leaders are likely more focused on pragmatic, task-oriented aspects of leadership, relying on logic, structure, or expertise rather than personal magnetism. While they may still be effective in guiding their team, they might struggle with rallying people around a shared vision or generating the same level of enthusiasm that charismatic leaders typically inspire."
+    },
+    "Situational": {
+      "high": "Leaders who score high in situational leadership are adaptable and skilled at adjusting their leadership style based on the needs of their team and the specific situation at hand. They can seamlessly transition between being directive and supportive, offering clear instructions when necessary and providing autonomy when their team is capable. These leaders excel in dynamic environments where flexibility is key, and they can manage diverse teams with varying levels of competence. Their adaptability, however, can sometimes lead to inconsistency if the leader struggles to balance their approach effectively across different team members or situations.",
+      "moderate": "Leaders with a moderate score in situational leadership may adjust their style based on the situation but not with the same fluidity or precision as those with high scores. They understand the importance of context and can adapt their approach when needed, but they may prefer a more consistent or default leadership style. These leaders might be comfortable balancing between being supportive and directive, but they may not always make quick, sharp adjustments based on changing team dynamics or individual needs.",
+      "low": "A low score in situational leadership suggests that the leader may prefer a more fixed leadership style, often relying on one approach regardless of the circumstances. They might struggle with adapting to the varying needs of their team members or changing situations, potentially leading to challenges in team engagement or performance. While they may excel in environments requiring a clear and consistent approach, they could face difficulties in situations that demand flexibility or a more tailored leadership style."
+    }
+  },
+  "styleQualities": {
+    "Autocratic": [
+      "Centralized Decision-Making: The leader makes all the decisions with little to no input from others. They retain full control over policies, procedures, and overall direction.",
+      "Absolute Authority: Autocratic leaders exercise significant control over all aspects of the organization or group. They expect compliance and obedience from their subordinates.",
+      "Minimal Delegation: Tasks and responsibilities are rarely delegated, as the leader prefers to manage details personally and directly oversee all operations.",
+      "Limited Group Input: Autocratic leaders typically do not seek or value input from team members. Decisions are made unilaterally, without consultation or consensus.",
+      "Clear Expectations: The leader sets clear, specific, and often rigid expectations and rules that subordinates are expected to follow without question.",
+      "Control Over Communication: Communication tends to be top-down, with the leader issuing directives and expecting compliance. There is little to no open dialogue or feedback loop.",
+      "Emphasis on Efficiency: Autocratic leaders focus on efficiency and productivity, often at the expense of creativity, innovation, or employee morale.",
+      "Use of Coercion or Punishment: They may employ coercive tactics, including punishment or threats, to enforce discipline and ensure that rules are followed.",
+      "Lack of Trust: These leaders often exhibit a lack of trust in their team members’ abilities, preferring to make decisions on their own rather than empowering others.",
+      "Resistance to Change: Autocratic leaders are often resistant to change or new ideas, preferring to stick with established methods and maintain control."
+    ],
+    "Democratic": [
+      "Inclusive Decision-Making: Democratic leaders actively seek input from team members when making decisions. They encourage open dialogue and collaboration, valuing the diverse perspectives of the group.",
+      "Shared Authority: While the leader retains the final say, they share authority by involving team members in the decision-making process. This fosters a sense of ownership and accountability among the team.",
+      "Empowerment and Delegation: Democratic leaders trust their team members and delegate responsibilities. They empower others to take initiative, make decisions, and contribute to the organization’s goals.",
+      "Open Communication: Communication is typically two-way, with the leader encouraging feedback, suggestions, and discussion. Transparency is a key component, ensuring everyone is informed and aligned.",
+      "Collaboration and Teamwork: Democratic leaders prioritize teamwork and collaboration. They create an environment where everyone feels comfortable contributing ideas and working together toward common objectives.",
+      "Flexibility and Adaptability: This leadership style is flexible, allowing for adaptability to changing circumstances or new information. Democratic leaders are open to new ideas and willing to change course if needed.",
+      "Trust and Respect: Democratic leaders build trust and respect within the team by valuing each member's contributions and treating everyone fairly. They are approachable and willing to listen to concerns or suggestions.",
+      "Encouragement of Creativity and Innovation: By fostering an open and inclusive environment, democratic leaders encourage creativity and innovation. Team members feel safe to explore new ideas and propose solutions.",
+      "Focus on Team Development: Democratic leaders are often invested in the growth and development of their team members. They provide opportunities for learning, mentoring, and professional development.",
+      "High Morale and Job Satisfaction: Due to the inclusive nature of democratic leadership, team members often experience higher morale, job satisfaction, and a sense of belonging. This can lead to increased motivation and productivity."
+    ],
+    "Laissez-Faire": [
+      "Minimal Supervision: Laissez-faire leaders provide little to no direct supervision and allow team members to make decisions on their own. They trust employees to manage their own work without much intervention.",
+      "High Degree of Autonomy: This leadership style grants a high level of autonomy to team members, empowering them to take the lead on projects, make decisions, and solve problems independently.",
+      "Hands-Off Approach: Laissez-faire leaders take a hands-off approach, rarely involving themselves in day-to-day activities or offering guidance unless specifically asked.",
+      "Trust in Team Members: These leaders exhibit a high level of trust in their team’s abilities, believing that employees are capable of handling their responsibilities without needing constant oversight.",
+      "Limited Guidance or Direction: Laissez-faire leaders often provide minimal guidance or direction. They might set overall goals or objectives but leave the specifics of how to achieve them to the team.",
+      "Encouragement of Creativity: The freedom granted under laissez-faire leadership can encourage creativity and innovation, as team members are free to explore new ideas and approaches without constraints.",
+      "Delegation of Decision-Making: Decision-making is often delegated entirely to the team. The leader may serve more as a facilitator, stepping in only when necessary or when the team requests their input.",
+      "Low Accountability or Structure: In some cases, the lack of structure and oversight can lead to low accountability, with tasks potentially being overlooked or not completed on time.",
+      "High Variability in Performance: The effectiveness of laissez-faire leadership can vary significantly depending on the team's competence and motivation. High-performing teams may thrive, while less experienced or less motivated teams may struggle.",
+      "Dependence on Team Expertise: This style works best when team members are highly skilled, self-motivated, and capable of working independently. It can be less effective in situations where guidance, coordination, or strong leadership is needed."
+    ],
+    "Transactional": [
+      "Focus on Supervision and Performance: Transactional leaders emphasize supervision, organization, and performance. They closely monitor their team members’ work, ensuring that tasks are completed according to predefined standards and deadlines.",
+      "Clear Structure and Expectations: These leaders provide a clear structure, with well-defined roles, responsibilities, and expectations. Team members know exactly what is expected of them and what they need to do to succeed.",
+      "Contingent Rewards: Transactional leaders use a system of rewards and punishments to motivate employees. Positive reinforcement, such as bonuses or praise, is given for meeting or exceeding expectations, while penalties or corrective actions are applied for underperformance.",
+      "Emphasis on Short-Term Goals: The focus is often on achieving short-term goals and immediate results. Transactional leaders prioritize efficiency, productivity, and task completion over long-term vision or innovation.",
+      "Directive and Task-Oriented: Transactional leaders are directive, providing specific instructions and expecting them to be followed. They are task-oriented, concentrating on the completion of tasks rather than on developing or empowering their team.",
+      "Bureaucratic Approach: Often, transactional leadership is associated with a bureaucratic approach, where policies, procedures, and rules are strictly adhered to. Leaders ensure that their team follows established protocols.",
+      "Limited Focus on Team Development: Unlike transformational leaders who focus on inspiring and developing their team, transactional leaders are more concerned with maintaining the status quo and achieving specific outcomes. They may provide less support for personal or professional growth.",
+      "Practical and Pragmatic: Transactional leaders are practical, focusing on what needs to be done to achieve specific results. They are less concerned with abstract ideas or innovation and more with concrete, measurable outcomes.",
+      "Dependence on Authority: These leaders rely on their formal authority to manage and control their team. Their power is often derived from their position within the organization and the ability to reward or punish subordinates.",
+      "Risk Aversion: Transactional leaders tend to be risk-averse, preferring to stick to proven methods and avoid experimentation or innovation. They focus on maintaining order and consistency rather than exploring new possibilities."
+    ],
+    "Transformational": [
+      "Visionary and Inspirational: Transformational leaders have a clear and compelling vision for the future. They inspire and motivate their team members by articulating this vision and encouraging them to work toward shared goals.",
+      "Focus on Change and Innovation: These leaders are agents of change, constantly seeking ways to improve and innovate. They challenge the status quo and encourage their team to think creatively and embrace new ideas.",
+      "Empowerment and Development: Transformational leaders are deeply invested in the personal and professional growth of their team members. They empower others by providing opportunities for development, mentoring, and encouraging self-improvement.",
+      "High Emotional Intelligence: Transformational leaders possess strong emotional intelligence, which allows them to understand and connect with their team members on an emotional level. They are empathetic, supportive, and skilled in managing relationships.",
+      "Lead by Example: These leaders model the behaviors, attitudes, and work ethic they expect from their team. They demonstrate integrity, commitment, and a strong sense of purpose, which inspires others to follow suit.",
+      "Encouragement of Creativity and Innovation: Transformational leaders create an environment where creativity and innovation are not only encouraged but celebrated. They allow team members to take risks and explore new ideas without fear of failure.",
+      "Individualized Consideration: They treat each team member as an individual with unique needs, strengths, and aspirations. Transformational leaders provide personalized support, coaching, and feedback to help each person reach their full potential.",
+      "Focus on Long-Term Goals: Unlike transactional leaders who focus on short-term objectives, transformational leaders are oriented toward long-term success. They prioritize strategic thinking and align their team’s efforts with the broader mission and vision.",
+      "Fostering a Positive Organizational Culture: Transformational leaders work to create a positive and inclusive culture within the organization. They promote values such as trust, collaboration, and mutual respect, which contribute to a healthy and productive work environment.",
+      "High Levels of Motivation and Morale: By connecting with their team on a deeper level and aligning individual goals with organizational objectives, transformational leaders often achieve high levels of motivation and morale among their team members.",
+      "Encouragement of Autonomy: While providing direction and support, transformational leaders encourage their team members to take ownership of their work and make decisions independently. This autonomy fosters a sense of responsibility and empowerment.",
+      "Strong Communication Skills: These leaders are effective communicators, able to convey their vision clearly and inspire others through their words. They are also good listeners, valuing input and feedback from their team."
+    ],
+    "Servant": [
+      "Prioritization of Others' Needs: Servant leaders focus on the needs and well-being of their team members before considering their own. They are committed to serving others and helping them achieve their goals.",
+      "Empathy and Compassion: They possess a deep sense of empathy, understanding, and compassion. Servant leaders actively listen to their team members, seek to understand their perspectives, and are genuinely concerned about their well-being.",
+      "Active Listening: Servant leaders practice active listening, giving their full attention to others when they speak. They ensure that everyone’s voice is heard and valued, and they use this feedback to guide their decisions.",
+      "Stewardship and Responsibility: These leaders see themselves as stewards of their organization and its people. They feel a strong sense of responsibility for the growth, development, and well-being of their team members and the organization as a whole.",
+      "Empowerment and Development: Servant leaders are dedicated to the personal and professional growth of their team members. They provide opportunities for development, encourage self-improvement, and empower others to take on leadership roles themselves.",
+      "Building Community and Collaboration: They foster a sense of community and collaboration within the team. Servant leaders encourage teamwork, mutual respect, and a shared sense of purpose, creating an inclusive and supportive environment.",
+      "Humility: Servant leaders demonstrate humility by recognizing that leadership is not about power or authority, but about serving others. They are modest, open to feedback, and willing to admit their mistakes.",
+      "Focus on Ethical Behavior and Integrity: These leaders operate with a strong ethical foundation. They model integrity, fairness, and honesty in all their actions, setting a positive example for others to follow.",
+      "Commitment to the Greater Good: Servant leaders are often driven by a commitment to a larger purpose or the greater good, whether that’s the success of the organization, the well-being of employees, or contributing positively to society.",
+      "Visionary Leadership: While servant leaders are focused on the needs of individuals, they also possess a broader vision for the organization. They guide their team toward this vision by aligning individual goals with the collective mission.",
+      "Emphasis on Healing and Growth: Servant leaders are concerned with the emotional and spiritual well-being of their team members. They aim to create a healing environment where people can thrive, recover from setbacks, and grow.",
+      "Long-Term Perspective: Servant leaders are often focused on long-term outcomes rather than short-term gains. They invest in the development of their people and the sustainability of their organization."
+    ]
+  },
+  "styleHelps": {
+    "Autocratic to Democratic": [
+      "Encourage Participation: Shift from making decisions unilaterally to involving others in the decision-making process. This could mean seeking input from team members, listening to their ideas, and incorporating their feedback into decisions.",
+      "Delegate Responsibility: Instead of closely controlling every aspect of projects, empower team members by delegating tasks and giving them more autonomy. Trusting others to take ownership fosters a sense of responsibility and initiative.",
+      "Facilitate Communication: Create an environment where open communication is valued. Encourage discussions, debates, and the sharing of diverse perspectives. This helps in gaining consensus and making informed decisions collectively.",
+      "Support Collaboration: Foster teamwork and collaboration among team members. Facilitate opportunities for joint problem-solving, brainstorming sessions, and cross-functional projects.",
+      "Adaptability and Flexibility: Be open to change and flexible in your approach. Democratic leadership often involves adapting to new ideas and adjusting plans based on collective input and evolving circumstances.",
+      "Provide Guidance: While giving more freedom and responsibility, still provide guidance and support when needed. Offer coaching, mentorship, and resources to help team members succeed.",
+      "Promote Accountability: Set clear goals and expectations, and hold team members accountable for their commitments. Establishing accountability helps maintain productivity and ensures that everyone contributes effectively.",
+      "Embrace Feedback: Encourage feedback from team members and be willing to receive constructive criticism. Use feedback as a tool for personal and organizational growth."
+    ],
+    "Autocratic to Laissez-Faire": [
+      "Loosen Control – Instead of micromanaging, give the laissez-faire individual more freedom to make decisions and manage their own work. Trust them to deliver results without constant oversight.",
+      "Encourage Self-Sufficiency – Since laissez-faire individuals prefer autonomy, provide them with the necessary resources and information but let them determine how they execute tasks.",
+      "Set Clear Expectations, Then Step Back – Outline goals, deadlines, and key performance indicators, but allow them to determine their own workflow. This ensures accountability without unnecessary interference.",
+      "Be Available, Not Overbearing – Offer guidance and support when needed, but don’t impose your involvement. Make it clear that they can reach out for help rather than forcing check-ins.",
+      "Shift to a Coaching Role – Instead of directing every move, act as a mentor or advisor. Provide occasional feedback and encouragement while allowing them to take ownership of their responsibilities.",
+      "Encourage Innovation and Independent Problem-Solving – Laissez-faire individuals often thrive when given creative freedom. Encourage them to experiment, take initiative, and bring new ideas without waiting for approval.",
+      "Respect Their Need for Flexibility – Adapt to their preference for a less structured work environment. Be open to flexible schedules or unconventional approaches to achieving results."
+    ],
+    "Autocratic to Transactional": [
+      "Clarify Roles and Expectations – Transactional individuals thrive on structure, so provide clear instructions, objectives, and performance standards. Clearly define roles and responsibilities to minimize ambiguity.",
+      "Implement a Reward-and-Consequence System – Since transactional leaders operate on a system of rewards and punishments, align your leadership with performance-based incentives, recognition, and accountability measures.",
+      "Focus on Short-Term Goals – Transactional individuals prefer clear, measurable objectives over broad, visionary goals. Break down large tasks into specific, achievable milestones with defined outcomes.",
+      "Maintain Consistency and Fairness – Be predictable and impartial when enforcing rules, rewarding achievements, and addressing issues. Transactional individuals value fairness and expect consistency in leadership.",
+      "Use Performance Metrics – Incorporate key performance indicators (KPIs), benchmarks, and progress tracking. This allows transactional individuals to measure success and adjust their efforts accordingly.",
+      "Provide Structured Feedback – Offer regular performance reviews with constructive, specific feedback. A transactional leader values direct, results-oriented discussions rather than abstract or visionary coaching.",
+      "Keep Communication Task-Oriented – Transactional individuals prefer clear, task-focused communication rather than overly collaborative discussions. Keep meetings and updates concise and centered on objectives.",
+      "Avoid Over-Controlling – While both autocratic and transactional leadership styles involve structure and authority, a transactional person expects autonomy as long as they meet agreed-upon targets. Balance oversight with independence."
+    ],
+    "Autocratic to Transformational": [
+      "Inspire Rather Than Command – Instead of simply giving orders, articulate a compelling vision and purpose. Transformational individuals are motivated by a sense of meaning and long-term impact rather than just following directives.",
+      "Encourage Innovation and Change – While autocratic leaders typically enforce established rules, transformational individuals value creativity and progress. Be open to new ideas and empower them to drive positive change.",
+      "Foster Two-Way Communication – Transformational individuals expect open dialogue rather than one-way instructions. Engage in discussions, seek their input, and consider their perspectives when making decisions.",
+      "Empower and Develop Others – Provide opportunities for personal and professional growth. Give them the freedom to lead initiatives, mentor others, and develop their leadership skills.",
+      "Shift from Control to Influence – Rather than relying on authority to enforce compliance, use motivation, encouragement, and vision-driven leadership to guide them toward shared goals.",
+      "Recognize and Reward Inspiration – Acknowledge and celebrate their efforts in driving change, motivating others, and thinking outside the box. Transformational individuals appreciate recognition for their impact.",
+      "Adapt to a Long-Term Mindset – While autocratic leaders often focus on short-term efficiency, transformational individuals emphasize long-term development and vision. Balance immediate structure with forward-thinking leadership.",
+      "Encourage Team Collaboration – While autocratic leaders tend to centralize decision-making, transformational individuals thrive in a collaborative environment. Support teamwork, brainstorming, and collective problem-solving."
+    ],
+    "Autocratic to Servant": [
+      "Adopt a Supportive Mindset – Instead of focusing solely on authority and control, prioritize helping the servant leader succeed in their mission to serve others. Provide them with the resources and backing they need.",
+      "Encourage Team-Oriented Decision-Making – While autocratic leaders often make unilateral decisions, servant leaders value input from others. Allow for more collective decision-making and seek their perspective.",
+      "Empower Them to Lead Through Service – Give them autonomy to mentor, coach, and uplift others. Recognize that their leadership style is rooted in developing people, and provide them with opportunities to do so.",
+      "Recognize Their People-First Approach – Instead of focusing only on efficiency and results, acknowledge and appreciate their commitment to team well-being, morale, and ethical leadership.",
+      "Balance Authority with Empathy – Maintain clear leadership and structure but integrate empathy and emotional intelligence into interactions. Show genuine concern for team members’ needs and growth.",
+      "Encourage a Culture of Development – Servant leaders prioritize professional and personal development. Support their efforts by investing in training, mentorship programs, and leadership opportunities.",
+      "Be Open to a More Collaborative Leadership Model – While autocratic leadership is centralized, servant leadership is decentralized. Be willing to share responsibility and delegate decision-making when appropriate.",
+      "Recognize Success Beyond Just Performance Metrics – Instead of focusing solely on efficiency and outcomes, appreciate improvements in team engagement, morale, and collaboration."
+    ],
+    "Democratic to Autocratic": [
+      "Be More Decisive – While democratic leaders value group input, an autocratic individual prefers clear, authoritative decision-making. Be prepared to make firm decisions without excessive debate when necessary.",
+      "Provide Clear Direction – Instead of relying on group discussions to shape every action, set clear expectations, rules, and goals. Autocratic individuals appreciate strong leadership with direct guidance.",
+      "Limit Excessive Collaboration – While democratic leaders emphasize teamwork, an autocratic individual may see prolonged discussions as inefficient. Focus on efficiency by streamlining meetings and decision-making processes.",
+      "Establish Strong Accountability Measures – Ensure that performance expectations, responsibilities, and consequences are clearly defined. Autocratic individuals thrive in structured environments with clear consequences for actions.",
+      "Respect Their Need for Control – Recognize that they may prefer to take charge rather than delegate authority widely. Allow them to lead in their preferred style when appropriate, while still maintaining oversight.",
+      "Adapt Communication to Be More Direct – Democratic leaders often encourage open-ended discussions, but autocratic individuals prefer direct, to-the-point communication. Keep interactions concise and results-oriented.",
+      "Maintain a Results-Driven Focus – While democratic leadership values process and collaboration, an autocratic individual is typically results-driven. Align discussions and decisions with measurable outcomes and efficiency.",
+      "Be Prepared to Enforce Rules – While democratic leadership allows flexibility, an autocratic individual expects rules to be upheld consistently. Strengthen enforcement of policies and maintain a sense of order."
+    ],
+    "Democratic to Laissez-Faire": [
+      "Give More Autonomy – Laissez-faire individuals thrive on independence. Reduce frequent check-ins and decision-making discussions, allowing them to manage their tasks with minimal oversight.",
+      "Limit Group Decision-Making – While democratic leaders value collective input, laissez-faire individuals prefer making their own choices without prolonged discussions. Provide them with the freedom to operate independently when possible.",
+      "Set Clear Expectations, Then Step Back – Define goals, deadlines, and desired outcomes upfront, but avoid micromanaging how they achieve them. Trust them to deliver results without constant supervision.",
+      "Offer Support When Needed – Laissez-faire individuals may not seek guidance often, but they should know help is available if required. Make yourself accessible rather than imposing frequent interventions.",
+      "Minimize Bureaucracy – Avoid excessive meetings, approval processes, or overly structured workflows. Streamline decision-making to match their preference for flexibility and efficiency",
+      "Encourage Self-Motivation – Since laissez-faire individuals prefer working independently, inspire them by aligning tasks with their personal interests and strengths rather than enforcing collective motivation.",
+      "Allow Flexible Work Styles – Be open to non-traditional work methods, whether it's flexible schedules, remote work, or unconventional problem-solving approaches.",
+      "Monitor Performance Without Micromanaging – Ensure accountability by measuring outcomes rather than processes. Use objective performance metrics instead of frequent check-ins."
+    ],
+    "Democratic to Transactional": [
+      "Set Clear Rules and Expectations – Transactional individuals prefer defined structures over flexible, evolving discussions. Provide clear job roles, responsibilities, and expectations from the start.",
+      "Focus on Performance and Outcomes – Unlike democratic leaders who value participation and innovation, transactional individuals prioritize efficiency and measurable success. Align discussions with tangible goals and KPIs.",
+      "Use a Reward-and-Consequence System – Transactional individuals respond well to structured incentives. Implement a system of rewards for performance and clear consequences for underperformance.",
+      "Limit Open-Ended Discussions – While democratic leadership encourages collaboration, transactional individuals may see too much discussion as inefficient. Keep meetings concise and action-driven.",
+      "Make Decisions Quickly and Efficiently – Rather than seeking broad input, focus on making prompt, results-oriented decisions. Transactional individuals appreciate direct, decisive leadership.",
+      "Structure Communication Around Tasks – Keep interactions focused on progress, deadlines, and deliverables rather than broader vision or philosophical discussions.",
+      "Enforce Accountability Rigorously – Democratic leaders often prefer team-driven accountability, but transactional individuals expect strong leadership enforcement. Regularly track progress and hold people accountable for meeting targets.",
+      "Emphasize Stability and Consistency – While democratic leaders value adaptability, transactional individuals prefer predictable workflows and processes. Maintain a stable environment with clear procedures."
+    ],
+    "Democratic to Transformational": [
+      "Encourage Big-Picture Thinking – Transformational individuals focus on vision and long-term change. Engage in discussions about broader goals, purpose, and how their work can drive meaningful impact.",
+      "Support Innovation and Risk-Taking – While democratic leaders encourage input, transformational individuals thrive on pushing boundaries. Be open to bold, unconventional ideas and provide the freedom to experiment.",
+      "Empower Them to Lead – Transformational individuals naturally inspire and influence others. Give them opportunities to take charge of initiatives, mentor team members, and drive change within the organization.",
+      "Balance Collaboration with Visionary Leadership – Democratic leaders value collective decision-making, while transformational individuals often have a strong personal vision. Encourage participation but allow them the space to drive ideas forward.",
+      "Foster a Growth-Oriented Culture – Provide opportunities for continuous learning, development, and leadership growth. Transformational individuals thrive in environments that challenge and elevate their potential.",
+      "Communicate with Energy and Purpose – Match their enthusiasm by framing discussions around motivation, passion, and the \"why\" behind tasks rather than just the \"how.\"",
+      "Be Open to Change and Adaptability – Transformational leaders often push for innovation and systemic change. Be flexible in adjusting strategies and processes to support their forward-thinking mindset.",
+      "Recognize and Celebrate Impact – Unlike transactional individuals who focus on rewards, transformational individuals seek fulfillment in making a difference. Acknowledge their influence and celebrate achievements beyond just performance metrics."
+    ],
+    "Democratic to Servant": [
+      "Encourage Their Desire to Serve – Servant leaders prioritize the needs of others. Support their efforts by allowing them to mentor, develop, and uplift team members rather than solely focusing on task completion.",
+      "Foster a People-Centered Environment – While democratic leaders value participation, servant leaders emphasize team well-being. Adapt by integrating more discussions about personal and professional growth.",
+      "Empower Them with Leadership Opportunities – Servant leaders thrive when they can support and develop others. Provide opportunities for them to take on mentorship roles and lead initiatives that benefit the team.",
+      "Balance Group Decision-Making with Ethical Leadership – Democratic leaders encourage group input, while servant leaders prioritize ethical and value-driven decisions. Align discussions with core values and long-term impact rather than just consensus.",
+      "Provide Resources for Development – Since servant leaders focus on nurturing others, ensure they have access to training, coaching, and mentorship programs that allow them to support their team effectively.",
+      "Acknowledge Their Contributions Beyond Results – Servant leaders care about relationships and team morale. Recognize their contributions in fostering a supportive, inclusive, and positive work environment.",
+      "Encourage Collaboration with a Service Mindset – While democratic leaders aim for balanced participation, servant leaders prioritize collective well-being. Support initiatives that enhance teamwork, emotional intelligence, and shared success.",
+      "Be Flexible in Leadership Roles – Servant leaders often put others before themselves. Encourage them to step forward in leadership when needed while maintaining a balance between service and authority."
+    ],
+    "Laissez-faire to Autocratic": [
+      "Provide More Structure and Guidance – Autocratic individuals prefer clear rules and expectations. Shift from a relaxed approach to one that defines roles, responsibilities, and objectives explicitly.",
+      "Be More Involved in Decision-Making – While laissez-faire leaders delegate freely, autocratic individuals expect strong leadership. Take a more active role in decision-making and provide clear directives when necessary.",
+      "Increase Accountability and Oversight – Autocratic individuals value control and efficiency. Implement stronger performance monitoring, regular check-ins, and accountability measures rather than relying on self-direction.",
+      "Establish Clear Hierarchies and Authority – Laissez-faire leadership minimizes hierarchy, but autocratic individuals prefer a clear chain of command. Adapt by reinforcing leadership authority and decision-making structures.",
+      "Limit Excessive Flexibility – While laissez-faire leaders encourage autonomy, autocratic individuals thrive in environments with rules and predictability. Reduce ambiguity and set clear policies for workflows and operations.",
+      "Use Direct and Decisive Communication – Laissez-faire leaders often take a passive communication approach, but autocratic individuals expect clear, firm, and directive messaging. Adapt by being more concise and authoritative in interactions.",
+      "Emphasize Efficiency and Results – Instead of a relaxed, hands-off approach, focus more on productivity, deadlines, and measurable outcomes that align with the autocratic individual’s results-driven mindset.",
+      "Be Prepared to Enforce Rules and Decisions – While laissez-faire leaders avoid heavy-handed management, autocratic individuals expect leaders to enforce policies consistently. Adapt by taking a more proactive stance on discipline and structure."
+    ],
+    "Laissez-faire to Democratic": [
+      "Encourage Collaboration and Input – While laissez-faire leaders often leave team members to their own devices, democratic individuals value active participation. Encourage open discussions and involve them in decision-making processes.",
+      "Create Clear Structures for Team Interaction – Laissez-faire leaders may allow too much freedom, but democratic individuals prefer clarity in how collaboration happens. Define roles and expectations for teamwork, ensuring everyone has a voice and responsibility.",
+      "Facilitate Group Decision-Making – Instead of allowing decisions to be made independently or left to chance, guide the process toward consensus-building and group participation. Foster a culture where team members can share their views and contribute to outcomes.",
+      "Provide Regular Feedback and Engagement – Laissez-faire leaders may neglect regular check-ins, but democratic individuals value ongoing feedback and engagement. Stay involved with your team, offering constructive guidance and creating space for input.",
+      "Empower Team Members While Maintaining Oversight – Laissez-faire leadership gives individuals autonomy, but democratic individuals appreciate support and shared ownership. Provide guidance while allowing them to contribute meaningfully to the process.",
+      "Foster Open Communication – Laissez-faire leaders may not prioritize structured communication, but democratic individuals thrive on open, transparent, and consistent dialogue. Make communication a priority and encourage feedback loops.",
+      "Support Development and Team Growth – While laissez-faire leaders may let individuals grow at their own pace, democratic leaders often focus on building collective capacity. Encourage skill development and teamwork in a collaborative environment.",
+      "Balance Flexibility with Responsibility – Laissez-faire leaders tend to be hands-off, but democratic individuals appreciate accountability. Allow flexibility but ensure that everyone understands their role and the collective goals of the team."
+    ],
+    "Laissez-faire to Transactional": [
+      "Set Clear Expectations and Goals – Transactional individuals thrive when clear goals and performance metrics are in place. Move from a relaxed approach to one where expectations, deadlines, and KPIs are explicitly defined and communicated.",
+      "Introduce a Reward-and-Consequence System – Laissez-faire leaders may not focus on rewards or penalties, but transactional individuals are motivated by tangible incentives. Implement a system that recognizes achievements and enforces consequences for underperformance.",
+      "Provide Regular Performance Feedback – Instead of allowing team members to work independently without much feedback, offer consistent performance reviews and feedback to ensure they stay on track with expectations.",
+      "Structure Workflows and Processes – Laissez-faire leaders allow flexibility in how work is done, but transactional individuals prefer structure and consistency. Introduce more defined processes and standard operating procedures to ensure efficiency and reliability.",
+      "Monitor Progress Closely – Laissez-faire leaders tend to avoid micromanaging, but transactional individuals may require more direct oversight to ensure they meet deadlines and adhere to guidelines. Implement regular check-ins or progress reports.",
+      "Focus on Efficiency and Results – While laissez-faire leadership focuses on autonomy, transactional individuals care about getting results quickly and efficiently. Align discussions and tasks with clear deliverables and performance outcomes.",
+      "Clarify Roles and Responsibilities – Laissez-faire leaders often provide freedom in roles, but transactional leaders expect clarity. Make sure everyone’s role is well-defined, ensuring a clear chain of responsibility and accountability.",
+      "Be More Directive When Necessary – While laissez-faire leadership allows for autonomy, transactional individuals may expect a more directive approach. Step in to offer guidance when performance dips or when clarity is needed to achieve goals."
+    ],
+    "Laissez-faire to Transformational": [
+      "Provide a Clear Vision – While laissez-faire leaders typically let individuals determine their own direction, transformational individuals thrive on purpose and long-term goals. Provide a strong, inspiring vision to align their efforts and help them see how their work contributes to the bigger picture.",
+      "Encourage Innovation and Creativity – Laissez-faire leadership allows for autonomy, but transformational individuals often push for new ideas and changes. Create an environment where innovation is celebrated and give them the space to experiment and propose new solutions.",
+      "Engage in Regular, Motivational Communication – Transformational leaders are inspired by motivation and personal growth. While laissez-faire leaders might not prioritize communication, make an effort to engage them with regular discussions about the team's goals, values, and the impact they are making.",
+      "Empower Them to Lead and Inspire – Instead of stepping back, actively empower transformational individuals by giving them leadership roles or opportunities to influence and motivate others. Provide guidance, but allow them to take the reins on initiatives that inspire change.",
+      "Support Personal and Professional Development – Laissez-faire leaders may not always offer structured growth opportunities, but transformational leaders value continuous development. Offer opportunities for learning, mentoring, and leadership development to foster their growth and align with their passion for transformation.",
+      "Create a Collaborative Environment – While laissez-faire leaders often leave individuals to their own devices, transformational individuals thrive in a collaborative atmosphere that fosters mutual support and team unity. Encourage teamwork, sharing ideas, and collective problem-solving.",
+      "Provide Constructive Feedback – Laissez-faire leaders may avoid giving feedback, but transformational leaders look for constant improvement. Provide constructive feedback on their efforts and progress toward the larger goals.",
+      "Celebrate Successes and Impact – Instead of just focusing on tasks, recognize and celebrate their contributions to transformational change. Acknowledge both the individual’s efforts and the larger impact of their work on the team or organization."
+    ],
+    "Laissez-faire to Servant": [
+      "Provide Support and Resources – Servant leaders prioritize the well-being and growth of others. Instead of taking a step back, make sure they have the resources, guidance, and emotional support needed to serve their team effectively.",
+      "Foster a People-Centered Environment – While laissez-faire leaders allow independence, servant leaders thrive in environments that prioritize the development and care of others. Shift focus from individual autonomy to the team's collective well-being and growth.",
+      "Encourage Mentorship and Coaching – Servant leaders often take on mentorship roles, helping others grow personally and professionally. Provide them with opportunities to mentor or coach others, which can align with their servant leadership values.",
+      "Be Present and Available – Laissez-faire leaders tend to be hands-off, but servant leaders value accessibility. Increase your availability to provide support and guidance when needed, without micromanaging.",
+      "Create an Inclusive, Caring Culture – Laissez-faire leadership might result in a more isolated or disengaged environment, but servant leaders thrive in cultures that emphasize inclusivity and care. Foster a culture where empathy, collaboration, and service to others are prioritized.",
+      "Empower Through Servant Leadership – Allow them to lead in a way that reflects their servant leadership values. Let them take charge of initiatives that help the team grow and succeed, whether through coaching, mentoring, or community-building.",
+      "Align Goals with Service to Others – Instead of focusing only on productivity or autonomy, ensure that the goals align with the values of helping and supporting others. Help them find meaning in tasks that contribute to the greater good of the team.",
+      "Encourage Listening and Feedback – Servant leaders are great listeners. Create space for open, two-way communication, and encourage them to listen to team members’ needs, allowing them to act as a bridge between leadership and the team."
+    ],
+    "Transactional to Autocratic": [
+      "Be More Directive and Authoritative – While transactional leadership emphasizes performance-based rewards, autocratic individuals expect clear, top-down directives. Move from a reward-based system to a more firm, authoritative decision-making process that aligns with the autocratic individual’s need for control.",
+      "Increase Control Over Processes and Outcomes – Autocratic leaders value order and structure, while transactional leaders focus on results. Adapt by tightening control over processes, establishing clearer rules, and enforcing strict accountability without much room for negotiation or deviation.",
+      "Minimize Focus on Rewards and Penalties – Transactional leadership thrives on a system of rewards and consequences, but an autocratic leader prefers to impose authority directly. Move away from incentives and instead emphasize clear consequences for adherence to authority and performance standards.",
+      "Maintain Clear Chains of Command – While transactional leadership can involve collaboration within defined systems, autocratic leaders expect a strict hierarchy. Ensure roles and responsibilities are explicitly defined, with little room for input from lower levels of the hierarchy.",
+      "Limit Open-Ended Discussions – Transactional leaders often promote feedback and discussion; however, autocratic individuals typically prefer decisive, unilateral decisions. Reduce group discussions and focus more on clear directives and expectations.",
+      "Implement Tight Oversight – Transactional leaders typically monitor performance through agreed-upon metrics, but autocratic individuals prefer constant supervision and direct control. Increase oversight and provide firm instructions on how to perform tasks, with minimal autonomy.",
+      "Set Clear, Non-Negotiable Expectations – Unlike transactional leadership’s flexibility, autocratic individuals expect rigid adherence to standards. Communicate expectations with little room for debate or adjustments, reinforcing the importance of following established rules.",
+      "Provide Less Flexibility – Autocratic leaders prefer rigid structures and rules. Adapt by focusing less on flexibility or adapting to individual needs and more on strict adherence to protocols, procedures, and rules."
+    ],
+    "Transactoinal to Democratic": [
+      "Encourage Participation and Input – Transactional leaders focus on rewards and penalties based on performance, but democratic individuals value collaboration. Adapt by actively involving them in decision-making processes and seeking their input on key initiatives.",
+      "Foster a Team-Oriented Environment – Transactional leaders tend to emphasize individual performance, but democratic individuals thrive in team-oriented settings. Create more opportunities for group collaboration and collective goal setting.",
+      "Provide Opportunities for Shared Leadership – Democratic leaders value shared responsibility and decision-making. Instead of dictating how things should be done, give them the freedom to take on leadership roles or contribute to team decisions.",
+      "Value Group Consensus – While transactional leadership relies on clear rewards for individual outcomes, democratic individuals prefer to reach decisions based on group consensus. Shift from a top-down approach to a more inclusive decision-making process.",
+      "Focus on Team Development and Empowerment – Transactional leaders focus on performance metrics, but democratic individuals prioritize empowerment and growth. Provide more opportunities for skill development and team-building activities.",
+      "Be Open to Feedback and Discussion – Transactional leaders tend to give structured feedback based on performance outcomes, but democratic individuals appreciate open discussions and feedback loops. Create an environment where feedback is exchanged regularly, and everyone’s voice is heard.",
+      "Create Clear but Flexible Guidelines – While transactional leadership can be rigid with rules and expectations, democratic individuals appreciate flexibility. Set clear goals and expectations but allow room for the team to determine the best way to achieve them.",
+      "Acknowledge Collective Success – Transactional leadership often highlights individual accomplishments tied to rewards, but democratic individuals prefer collective recognition. Celebrate team achievements and emphasize the value of working together toward common goals."
+    ],
+    "Transactional to Laissez-faire": [
+      "Allow More Autonomy – Transactional leaders typically set clear expectations and consequences, but laissez-faire individuals prefer minimal supervision. Provide them with the freedom to manage their own tasks and make decisions, while still ensuring key goals are met.",
+      "Focus on Outcomes Over Processes – While transactional leadership often involves detailed monitoring of processes, laissez-faire individuals thrive when they have the freedom to choose their own methods. Shift focus from the \"how\" to the \"what\"—emphasize results and outcomes rather than rigid adherence to processes.",
+      "Reduce Micromanagement – Transactional leaders tend to monitor performance closely, but laissez-faire individuals may feel stifled by constant oversight. Give them more space to work independently, checking in periodically instead of frequently monitoring their every move.",
+      "Provide Clear Expectations Without Over-Interference – Laissez-faire individuals appreciate freedom, but still need clarity around goals. Set clear expectations but step back to allow them to approach the work on their own terms. Avoid imposing excessive structure.",
+      "Encourage Self-Motivation and Responsibility – Transactional leadership relies on external motivators like rewards and penalties, but laissez-faire individuals often rely on intrinsic motivation. Foster an environment where they feel responsible for their own success and encourage self-driven goals.",
+      "Be More Flexible with Accountability – Transactional leaders typically impose strict accountability measures, but laissez-faire individuals may resist rigid control. While still ensuring they are accountable for outcomes, consider a more flexible approach, focusing on trust and self-regulation.",
+      "Provide Support When Needed – Laissez-faire individuals value independence, but they still need support when challenges arise. Instead of actively guiding them, offer assistance when requested or when it’s clear they need direction.",
+      "Encourage Innovation and Personal Initiative – Transactional leaders typically enforce consistency, but laissez-faire individuals value creativity and personal initiative. Encourage innovation and provide the space for them to explore new ideas, allowing them to take risks without fear of punishment."
+    ],
+    "Transactoinal to Transformational": [
+      "Encourage a Vision-Oriented Approach – While transactional leaders focus on short-term goals and results, transformational leaders thrive on inspiring others with a bigger vision. Engage them in discussions about the long-term direction and the broader impact of their work, fostering a sense of purpose beyond just tasks and rewards.",
+      "Provide Opportunities for Innovation – Transactional leadership is often about maintaining established processes, but transformational individuals are driven by creativity and change. Give them the space to innovate, try new approaches, and challenge the status quo in ways that align with broader team or organizational goals.",
+      "Incorporate Personal and Professional Growth – Transactional leaders typically focus on meeting specific targets, but transformational leaders are motivated by personal development and the development of those around them. Provide opportunities for continuous learning, mentorship, and leadership growth.",
+      "Align Rewards with Meaningful Impact – Transactional leadership uses external rewards like bonuses or promotions to motivate performance, but transformational leaders are more inspired by intrinsic rewards, such as recognition for contributing to meaningful change. Focus on recognizing their contributions to team development, innovation, and positive impact rather than just performance metrics.",
+      "Foster a Collaborative Environment – Transactional leadership often focuses on individual performance, but transformational leaders value teamwork and collective success. Encourage collaboration, shared goals, and mutual support, while allowing them to take on leadership roles within the team to inspire others.",
+      "Be Open to Feedback and New Ideas – Transactional leaders may stick to established methods, but transformational individuals thrive in environments that encourage continuous feedback and idea generation. Create a culture of openness, where their ideas for improvement are welcomed and can lead to positive change.",
+      "Inspire Through Example – Transactional leadership often relies on rules and rewards to drive performance, but transformational leaders are inspired by strong, ethical leadership. Lead by example, showing integrity, commitment to growth, and passion for the team’s vision.",
+      "Emphasize Long-Term Relationships – While transactional leadership is often focused on achieving specific tasks, transformational leaders value long-term relationships built on trust and respect. Shift from short-term transactional exchanges to building deeper, more meaningful connections within the team."
+    ],
+    "Transactional to Servant": [
+      "Focus on the Well-Being and Development of Others – Transactional leaders typically focus on meeting specific goals and rewards, while servant leaders prioritize the growth and well-being of those around them. Shift the focus from individual performance to creating an environment where the team’s needs and development are prioritized.",
+      "Support the Team’s Needs – While transactional leadership emphasizes individual rewards based on performance, servant leaders focus on meeting the needs of others. Adapt by ensuring that resources and support are available for the team’s personal and professional growth, and make the team’s welfare a priority.",
+      "Provide Opportunities for Coaching and Mentorship – Transactional leadership is often task-oriented, but servant leaders are motivated by a desire to help others grow. Offer the opportunity for mentorship and coaching, where the servant leader can guide others in their development, while still ensuring that results are met.",
+      "Encourage a Servant Leadership Approach – Servant leaders emphasize humility, service, and collaboration. Provide space for them to lead by example, encouraging their ability to serve others and put the needs of the team first, rather than focusing only on performance outcomes.",
+      "Value Compassion and Empathy in Decision-Making – Transactional leaders may focus on pragmatic, outcome-oriented decisions, but servant leaders value compassion and empathy. Consider the emotional and personal needs of the team when making decisions, and demonstrate understanding and care.",
+      "Empower Through Service and Recognition – Transactional leaders typically reward results with tangible incentives, but servant leaders feel empowered by service and recognition of their efforts to help others. Recognize and appreciate their contributions to the team’s success, focusing on the positive impact they have on others, not just individual results.",
+      "Incorporate Team Collaboration – While transactional leadership often encourages individual performance, servant leaders thrive in collaborative, team-focused environments. Shift the approach to emphasize teamwork and collective success, where the leader facilitates collaboration and the team works together toward shared goals.",
+      "Emphasize Ethical Leadership and Integrity – Transactional leadership often focuses on efficiency and task completion, but servant leaders value integrity, ethics, and selflessness. Adapt by focusing more on ethical decision-making, modeling integrity, and placing emphasis on serving others in the process."
+    ],
+    "Transformational to Autocratic": [
+      "Clarify Expectations and Authority – While transformational leaders focus on empowerment and self-direction, autocratic individuals expect clear authority and direction. Provide specific guidelines and expectations, ensuring that the autocratic individual understands their role and the tasks they are expected to oversee without ambiguity.",
+      "Offer Clear and Direct Decisions – Transformational leadership often involves collaboration and consensus-building, but autocratic leaders value decisive and unilateral decision-making. Adapt by being more authoritative when making decisions, offering clear directives, and avoiding excessive debate.",
+      "Ensure Structure and Control – Autocratic individuals prefer strong structure and control, whereas transformational leaders often encourage flexibility. Adapt by establishing clear processes and procedures that minimize ambiguity, and be willing to impose tighter control over how things are done.",
+      "Focus on Task Completion and Results – Transformational leaders often emphasize the personal growth and inspiration of individuals, while autocratic leaders prioritize task completion and results. Shift the focus toward ensuring that tasks are being accomplished efficiently and in line with specific, measurable outcomes.",
+      "Respect Hierarchy and Chain of Command – Transformational leaders may encourage open dialogue and shared decision-making, but autocratic individuals thrive in environments where authority is respected and clear. Be mindful of maintaining a strong, defined hierarchy and chain of command, ensuring that roles and responsibilities are clearly outlined.",
+      "Minimize Emphasis on Personal Growth – While transformational leadership emphasizes personal growth and self-actualization, autocratic leaders tend to focus more on performance. Adjust by placing less emphasis on the individual's development and more on the completion of tasks and achieving organizational goals.",
+      "Provide Clear Boundaries and Limitations – Transformational leaders often encourage creativity and flexibility, but autocratic individuals prefer clear boundaries. Establish rules, guidelines, and limits to help them stay within defined parameters.",
+      "Adapt Feedback Approach – Transformational leaders often provide broad, motivating feedback aimed at personal growth, while autocratic leaders prefer concise, performance-based feedback. Adjust by providing clear, direct feedback that focuses on meeting goals and expectations, with less emphasis on motivation or inspiration."
+    ],
+    "Transformational to Democratic": [
+      "Encourage More Group Involvement – While transformational leaders tend to inspire individuals and focus on personal growth, democratic individuals value teamwork and consensus-building. Adapt by encouraging group involvement in decision-making, seeking input from everyone, and fostering a collective approach to goal-setting.",
+      "Promote Collaboration and Team Decision-Making – Transformational leaders often lead with a vision, while democratic leaders thrive in environments where everyone's opinions are valued. Ensure that decisions are made collaboratively, allowing the democratic individual to actively participate in discussions and ensure the team has a voice in the process.",
+      "Provide Room for Shared Leadership – Transformational leaders often take a charismatic role, inspiring others to follow their lead. However, democratic individuals value shared leadership and distributed responsibility. Encourage leadership opportunities for the democratic individual, allowing them to take charge of initiatives and contribute to the direction of the team.",
+      "Focus on Empowering the Team – Transformational leaders emphasize individual empowerment and growth, but democratic individuals are motivated by empowering the group as a whole. Adapt by ensuring that everyone on the team has a voice, encouraging participation, and fostering an environment where collaboration and mutual respect are prioritized.",
+      "Create Open Dialogue and Feedback Loops – While transformational leadership may involve inspiring individuals through big-picture vision and motivation, democratic leaders often focus on feedback and communication. Create open channels for feedback, fostering dialogue where everyone can contribute their ideas, concerns, and opinions.",
+      "Respect and Balance Different Opinions – Democratic individuals value diverse perspectives and respect others' opinions. In contrast to transformational leadership, which can be very vision-driven, make sure to create an environment where differing ideas are welcomed and balanced, ensuring everyone feels heard.",
+      "Support Team-Driven Goals – Transformational leaders focus on vision and long-term impact, but democratic individuals prioritize team-driven goals and shared success. Adapt by ensuring the goals are created with input from the whole team and that the focus is on collective achievement rather than individual accolades.",
+      "Be More Collaborative in Problem-Solving – Transformational leaders often present solutions as part of their vision for change. For someone who is democratic, be more inclusive in the problem-solving process. Work together with them to explore various options, allowing the democratic individual to contribute and collaborate on finding the best solutions."
+    ],
+    "Transformational to Laissez-Faire": [
+      "Provide Autonomy with Clear Direction – While transformational leaders often provide inspiration and detailed direction, laissez-faire individuals prefer more freedom in how they approach their work. Adapt by giving them the autonomy they need but still providing a clear vision and end goal so they understand the direction without micromanagement.",
+      "Reduce Micromanagement – Transformational leaders can sometimes over-involve themselves in guiding and motivating their team members. For someone who is laissez-faire, minimize hands-on supervision and create space for them to take ownership of their tasks and find their own solutions.",
+      "Encourage Independent Problem-Solving – Transformational leadership often involves guiding individuals through challenges and offering motivational support. For a laissez-faire individual, encourage them to tackle problems on their own and only step in when necessary, allowing them to use their creativity and initiative without feeling restricted.",
+      "Foster a Trust-Based Relationship – Laissez-faire individuals thrive in environments where they feel trusted to work independently. Adapt by demonstrating trust in their abilities and refraining from excessive oversight, instead focusing on the results they produce and offering support when needed.",
+      "Emphasize Results Over Processes – Transformational leaders tend to focus on the process of change, innovation, and personal growth. For someone more laissez-faire, shift your emphasis toward the end results and the impact of their work, rather than focusing on the steps or methods used to achieve those results.",
+      "Provide Flexibility in Execution – While transformational leaders often have a clear vision and strategy, laissez-faire individuals are motivated by flexibility and independence. Allow them to find their own ways to contribute to the overall mission, while ensuring the broader vision is still aligned with the goals.",
+      "Be Available for Support When Needed – Laissez-faire individuals prefer to work independently but may still require occasional guidance. Instead of offering constant feedback, make yourself available as a resource when they need it, offering guidance and support only when asked.",
+      "Encourage Self-Motivation – Transformational leaders often inspire others through enthusiasm and vision, but laissez-faire individuals typically rely on their own intrinsic motivation. Focus on encouraging self-driven progress, rather than constantly providing external motivation or guidance."
+    ],
+    "Transformational to Transactional": [
+      "Clarify Expectations and Rewards – Transactional leaders thrive on clear guidelines, rewards, and penalties based on performance. While transformational leaders focus on inspiring long-term change, adapt by setting specific, measurable goals and providing clear expectations for how success is to be achieved, along with associated rewards or consequences.",
+      "Focus on Short-Term Results – Transformational leadership emphasizes big-picture vision and long-term impact, while transactional leadership is more focused on short-term performance and efficiency. Shift your focus to highlight immediate results and operational goals, aligning with the transactional individual’s need for tangible, short-term outcomes.",
+      "Provide Structure and Order – While transformational leaders encourage creativity and flexibility, transactional leaders prefer structure and consistency. Adapt by offering a more structured environment, with well-defined processes, rules, and procedures to ensure that performance standards are met efficiently.",
+      "Emphasize Accountability and Performance Metrics – Transformational leaders often rely on inspiring intrinsic motivation, but transactional leaders are driven by extrinsic rewards. Adapt by regularly reviewing performance metrics and holding individuals accountable for meeting set expectations, providing both positive reinforcement for success and corrective feedback when needed.",
+      "Be More Directive and Task-Oriented – While transformational leadership encourages empowerment and autonomy, transactional leaders often prefer clear directions and task-oriented goals. Provide specific instructions on how tasks should be completed, and focus on ensuring that tasks are done correctly and efficiently, with little ambiguity in how to achieve success.",
+      "Reinforce Rules and Procedures – Transactional leadership thrives on systems, rules, and compliance. Adapt by reinforcing the importance of following established procedures and adhering to guidelines, ensuring that performance is in line with organizational expectations.",
+      "Focus on Reward Systems – While transformational leaders focus on intrinsic motivation and personal growth, transactional leaders are more motivated by external rewards. Shift by incorporating clear reward systems tied to performance, such as bonuses, recognition, or promotions based on measurable achievements.",
+      "Address Performance Challenges Directly – Transactional leaders often deal directly with performance issues through clear consequences. If challenges arise, be prepared to offer direct feedback and corrective actions, focusing on resolving performance gaps rather than offering motivational speeches or vision-based inspiration."
+    ],
+    "Transformatoinal to Servant": [
+      "Focus on Serving the Team's Needs – While transformational leadership emphasizes inspiring individuals and pushing for big-picture goals, servant leaders prioritize the needs of others. Adapt by focusing more on understanding and addressing the needs and concerns of the team, ensuring their well-being and personal development are prioritized.",
+      "Emphasize Collaborative Leadership – Transformational leaders often take a central role in driving vision and change, while servant leaders encourage shared leadership and empower others. Adapt by providing more space for collaborative decision-making, involving the servant leader in discussions and initiatives that emphasize serving others.",
+      "Encourage Humility and Selflessness – Servant leaders value humility, selflessness, and putting others first. Transformational leaders often lead with bold, visionary ideas and strong charisma. Adapt by emphasizing the importance of humility and serving the team, and demonstrate this value through your actions as a leader, showing that you’re willing to put others’ needs above your own.",
+      "Support the Personal Growth of Others – While transformational leadership is about inspiring growth in individuals, servant leaders take a more direct role in fostering others' development. Focus more on providing opportunities for the servant-oriented individual to mentor and develop others, supporting their desire to help and guide those around them.",
+      "Listen Actively and Empathetically – Servant leaders are skilled listeners who focus on understanding the concerns of others. While transformational leaders are typically focused on inspiring and motivating, adapt by taking time to actively listen to the servant-oriented individual, valuing their input, and addressing their concerns with empathy and understanding.",
+      "Foster a Culture of Empowerment and Service – Transformational leaders may drive change through individual passion and vision, but servant leaders empower others through service. Adapt by fostering a culture where the success of the team and the service to others is prioritized, encouraging everyone, including the servant-oriented individual, to focus on collective well-being.",
+      "Create an Environment of Trust and Support – Servant leaders thrive in environments where trust, support, and community are present. Transformational leaders often inspire through big ideas, but you can adapt by focusing on creating an environment where trust and care for others are central, providing support and guidance when needed.",
+      "Balance Personal Vision with Team-Oriented Goals – While transformational leadership often emphasizes personal vision, servant leadership puts a strong focus on team goals and the success of others. Adapt by ensuring that your vision aligns with the well-being and success of the team, making sure that everyone’s contributions are valued and recognized."
+    ],
+    "Servant to Autocratic": [
+      "Clarify Roles and Responsibilities – While servant leadership emphasizes shared decision-making and empowerment, autocratic individuals expect clear roles and a defined hierarchy. Adapt by clearly defining roles and responsibilities, and ensure that the autocratic individual understands their authority and scope of decision-making.",
+      "Provide Clear, Decisive Direction – Servant leaders often lead by consensus and collaboration, whereas autocratic leaders prefer direct, authoritative decisions. Adapt by offering more clear, directive guidance when needed, giving the autocratic individual a sense of control and certainty about the decisions and direction of the team.",
+      "Minimize Debate and Focus on Efficiency – Servant leaders thrive in environments where open dialogue and input are encouraged. However, autocratic individuals value efficiency and quick decision-making. Adapt by reducing lengthy discussions and providing more concise, straightforward solutions to ensure timely action.",
+      "Respect Hierarchy and Authority – Servant leaders prioritize serving others and may blur traditional lines of authority to empower individuals. Autocratic leaders, on the other hand, expect a clear hierarchy and respect for their authority. Adapt by showing respect for their leadership and authority, and avoid challenging their control or decisions directly.",
+      "Align Goals with Structured Outcomes – While servant leadership emphasizes the development and well-being of individuals, autocratic leadership is more focused on task completion and structured outcomes. Adapt by ensuring that goals are well-defined, specific, and measurable, with a focus on meeting objectives efficiently and effectively.",
+      "Be More Results-Oriented – Servant leaders often focus on the personal growth of others, but autocratic leaders are driven by achieving results. Adapt by emphasizing task completion and performance, focusing on how the team can meet its goals quickly and with precision, rather than on individual development or empowerment.",
+      "Provide Frequent Performance Monitoring – Autocratic leaders tend to monitor performance closely, while servant leaders are more hands-off. Adapt by offering more frequent check-ins or performance reviews to ensure that the autocratic individual feels confident in their ability to evaluate the team’s progress and enforce standards.",
+      "Limit Empowerment in Decision-Making – Servant leaders often encourage individuals to take ownership and make decisions. However, autocratic individuals prefer having control over decisions. Adapt by stepping back in situations where the autocratic individual needs to assert control, limiting shared decision-making and giving them more authority to lead without interference."
+    ],
+    "Servant to Democratic": [
+      "Encourage More Team Involvement in Decision-Making – Servant leadership often prioritizes the leader’s support and the needs of the team members, but democratic individuals thrive in environments where decision-making is a collective process. Adapt by involving them in discussions and decisions more actively, ensuring that their desire for collaboration is met by seeking input from the entire team.",
+      "Support a Collaborative Leadership Style – While servant leaders emphasize serving the needs of the team, democratic leaders often value shared leadership and equal participation. Adapt by facilitating more opportunities for the democratic individual to take the lead or co-lead initiatives, and involve them in discussions that require team-wide cooperation.",
+      "Foster Open Communication and Feedback – Servant leaders are attuned to the needs of individuals, but democratic leaders focus on ensuring that everyone’s voice is heard. Adapt by prioritizing open channels for communication, making sure that there is space for dialogue, feedback, and contributions from everyone in the team, and emphasizing the value of diverse opinions.",
+      "Balance Individual Support with Collective Responsibility – Servant leadership is often centered on individual growth and well-being, while democratic leadership emphasizes shared responsibility and consensus. Adapt by ensuring that the focus remains on the collective success of the team, encouraging collaboration without losing sight of individual growth, while offering support to help achieve shared goals.",
+      "Encourage Equal Participation in Problem-Solving – Democratic leaders are driven by the idea that everyone should have a say in how problems are addressed. While servant leaders may focus more on supporting individual contributions, adapt by encouraging the democratic individual to actively engage others in problem-solving and decision-making processes, fostering a sense of team ownership.",
+      "Provide Opportunities for Consensus-Building – Servant leaders often guide by example and empower individuals, but democratic leaders value consensus and mutual agreement. Adapt by taking more time to build consensus on decisions, allowing the democratic individual to help facilitate discussions that align everyone’s interests and foster unity in decision-making.",
+      "Acknowledge the Importance of Team Harmony and Cooperation – Servant leaders are typically focused on individuals’ well-being, but democratic leaders focus on maintaining team cohesion and cooperation. Adapt by prioritizing team harmony in decision-making, ensuring that everyone feels included and that decisions are made with the group’s best interest in mind.",
+      "Allow Flexibility in Leadership – While servant leadership emphasizes meeting the needs of others and providing direction, democratic individuals are more comfortable in environments where leadership is shared or fluid. Adapt by allowing the democratic individual to take more initiative and leadership responsibility, shifting between roles depending on team needs and the situation."
+    ],
+    "Servant to Laissez-Faire": [
+      "Provide Clear Expectations with Minimal Supervision – Servant leaders focus heavily on providing support and nurturing individual growth, but laissez-faire individuals typically prefer working autonomously. Adapt by setting clear expectations and goals, but avoid micromanaging. Allow them the freedom to take ownership of their tasks while ensuring they understand the desired outcomes.",
+      "Allow Greater Autonomy – Laissez-faire individuals thrive when they have the freedom to work without interference. Adapt by stepping back and giving them the space to make decisions and work independently, while providing guidance and support only when necessary or requested.",
+      "Be Available for Support, Not Overbearing – While servant leaders tend to be highly involved in supporting team members, laissez-faire individuals value independence. Adapt by offering yourself as a resource when needed but avoid over-involvement. Be approachable and available for help, but give them the freedom to approach challenges in their own way.",
+      "Focus on Outcomes Rather Than Processes – Servant leadership often emphasizes the process, growth, and collaboration, but laissez-faire individuals tend to focus more on the results rather than the methods used. Adapt by ensuring that they have the freedom to find their own solutions, while still checking in on whether the outcomes are being achieved and aligning with the bigger goals.",
+      "Encourage Self-Leadership and Accountability – Servant leaders are typically hands-on in guiding and empowering their team members. For someone who is laissez-faire, encourage them to take on a leadership role over their tasks, setting their own priorities and schedules. Foster a sense of responsibility and self-motivation rather than providing detailed instructions.",
+      "Set Boundaries and Encourage Focus – Laissez-faire individuals can sometimes lack structure or focus, as they often have the freedom to work without clear constraints. Adapt by setting clear boundaries for deadlines and outcomes, while still allowing them the freedom to decide how they achieve their goals.",
+      "Be Flexible in Your Support – Servant leadership emphasizes nurturing the development of individuals, but laissez-faire individuals tend to work best when they have control over their work. Adapt by being flexible in how you provide support, offering tailored solutions when needed but respecting their need for space and independence.",
+      "Balance Freedom with Team Goals – Laissez-faire individuals may sometimes focus on their individual tasks and overlook the broader team objectives. Adapt by gently reminding them of the team’s overall goals and vision, encouraging them to align their work with the collective purpose, while still respecting their autonomy in how they contribute."
+    ],
+    "Servant to Transactional": [
+      "Clarify Expectations and Reward Systems – While servant leaders focus on nurturing and supporting individuals, transactional leaders prefer clear goals and rewards tied to specific outcomes. Adapt by setting specific, measurable goals for the individual and outlining the rewards or consequences tied to their performance.",
+      "Provide Structure and Process – Servant leadership tends to be flexible and responsive to the team’s needs, but transactional leadership values structure and consistency. Adapt by establishing clear processes and frameworks to ensure the individual knows what is expected and how to achieve their objectives within a set structure.",
+      "Focus on Short-Term Goals and Immediate Results – Transactional leaders are more concerned with short-term results and performance, whereas servant leaders tend to focus on long-term development. Adapt by emphasizing immediate, task-oriented goals and how they will be measured, ensuring that progress is visible and recognized along the way.",
+      "Emphasize Accountability – While servant leaders are often focused on providing support and addressing individual needs, transactional leaders are motivated by external rewards and performance metrics. Adapt by setting up regular check-ins to review progress, ensure that goals are being met, and hold the individual accountable for their performance.",
+      "Use Clear, Direct Communication – Servant leaders often prioritize empathy and understanding, whereas transactional leaders prefer clear, straightforward communication. Adapt by being more direct when communicating expectations and feedback, ensuring that there is no ambiguity in your discussions about performance and results.",
+      "Recognize and Reward Performance – Transactional leaders value recognition based on measurable achievements. While servant leaders emphasize the growth and development of others, adapt by recognizing the transactional individual’s performance through specific rewards, bonuses, or acknowledgment tied to their results, providing external validation for their efforts.",
+      "Maintain Consistency in Standards – Transactional leadership thrives on consistency and adherence to rules. Servant leaders, who are more flexible and empathetic, should adapt by ensuring that the standards, rules, and expectations remain consistent, reinforcing the importance of adherence to guidelines and established processes.",
+      "Provide Feedback Based on Performance Metrics – While servant leaders focus on emotional well-being and personal growth, transactional leaders are more focused on performance and measurable outcomes. Adapt by offering feedback that is rooted in concrete performance metrics, ensuring that the individual knows exactly how their performance impacts the team or organization."
+    ],
+    "Servant to Transformational": [
+      "Empower with a Shared Vision – While servant leaders focus on serving others and ensuring their well-being, transformational leaders are driven by big-picture visions and motivating others to achieve ambitious goals. Adapt by aligning the team’s individual needs with the broader vision, ensuring that the transformational leader feels empowered to inspire others toward long-term change.",
+      "Encourage Innovation and Creativity – Servant leaders often support their team by addressing personal and professional needs, but transformational leaders thrive on innovation and new ideas. Adapt by providing more freedom and opportunities for the transformational leader to experiment, introduce creative solutions, and lead efforts to innovate and drive change.",
+      "Support Personal and Professional Growth – Both servant and transformational leadership styles value growth, but while servant leaders focus on the well-being and development of individuals, transformational leaders focus on helping others realize their potential in alignment with the vision. Adapt by emphasizing the transformational leader’s role in inspiring others and supporting their growth through leadership opportunities.",
+      "Foster a Culture of Change and Adaptability – Servant leaders are often focused on stability and nurturing relationships, but transformational leaders thrive in environments where change is constant. Adapt by fostering a culture that embraces continuous learning and adaptability, encouraging the transformational leader to challenge the status quo and drive positive transformation.",
+      "Align Support with Vision-Driven Leadership – While servant leaders focus on addressing the immediate needs of individuals, transformational leaders are focused on long-term, transformational goals. Adapt by providing support in a way that aligns with the transformational leader's vision, ensuring that any resources or guidance given are framed within the context of driving change and achieving broader objectives.",
+      "Encourage Inspirational Leadership – Transformational leaders inspire others with their vision and passion. As a servant leader, adapt by fostering an environment where the transformational leader can express their ideas, encourage enthusiasm, and motivate others to follow their lead. Provide them with the space to inspire others, while supporting them in their journey.",
+      "Balance Support with Challenges for Growth – Servant leadership tends to be more focused on providing support and addressing needs, while transformational leaders often grow through challenges and pushing boundaries. Adapt by offering opportunities for the transformational leader to stretch their limits and take on challenges that will help them grow, while still being available for support when needed.",
+      "Provide Recognition for Impact and Influence – Transformational leaders are often driven by the impact they can have on others and the organization. While servant leadership is more focused on process and individual needs, adapt by acknowledging and recognizing the transformational leader’s influence on others, the positive change they’re driving, and their ability to motivate and inspire the team."
+    ]
+  }
+}

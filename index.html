@@ -1,0 +1,112 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Leadership Assessment</title>
+    <link rel="stylesheet" href="styles.css">
+  </head>
+  <body>
+    <main class="app-shell">
+      <aside class="sidebar" aria-label="Assessment progress">
+        <div>
+          <p class="eyebrow">Leadership Assessment</p>
+          <h1>Find your strongest leadership style.</h1>
+        </div>
+
+        <div class="progress-panel">
+          <div class="progress-label">
+            <span id="progressText">Question 1</span>
+            <span id="progressPercent">0%</span>
+          </div>
+          <div class="progress-track" aria-hidden="true">
+            <div id="progressBar" class="progress-bar"></div>
+          </div>
+        </div>
+
+        <nav class="dimension-list" aria-label="Leadership dimensions">
+          <button class="dimension-pill active" data-style="Transformational">Transformational</button>
+          <button class="dimension-pill" data-style="Transactional">Transactional</button>
+          <button class="dimension-pill" data-style="Servant">Servant</button>
+          <button class="dimension-pill" data-style="Autocratic">Autocratic</button>
+          <button class="dimension-pill" data-style="Charismatic">Charismatic</button>
+          <button class="dimension-pill" data-style="Democratic">Democratic</button>
+          <button class="dimension-pill" data-style="Laissez-Faire">Laissez-Faire</button>
+          <button class="dimension-pill" data-style="Situational">Situational</button>
+        </nav>
+      </aside>
+
+      <section class="workspace">
+        <section id="assessmentView" class="assessment-view" aria-live="polite">
+          <div class="question-meta">
+            <span id="dimensionLabel">Clarity</span>
+            <span id="questionCounter">1 / 18</span>
+          </div>
+          <h2 id="questionText"></h2>
+          <p id="questionHelp" class="question-help"></p>
+
+          <fieldset class="rating-group" aria-label="Response options">
+            <legend>Choose the statement that fits best.</legend>
+            <button class="rating-option" data-value="1" type="button">
+              <span>Strongly Disagree</span>
+              <small>This does not describe me.</small>
+            </button>
+            <button class="rating-option" data-value="2" type="button">
+              <span>Disagree</span>
+              <small>This is usually not true.</small>
+            </button>
+            <button class="rating-option" data-value="3" type="button">
+              <span>Neutral</span>
+              <small>It depends on the situation.</small>
+            </button>
+            <button class="rating-option" data-value="4" type="button">
+              <span>Agree</span>
+              <small>This is usually true.</small>
+            </button>
+            <button class="rating-option" data-value="5" type="button">
+              <span>Strongly Agree</span>
+              <small>This strongly describes me.</small>
+            </button>
+          </fieldset>
+
+          <div class="actions">
+            <button id="backButton" class="icon-button" type="button" aria-label="Previous question" title="Previous question">
+              <span aria-hidden="true">←</span>
+            </button>
+            <button id="nextButton" class="primary-button" type="button" disabled>Next</button>
+          </div>
+        </section>
+
+        <section id="resultsView" class="results-view hidden" aria-live="polite">
+          <div class="results-header">
+            <div>
+              <p class="eyebrow">Your Leadership Profile</p>
+              <h2 id="profileTitle"></h2>
+            </div>
+            <div class="score-ring" aria-label="Overall score">
+              <span id="overallScore">0</span>
+              <small>/100</small>
+            </div>
+          </div>
+
+          <p id="profileSummary" class="profile-summary"></p>
+
+          <div id="dimensionScores" class="score-grid"></div>
+
+          <section class="recommendation-panel">
+            <h3>Style Detail</h3>
+            <div id="recommendations" class="recommendations"></div>
+          </section>
+
+          <div class="actions results-actions">
+            <button id="restartButton" class="secondary-button" type="button">Retake</button>
+            <button id="copyButton" class="primary-button" type="button">Copy Summary</button>
+          </div>
+        </section>
+      </section>
+    </main>
+
+    <script src="data/leadership-assessment.js"></script>
+    <script src="app.js"></script>
+  </body>
+</html>
