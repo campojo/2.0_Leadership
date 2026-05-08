@@ -165,6 +165,31 @@ h2 {
   line-height: 1.6;
 }
 
+.instruction-list {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 14px;
+  margin-top: 30px;
+}
+
+.instruction-list article {
+  padding: 18px;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  background: #fbfcfa;
+}
+
+.instruction-list h3 {
+  margin: 0 0 8px;
+  font-size: 1rem;
+}
+
+.instruction-list p {
+  margin: 0;
+  color: var(--muted);
+  line-height: 1.5;
+}
+
 .rating-group {
   display: grid;
   grid-template-columns: repeat(5, minmax(0, 1fr));
@@ -442,6 +467,7 @@ h2 {
   }
 
   .rating-group,
+  .instruction-list,
   .score-grid {
     grid-template-columns: 1fr;
   }

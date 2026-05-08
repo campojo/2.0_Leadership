@@ -78,12 +78,15 @@ const questionBank = [...sourceData.questions, ...derivedQuestions];
 const state = {
   currentQuestion: null,
   selectedValue: null,
-  asked: [],
+  started: false,
+  currentIndex: 0,
+  questionHistory: [],
   answers: [],
   pendingQueue: [],
   complete: false
 };
 
+const startView = document.querySelector("#startView");
 const assessmentView = document.querySelector("#assessmentView");
 const resultsView = document.querySelector("#resultsView");
 const progressText = document.querySelector("#progressText");
@@ -102,6 +105,7 @@ const profileSummary = document.querySelector("#profileSummary");
 const overallScore = document.querySelector("#overallScore");
 const dimensionScores = document.querySelector("#dimensionScores");
 const recommendations = document.querySelector("#recommendations");
+const startButton = document.querySelector("#startButton");
 const restartButton = document.querySelector("#restartButton");
 const copyButton = document.querySelector("#copyButton");
 
@@ -127,8 +131,66 @@ function shuffle(items) {
   return copy;
 }
 
-function styleKey(style) {
-  return style.toLowerCase().replace(/[^a-z0-9]+/g, "-");
+function firstPersonQuestion(text) {
+  const original = text.trim();
+  if (!/^The leader\b/i.test(original)) {
+    return original;
+  }
+
+  let output = original.replace(/^The leader\b/i, "I");
+  const replacements = [
+    ["shares", "share"],
+    ["outlines", "outline"],
+    ["communicates", "communicate"],
+    ["sets", "set"],
+    ["inspires", "inspire"],
+    ["encourages", "encourage"],
+    ["empowers", "empower"],
+    ["drives", "drive"],
+    ["challenges", "challenge"],
+    ["shows", "show"],
+    ["makes", "make"],
+    ["engages", "engage"],
+    ["takes", "take"],
+    ["seeks", "seek"],
+    ["promotes", "promote"],
+    ["supports", "support"],
+    ["values", "value"],
+    ["fosters", "foster"],
+    ["acknowledges", "acknowledge"],
+    ["provides", "provide"],
+    ["celebrates", "celebrate"],
+    ["ensures", "ensure"],
+    ["maintains", "maintain"],
+    ["focuses", "focus"],
+    ["monitors", "monitor"],
+    ["uses", "use"],
+    ["offers", "offer"],
+    ["places", "place"],
+    ["relies", "rely"],
+    ["prioritizes", "prioritize"],
+    ["demonstrates", "demonstrate"],
+    ["adapts", "adapt"],
+    ["allows", "allow"],
+    ["gives", "give"],
+    ["delegates", "delegate"],
+    ["expects", "expect"],
+    ["handles", "handle"],
+    ["listens", "listen"],
+    ["involves", "involve"],
+    ["creates", "create"],
+    ["leads", "lead"],
+    ["acts", "act"],
+    ["builds", "build"],
+    ["refrains", "refrain"],
+    ["is", "am"]
+  ];
+
+  replacements.forEach(([from, to]) => {
+    output = output.replace(new RegExp(`^I(.*?)\\b${from}\\b`, "i"), `I$1${to}`);
+  });
+
+  return output;
 }
 
 function scoreAnswer(question, value) {
@@ -138,12 +200,12 @@ function scoreAnswer(question, value) {
   return value;
 }
 
-function getQuestionById(id) {
-  return questionBank.find((question) => question.id === id);
+function getAnswersByStyle(style) {
+  return state.answers.filter((answer) => answer && answer.style === style);
 }
 
-function getAnswersByStyle(style) {
-  return state.answers.filter((answer) => answer.style === style);
+function answeredCount() {
+  return state.answers.filter(Boolean).length;
 }
 
 function calculateScores() {
@@ -170,7 +232,8 @@ function standardDeviation(values) {
 }
 
 function responseQuality() {
-  const values = state.answers.map((answer) => answer.value);
+  const completeAnswers = state.answers.filter(Boolean);
+  const values = completeAnswers.map((answer) => answer.value);
   const counts = values.reduce((memo, value) => {
     memo[value] = (memo[value] || 0) + 1;
     return memo;
@@ -178,14 +241,14 @@ function responseQuality() {
   const maxSame = Math.max(...Object.values(counts), 0);
   const straightLineRatio = values.length ? maxSame / values.length : 0;
   const variance = standardDeviation(values);
-  const derivedCount = state.answers.filter((answer) => answer.derived).length;
-  const derivedRatio = state.answers.length ? derivedCount / state.answers.length : 0;
+  const derivedCount = completeAnswers.filter((answer) => answer.derived).length;
+  const derivedRatio = completeAnswers.length ? derivedCount / completeAnswers.length : 0;
 
   const flags = [];
-  if (state.answers.length >= 12 && straightLineRatio >= 0.85) {
+  if (completeAnswers.length >= 12 && straightLineRatio >= 0.85) {
     flags.push("Most responses used the same answer option.");
   }
-  if (state.answers.length >= 12 && variance < 0.45) {
+  if (completeAnswers.length >= 12 && variance < 0.45) {
     flags.push("Responses showed very low variation.");
   }
   if (derivedRatio > MAX_DERIVED_RATIO) {
@@ -234,7 +297,7 @@ function interleaveByStyle(questions) {
 }
 
 function getUnusedQuestions(style, includeDerived = false) {
-  const askedIds = new Set(state.asked);
+  const askedIds = new Set(state.questionHistory.map((question) => question.id));
   return questionBank.filter((question) => {
     if (question.style !== style || askedIds.has(question.id)) return false;
     if (!includeDerived && question.derived) return false;
@@ -243,8 +306,8 @@ function getUnusedQuestions(style, includeDerived = false) {
 }
 
 function shouldStop() {
-  if (state.answers.length < styles.length) return false;
-  if (state.answers.length >= MAX_QUESTIONS) return true;
+  if (answeredCount() < styles.length) return false;
+  if (answeredCount() >= MAX_QUESTIONS) return true;
 
   const scoresData = calculateScores();
   const [top, second] = scoresData.ranked;
@@ -305,28 +368,35 @@ function advanceQuestion() {
   }
 
   state.currentQuestion = next;
-  state.asked.push(next.id);
+  state.questionHistory.push(next);
+  state.currentIndex = state.questionHistory.length - 1;
   renderQuestion();
 }
 
 function renderQuestion() {
-  const question = state.currentQuestion;
-  const progress = Math.min(Math.round((state.answers.length / MAX_QUESTIONS) * 100), 100);
+  const question = state.questionHistory[state.currentIndex];
+  const existingAnswer = state.answers[state.currentIndex] || null;
+  const progress = Math.min(Math.round((answeredCount() / MAX_QUESTIONS) * 100), 100);
 
-  progressText.textContent = `Question ${state.answers.length + 1} of up to ${MAX_QUESTIONS}`;
+  state.currentQuestion = question;
+  state.selectedValue = existingAnswer ? existingAnswer.value : null;
+  progressText.textContent = `Question ${state.currentIndex + 1} of up to ${MAX_QUESTIONS}`;
   progressPercent.textContent = `${progress}%`;
   progressBar.style.width = `${Math.max(progress, 4)}%`;
   dimensionLabel.textContent = "Assessment Item";
-  questionCounter.textContent = `${state.answers.length + 1}`;
-  questionText.textContent = question.text;
+  questionCounter.textContent = `${state.currentIndex + 1}`;
+  questionText.textContent = firstPersonQuestion(question.text);
   questionHelp.textContent = "Choose the response that best describes your typical leadership behavior.";
-  backButton.disabled = true;
-  nextButton.disabled = true;
-  nextButton.textContent = state.answers.length + 1 >= MAX_QUESTIONS ? "See Results" : "Next";
+  backButton.disabled = state.currentIndex === 0;
+  nextButton.disabled = state.selectedValue === null;
+  nextButton.textContent = state.currentIndex === state.questionHistory.length - 1 && answeredCount() >= MAX_QUESTIONS
+    ? "See Results"
+    : "Next";
 
   ratingOptions.forEach((option) => {
-    option.classList.remove("selected");
-    option.setAttribute("aria-pressed", "false");
+    const selected = Number(option.dataset.value) === state.selectedValue;
+    option.classList.toggle("selected", selected);
+    option.setAttribute("aria-pressed", String(selected));
   });
 
   dimensionPills.forEach((pill) => pill.classList.remove("active"));
@@ -336,19 +406,18 @@ function answerCurrent(value) {
   const question = state.currentQuestion;
   const score = scoreAnswer(question, value);
 
-  state.answers.push({
+  state.answers[state.currentIndex] = {
     questionId: question.id,
-    text: question.text,
+    text: firstPersonQuestion(question.text),
     style: question.style,
     value,
     score,
     direction: question.direction,
     derived: Boolean(question.derived),
     derivedFrom: question.derivedFrom || null
-  });
+  };
 
-  state.selectedValue = null;
-  advanceQuestion();
+  state.selectedValue = value;
 }
 
 function tendencyFor(score) {
@@ -386,8 +455,8 @@ function resultPayload() {
     confidence,
     quality,
     resultSummary,
-    answers: state.answers,
-    questionsAsked: state.answers.length
+    answers: state.answers.filter(Boolean),
+    questionsAsked: answeredCount()
   };
 }
 
@@ -406,6 +475,7 @@ function renderResults() {
   const primaryLabel = payload.primaryStyles.join(" + ");
   const primaryScore = Math.round(payload.primaryStyles.reduce((sum, style) => sum + payload.scores[style], 0) / payload.primaryStyles.length);
 
+  startView.classList.add("hidden");
   assessmentView.classList.add("hidden");
   resultsView.classList.remove("hidden");
   progressText.textContent = `Complete after ${payload.questionsAsked} questions`;
@@ -455,14 +525,26 @@ function renderResults() {
 function restartAssessment() {
   state.currentQuestion = null;
   state.selectedValue = null;
-  state.asked = [];
+  state.started = false;
+  state.currentIndex = 0;
+  state.questionHistory = [];
   state.answers = [];
   state.pendingQueue = [];
   state.complete = false;
+  startView.classList.remove("hidden");
   resultsView.classList.add("hidden");
-  assessmentView.classList.remove("hidden");
+  assessmentView.classList.add("hidden");
   seed = hashSeed();
   buildBaselineQueue();
+  progressText.textContent = "Ready to begin";
+  progressPercent.textContent = "0%";
+  progressBar.style.width = "4%";
+}
+
+function startAssessment() {
+  state.started = true;
+  startView.classList.add("hidden");
+  assessmentView.classList.remove("hidden");
   advanceQuestion();
 }
 
@@ -494,15 +576,27 @@ ratingOptions.forEach((option) => {
       ratingOption.classList.toggle("selected", selected);
       ratingOption.setAttribute("aria-pressed", String(selected));
     });
+    answerCurrent(value);
     nextButton.disabled = false;
   });
 });
 
 nextButton.addEventListener("click", () => {
   if (state.selectedValue === null) return;
-  answerCurrent(state.selectedValue);
+  if (state.currentIndex < state.questionHistory.length - 1) {
+    state.currentIndex += 1;
+    renderQuestion();
+    return;
+  }
+  advanceQuestion();
 });
-backButton.addEventListener("click", () => {});
+
+backButton.addEventListener("click", () => {
+  if (state.currentIndex === 0) return;
+  state.currentIndex -= 1;
+  renderQuestion();
+});
+startButton.addEventListener("click", startAssessment);
 restartButton.addEventListener("click", restartAssessment);
 copyButton.addEventListener("click", copySummary);
 

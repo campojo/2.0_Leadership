@@ -35,6 +35,20 @@ Questions must be randomized so respondents do not receive all questions from on
 
 The baseline phase should include coverage across every leadership style before narrowing adaptively.
 
+During the assessment, the app must not display the leadership style/category associated with the current question. This reduces obvious response gaming, especially for styles respondents may perceive as desirable or undesirable.
+
+## Instructions
+
+The assessment opens with an instruction screen based on `Instructions for Taking the Leadership Assessment.docx.pdf`.
+
+The start screen explains that the assessment is a self-assessment, asks respondents to answer honestly, discourages overthinking, and clarifies that there is no perfect leadership style.
+
+## Question Wording
+
+The assessment is a self-assessment, so displayed questions should be phrased in first person wherever possible.
+
+If source content uses third-person language such as `The leader...`, the app converts the displayed question to first person while preserving the original construct.
+
 ## Minimum Coverage
 
 At least one scored question from every leadership style must be answered before a result can be produced.
@@ -54,6 +68,17 @@ Follow-up questions should be selected when:
 - The system needs to distinguish between two plausible styles.
 
 The assessment may return two equally likely styles, but only after additional targeted questions fail to create a reliable distinction. It should never return more than two primary styles.
+
+## Review Navigation
+
+Respondents may go back to review previous questions.
+
+Rules:
+
+- Respondents cannot skip an unanswered question.
+- Going backward must preserve prior answers.
+- If a respondent selects a different answer on a previous question, that answer is updated.
+- Already asked questions remain in the sequence so review does not unexpectedly erase answers.
 
 ## Derived Negative-Framed Questions
 
