@@ -316,12 +316,10 @@ function renderQuestion() {
   progressText.textContent = `Question ${state.answers.length + 1} of up to ${MAX_QUESTIONS}`;
   progressPercent.textContent = `${progress}%`;
   progressBar.style.width = `${Math.max(progress, 4)}%`;
-  dimensionLabel.textContent = question.style;
+  dimensionLabel.textContent = "Assessment Item";
   questionCounter.textContent = `${state.answers.length + 1}`;
   questionText.textContent = question.text;
-  questionHelp.textContent = question.derived
-    ? "This reverse-framed item checks consistency with the same leadership construct."
-    : "Choose the response that best describes your typical leadership behavior.";
+  questionHelp.textContent = "Choose the response that best describes your typical leadership behavior.";
   backButton.disabled = true;
   nextButton.disabled = true;
   nextButton.textContent = state.answers.length + 1 >= MAX_QUESTIONS ? "See Results" : "Next";
@@ -331,9 +329,7 @@ function renderQuestion() {
     option.setAttribute("aria-pressed", "false");
   });
 
-  dimensionPills.forEach((pill) => {
-    pill.classList.toggle("active", pill.dataset.style === question.style);
-  });
+  dimensionPills.forEach((pill) => pill.classList.remove("active"));
 }
 
 function answerCurrent(value) {
@@ -365,6 +361,12 @@ function styleSummary(style, score) {
   return sourceData.scoreDescriptions[style]?.[tendencyFor(score)] || "";
 }
 
+function briefStyleSummary(style, score) {
+  const summary = styleSummary(style, score);
+  const firstSentence = summary.match(/^.*?[.!?](\s|$)/);
+  return firstSentence ? firstSentence[0].trim() : summary;
+}
+
 function resultPayload() {
   const scoresData = calculateScores();
   const quality = responseQuality();
@@ -374,7 +376,7 @@ function resultPayload() {
   const primaryStyles = gap <= 3 && scoresData.raw[first[0]].count >= 4 && scoresData.raw[second[0]].count >= 4
     ? [first[0], second[0]]
     : [first[0]];
-  const resultSummary = `Your strongest signal is ${primaryStyles.join(" + ")}. Confidence: ${confidence}. ${styleSummary(primaryStyles[0], scoresData.scores[primaryStyles[0]])}`;
+  const resultSummary = `Your strongest signal is ${primaryStyles.join(" + ")}. Confidence: ${confidence}. The detailed profile below explains what that style usually means, where it tends to be strong, and where it can create friction.`;
 
   return {
     id: crypto.randomUUID(),
@@ -421,7 +423,7 @@ function renderResults() {
           <strong>${score}</strong>
         </header>
         <div class="meter" aria-hidden="true"><span style="width: ${score}%"></span></div>
-        <p>${styleSummary(style, score)}</p>
+        <p>${briefStyleSummary(style, score)}</p>
       </article>
     `)
     .join("");
@@ -429,8 +431,15 @@ function renderResults() {
   const primaryDetails = payload.primaryStyles.flatMap((style) => {
     const qualities = sourceData.styleQualities[style] || [];
     return [
-      `<p class="recommendation"><strong>${style} detail:</strong> ${styleSummary(style, payload.scores[style])}</p>`,
-      ...qualities.slice(0, 4).map((quality) => `<p class="recommendation">${quality}</p>`)
+      `
+        <article class="detail-card">
+          <h4>${style} Leadership</h4>
+          <p>${styleSummary(style, payload.scores[style])}</p>
+          <div class="detail-list">
+            ${qualities.slice(0, 4).map((quality) => `<p class="recommendation">${quality}</p>`).join("")}
+          </div>
+        </article>
+      `
     ];
   });
 

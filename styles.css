@@ -96,7 +96,7 @@ button {
 }
 
 .dimension-list {
-  display: grid;
+  display: none;
   grid-template-columns: repeat(2, minmax(0, 1fr));
   gap: 8px;
 }
@@ -368,25 +368,50 @@ h2 {
 
 .recommendations {
   display: grid;
-  gap: 10px;
+  gap: 14px;
 }
 
 .recommendation {
-  display: grid;
-  grid-template-columns: 10px 1fr;
+  display: flex;
   gap: 12px;
   align-items: start;
   color: var(--muted);
   line-height: 1.5;
+  margin: 0;
 }
 
 .recommendation::before {
   content: "";
+  flex: 0 0 auto;
   width: 10px;
   height: 10px;
   margin-top: 7px;
   border-radius: 50%;
   background: var(--amber);
+}
+
+.detail-card {
+  padding: 20px;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  background: #fbfcfa;
+}
+
+.detail-card h4 {
+  margin: 0 0 10px;
+  font-size: 1rem;
+}
+
+.detail-card p {
+  margin: 0;
+  color: var(--muted);
+  line-height: 1.55;
+}
+
+.detail-list {
+  display: grid;
+  gap: 10px;
+  margin-top: 16px;
 }
 
 .results-actions {
