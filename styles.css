@@ -398,6 +398,11 @@ h2 {
   background: #eef8f5;
 }
 
+.score-card.muted-score {
+  background: #fbfcfa;
+  opacity: 0.68;
+}
+
 .recommendation strong {
   color: var(--ink);
 }
@@ -442,6 +447,11 @@ h2 {
   border: 1px solid var(--line);
   border-radius: 8px;
   background: #fbfcfa;
+}
+
+.warning-card {
+  border-color: rgba(184, 77, 98, 0.36);
+  background: #fff8f8;
 }
 
 .detail-card h4 {

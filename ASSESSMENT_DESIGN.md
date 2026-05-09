@@ -122,6 +122,8 @@ Signals include:
 
 The assessment should not accuse the respondent of gaming the system. It may mark a result as lower confidence and recommend retaking if response quality is weak.
 
+If a response pattern is not interpretable, such as selecting the same answer for nearly all questions or using almost no variation, the respondent should still be allowed to finish. The attempt should be saved, but the app should not present the output as a meaningful leadership profile. Instead, it should explain that the response pattern does not support a reliable interpretation and recommend retaking the assessment.
+
 ## Result Output
 
 Respondents should receive:

@@ -259,19 +259,32 @@ function responseQuality() {
   const variance = standardDeviation(values);
   const derivedCount = completeAnswers.filter((answer) => answer.derived).length;
   const derivedRatio = completeAnswers.length ? derivedCount / completeAnswers.length : 0;
+  const neutralRatio = values.length ? (counts[3] || 0) / values.length : 0;
+  const extremeRatio = values.length ? ((counts[1] || 0) + (counts[5] || 0)) / values.length : 0;
 
   const flags = [];
+  let invalid = false;
   if (completeAnswers.length >= 12 && straightLineRatio >= 0.85) {
     flags.push("Most responses used the same answer option.");
+    invalid = true;
   }
   if (completeAnswers.length >= 12 && variance < 0.45) {
     flags.push("Responses showed very low variation.");
+    invalid = true;
+  }
+  if (completeAnswers.length >= 12 && neutralRatio >= 0.85) {
+    flags.push("Most responses were neutral.");
+    invalid = true;
+  }
+  if (completeAnswers.length >= 12 && extremeRatio >= 0.9 && variance < 0.65) {
+    flags.push("Responses relied almost entirely on one extreme answer pattern.");
+    invalid = true;
   }
   if (derivedRatio > MAX_DERIVED_RATIO) {
     flags.push("Too many derived check questions were used.");
   }
 
-  return { flags, straightLineRatio, variance, derivedRatio };
+  return { flags, invalid, straightLineRatio, variance, derivedRatio, neutralRatio, extremeRatio };
 }
 
 function confidenceLevel(scoresData) {
@@ -281,6 +294,7 @@ function confidenceLevel(scoresData) {
   const topCount = scoresData.raw[top[0]].count;
   const quality = responseQuality();
 
+  if (quality.invalid) return "Invalid response pattern";
   if (quality.flags.length) return "Lower";
   if (gap >= 12 && topCount >= MIN_TOP_STYLE_ANSWERS) return "High";
   if (gap >= MIN_LEAD_GAP && topCount >= 3) return "Moderate";
@@ -458,10 +472,14 @@ function resultPayload() {
   const confidence = confidenceLevel(scoresData);
   const [first, second] = scoresData.ranked;
   const gap = first[1] - second[1];
-  const primaryStyles = gap <= 3 && scoresData.raw[first[0]].count >= 4 && scoresData.raw[second[0]].count >= 4
+  const primaryStyles = quality.invalid
+    ? []
+    : gap <= 3 && scoresData.raw[first[0]].count >= 4 && scoresData.raw[second[0]].count >= 4
     ? [first[0], second[0]]
     : [first[0]];
-  const resultSummary = `Your strongest signal is ${primaryStyles.join(" + ")}. Confidence: ${confidence}. The detailed profile below explains what that style usually means, where it tends to be strong, and where it can create friction.`;
+  const resultSummary = quality.invalid
+    ? "Your responses show very little variation, so this assessment cannot produce a reliable leadership profile. For a more useful result, retake the assessment and choose the response that best describes your usual behavior for each item."
+    : `Your strongest signal is ${primaryStyles.join(" + ")}. Confidence: ${confidence}. The detailed profile below explains what that style usually means, where it tends to be strong, and where it can create friction.`;
 
   return {
     id: crypto.randomUUID(),
@@ -534,7 +552,7 @@ function renderAttemptsView() {
       <article class="attempt-card">
         <header>
           <div>
-            <h3>${attempt.primaryStyles.join(" + ")} Leadership</h3>
+            <h3>${attempt.primaryStyles.length ? `${attempt.primaryStyles.join(" + ")} Leadership` : "Result Needs Review"}</h3>
             <p>${created} · ${attempt.questionsAsked} questions · ${attempt.confidence} confidence</p>
           </div>
         </header>
@@ -578,7 +596,9 @@ function renderResults() {
 
   const ranked = Object.entries(payload.scores).sort((a, b) => b[1] - a[1]);
   const primaryLabel = payload.primaryStyles.join(" + ");
-  const primaryScore = Math.round(payload.primaryStyles.reduce((sum, style) => sum + payload.scores[style], 0) / payload.primaryStyles.length);
+  const primaryScore = payload.primaryStyles.length
+    ? Math.round(payload.primaryStyles.reduce((sum, style) => sum + payload.scores[style], 0) / payload.primaryStyles.length)
+    : 0;
 
   startView.classList.add("hidden");
   assessmentView.classList.add("hidden");
@@ -587,13 +607,13 @@ function renderResults() {
   progressText.textContent = `Complete after ${payload.questionsAsked} questions`;
   progressPercent.textContent = "100%";
   progressBar.style.width = "100%";
-  profileTitle.textContent = `Likely ${primaryLabel} Leadership`;
+  profileTitle.textContent = payload.quality.invalid ? "Result Needs Review" : `Likely ${primaryLabel} Leadership`;
   profileSummary.textContent = payload.resultSummary;
-  overallScore.textContent = primaryScore;
+  overallScore.textContent = payload.quality.invalid ? "!" : primaryScore;
 
   dimensionScores.innerHTML = ranked
     .map(([style, score]) => `
-      <article class="score-card ${payload.primaryStyles.includes(style) ? "primary-style" : ""}">
+      <article class="score-card ${payload.primaryStyles.includes(style) ? "primary-style" : ""} ${payload.quality.invalid ? "muted-score" : ""}">
         <header>
           <span>${style}</span>
           <strong>${score}</strong>
@@ -604,7 +624,7 @@ function renderResults() {
     `)
     .join("");
 
-  const primaryDetails = payload.primaryStyles.flatMap((style) => {
+  const primaryDetails = payload.quality.invalid ? [] : payload.primaryStyles.flatMap((style) => {
     const qualities = sourceData.styleQualities[style] || [];
     return [
       `
@@ -621,7 +641,15 @@ function renderResults() {
 
   const lowest = ranked[ranked.length - 1];
   const qualityNotes = payload.quality.flags.length
-    ? payload.quality.flags.map((flag) => `<p class="recommendation"><strong>Confidence note:</strong> ${flag}</p>`)
+    ? [
+      `<article class="detail-card warning-card">
+        <h4>Response Quality Warning</h4>
+        <p>This attempt was saved, but the response pattern is not strong enough to interpret as a reliable leadership profile.</p>
+        <div class="detail-list">
+          ${payload.quality.flags.map((flag) => `<p class="recommendation">${flag}</p>`).join("")}
+        </div>
+      </article>`
+    ]
     : [`<p class="recommendation"><strong>Least-like style:</strong> ${lowest[0]} scored lowest at ${lowest[1]}.</p>`];
 
   recommendations.innerHTML = [...primaryDetails, ...qualityNotes].join("");
