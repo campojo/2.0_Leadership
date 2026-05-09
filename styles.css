@@ -461,6 +461,88 @@ h2 {
   margin-top: 16px;
 }
 
+.attempts-list {
+  display: grid;
+  gap: 18px;
+  margin-top: 30px;
+}
+
+.attempt-card {
+  padding: 20px;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  background: #fbfcfa;
+}
+
+.attempt-card h3 {
+  margin: 0 0 6px;
+  font-size: 1.1rem;
+}
+
+.attempt-card p,
+.empty-state {
+  margin: 0;
+  color: var(--muted);
+  line-height: 1.5;
+}
+
+.score-strip {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin: 16px 0;
+}
+
+.score-strip span {
+  padding: 7px 10px;
+  border-radius: 999px;
+  background: #e8f5f2;
+  color: var(--accent-dark);
+  font-size: 0.88rem;
+}
+
+.attempt-card details {
+  margin-top: 8px;
+}
+
+.attempt-card summary {
+  cursor: pointer;
+  font-weight: 850;
+}
+
+.table-wrap {
+  overflow-x: auto;
+  margin-top: 14px;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  background: #fff;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  min-width: 760px;
+}
+
+th,
+td {
+  padding: 12px;
+  border-bottom: 1px solid var(--line);
+  text-align: left;
+  vertical-align: top;
+  font-size: 0.9rem;
+}
+
+th {
+  color: var(--accent-dark);
+  font-size: 0.78rem;
+  text-transform: uppercase;
+}
+
+td {
+  color: var(--muted);
+}
+
 .results-actions {
   justify-content: flex-end;
 }

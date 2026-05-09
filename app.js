@@ -89,6 +89,7 @@ const state = {
 const startView = document.querySelector("#startView");
 const assessmentView = document.querySelector("#assessmentView");
 const resultsView = document.querySelector("#resultsView");
+const attemptsView = document.querySelector("#attemptsView");
 const progressText = document.querySelector("#progressText");
 const progressPercent = document.querySelector("#progressPercent");
 const progressBar = document.querySelector("#progressBar");
@@ -107,7 +108,11 @@ const dimensionScores = document.querySelector("#dimensionScores");
 const recommendations = document.querySelector("#recommendations");
 const startButton = document.querySelector("#startButton");
 const restartButton = document.querySelector("#restartButton");
+const reviewAttemptsButton = document.querySelector("#reviewAttemptsButton");
 const copyButton = document.querySelector("#copyButton");
+const attemptsList = document.querySelector("#attemptsList");
+const backToResultsButton = document.querySelector("#backToResultsButton");
+const exportAttemptsButton = document.querySelector("#exportAttemptsButton");
 
 function hashSeed() {
   const values = new Uint32Array(1);
@@ -134,7 +139,7 @@ function shuffle(items) {
 function firstPersonQuestion(text) {
   const original = text.trim();
   if (!/^The leader\b/i.test(original)) {
-    return original;
+    return polishSelfAssessmentText(original);
   }
 
   let output = original.replace(/^The leader\b/i, "I");
@@ -190,7 +195,18 @@ function firstPersonQuestion(text) {
     output = output.replace(new RegExp(`^I(.*?)\\b${from}\\b`, "i"), `I$1${to}`);
   });
 
-  return output;
+  return polishSelfAssessmentText(output);
+}
+
+function polishSelfAssessmentText(text) {
+  return text
+    .replace(/\bmy team members\b/gi, "__MY_TEAM_MEMBERS__")
+    .replace(/\bteam members\b/gi, "my team members")
+    .replace(/__MY_TEAM_MEMBERS__/g, "my team members")
+    .replace(/\bmy team\b/gi, "__MY_TEAM__")
+    .replace(/\bthe team\b/gi, "my team")
+    .replace(/__MY_TEAM__/g, "my team")
+    .replace(/\btheir own work\b/gi, "their own work");
 }
 
 function scoreAnswer(question, value) {
@@ -466,6 +482,95 @@ function persistAttempt(payload) {
   localStorage.setItem("leadershipAssessmentAttempts", JSON.stringify(existing));
 }
 
+function getSavedAttempts() {
+  return JSON.parse(localStorage.getItem("leadershipAssessmentAttempts") || "[]");
+}
+
+function answerLabel(value) {
+  return {
+    1: "Strongly Disagree",
+    2: "Disagree",
+    3: "Neutral",
+    4: "Agree",
+    5: "Strongly Agree"
+  }[value] || String(value);
+}
+
+function renderAttemptsView() {
+  const attempts = getSavedAttempts().slice().reverse();
+
+  startView.classList.add("hidden");
+  assessmentView.classList.add("hidden");
+  resultsView.classList.add("hidden");
+  attemptsView.classList.remove("hidden");
+  progressText.textContent = `${attempts.length} saved locally`;
+  progressPercent.textContent = "Review";
+  progressBar.style.width = "100%";
+
+  if (!attempts.length) {
+    attemptsList.innerHTML = `<p class="empty-state">No completed attempts are saved in this browser yet.</p>`;
+    return;
+  }
+
+  attemptsList.innerHTML = attempts.map((attempt) => {
+    const created = new Date(attempt.createdAt).toLocaleString();
+    const scoreRows = Object.entries(attempt.scores)
+      .sort((a, b) => b[1] - a[1])
+      .map(([style, score]) => `<span>${style}: <strong>${score}</strong></span>`)
+      .join("");
+    const answerRows = attempt.answers
+      .map((answer, index) => `
+        <tr>
+          <td>${index + 1}</td>
+          <td>${answer.text}</td>
+          <td>${answerLabel(answer.value)}</td>
+          <td>${answer.score}</td>
+          <td>${answer.derived ? "Derived" : "Source"}</td>
+        </tr>
+      `)
+      .join("");
+
+    return `
+      <article class="attempt-card">
+        <header>
+          <div>
+            <h3>${attempt.primaryStyles.join(" + ")} Leadership</h3>
+            <p>${created} · ${attempt.questionsAsked} questions · ${attempt.confidence} confidence</p>
+          </div>
+        </header>
+        <div class="score-strip">${scoreRows}</div>
+        <details>
+          <summary>Review questions and answers</summary>
+          <div class="table-wrap">
+            <table>
+              <thead>
+                <tr>
+                  <th>#</th>
+                  <th>Question shown</th>
+                  <th>Answer</th>
+                  <th>Score</th>
+                  <th>Source</th>
+                </tr>
+              </thead>
+              <tbody>${answerRows}</tbody>
+            </table>
+          </div>
+        </details>
+      </article>
+    `;
+  }).join("");
+}
+
+function exportAttempts() {
+  const payload = JSON.stringify(getSavedAttempts(), null, 2);
+  navigator.clipboard.writeText(payload).then(() => {
+    exportAttemptsButton.textContent = "Copied JSON";
+    window.setTimeout(() => {
+      exportAttemptsButton.textContent = "Export JSON";
+    }, 1400);
+  });
+}
+
 function renderResults() {
   state.complete = true;
   const payload = resultPayload();
@@ -477,6 +582,7 @@ function renderResults() {
 
   startView.classList.add("hidden");
   assessmentView.classList.add("hidden");
+  attemptsView.classList.add("hidden");
   resultsView.classList.remove("hidden");
   progressText.textContent = `Complete after ${payload.questionsAsked} questions`;
   progressPercent.textContent = "100%";
@@ -534,6 +640,7 @@ function restartAssessment() {
   startView.classList.remove("hidden");
   resultsView.classList.add("hidden");
   assessmentView.classList.add("hidden");
+  attemptsView.classList.add("hidden");
   seed = hashSeed();
   buildBaselineQueue();
   progressText.textContent = "Ready to begin";
@@ -598,6 +705,20 @@ backButton.addEventListener("click", () => {
 });
 startButton.addEventListener("click", startAssessment);
 restartButton.addEventListener("click", restartAssessment);
+reviewAttemptsButton.addEventListener("click", renderAttemptsView);
 copyButton.addEventListener("click", copySummary);
+backToResultsButton.addEventListener("click", () => {
+  attemptsView.classList.add("hidden");
+  if (window.lastAssessmentResult) {
+    resultsView.classList.remove("hidden");
+  } else {
+    startView.classList.remove("hidden");
+  }
+});
+exportAttemptsButton.addEventListener("click", exportAttempts);
 
 restartAssessment();
+
+if (window.location.hash === "#review") {
+  renderAttemptsView();
+}

@@ -136,7 +136,28 @@
 
           <div class="actions results-actions">
             <button id="restartButton" class="secondary-button" type="button">Retake</button>
+            <button id="reviewAttemptsButton" class="secondary-button" type="button">Review Saved Attempts</button>
             <button id="copyButton" class="primary-button" type="button">Copy Summary</button>
+          </div>
+        </section>
+
+        <section id="attemptsView" class="results-view hidden" aria-live="polite">
+          <div class="results-header">
+            <div>
+              <p class="eyebrow">Local Review Log</p>
+              <h2>Saved assessment attempts</h2>
+            </div>
+          </div>
+
+          <p class="profile-summary">
+            This temporary review log uses this browser's local storage. It helps debug question wording, answer history, scoring, and result output until the permanent database is connected.
+          </p>
+
+          <div id="attemptsList" class="attempts-list"></div>
+
+          <div class="actions results-actions">
+            <button id="backToResultsButton" class="secondary-button" type="button">Back</button>
+            <button id="exportAttemptsButton" class="primary-button" type="button">Export JSON</button>
           </div>
         </section>
       </section>
