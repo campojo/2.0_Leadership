@@ -79,6 +79,10 @@ const state = {
   currentQuestion: null,
   selectedValue: null,
   started: false,
+  respondent: {
+    name: "",
+    email: ""
+  },
   currentIndex: 0,
   questionHistory: [],
   answers: [],
@@ -86,6 +90,7 @@ const state = {
   complete: false
 };
 
+const identityView = document.querySelector("#identityView");
 const startView = document.querySelector("#startView");
 const assessmentView = document.querySelector("#assessmentView");
 const resultsView = document.querySelector("#resultsView");
@@ -113,6 +118,10 @@ const copyButton = document.querySelector("#copyButton");
 const attemptsList = document.querySelector("#attemptsList");
 const backToResultsButton = document.querySelector("#backToResultsButton");
 const exportAttemptsButton = document.querySelector("#exportAttemptsButton");
+const identityForm = document.querySelector("#identityForm");
+const respondentNameInput = document.querySelector("#respondentName");
+const respondentEmailInput = document.querySelector("#respondentEmail");
+const identityError = document.querySelector("#identityError");
 
 function hashSeed() {
   const values = new Uint32Array(1);
@@ -484,6 +493,11 @@ function resultPayload() {
   return {
     id: crypto.randomUUID(),
     createdAt: new Date().toISOString(),
+    respondent: {
+      name: state.respondent.name,
+      email: state.respondent.email
+    },
+    respondentLabel: state.respondent.name,
     primaryStyles,
     scores: scoresData.scores,
     confidence,
@@ -518,6 +532,7 @@ function renderAttemptsView() {
   const attempts = getSavedAttempts().slice().reverse();
 
   startView.classList.add("hidden");
+  identityView.classList.add("hidden");
   assessmentView.classList.add("hidden");
   resultsView.classList.add("hidden");
   attemptsView.classList.remove("hidden");
@@ -553,6 +568,7 @@ function renderAttemptsView() {
         <header>
           <div>
             <h3>${attempt.primaryStyles.length ? `${attempt.primaryStyles.join(" + ")} Leadership` : "Result Needs Review"}</h3>
+            <p>${attempt.respondent?.name || attempt.respondentLabel || "Unknown respondent"}${attempt.respondent?.email ? ` · ${attempt.respondent.email}` : ""}</p>
             <p>${created} · ${attempt.questionsAsked} questions · ${attempt.confidence} confidence</p>
           </div>
         </header>
@@ -600,6 +616,7 @@ function renderResults() {
     ? Math.round(payload.primaryStyles.reduce((sum, style) => sum + payload.scores[style], 0) / payload.primaryStyles.length)
     : 0;
 
+  identityView.classList.add("hidden");
   startView.classList.add("hidden");
   assessmentView.classList.add("hidden");
   attemptsView.classList.add("hidden");
@@ -660,18 +677,43 @@ function restartAssessment() {
   state.currentQuestion = null;
   state.selectedValue = null;
   state.started = false;
+  state.respondent = { name: "", email: "" };
   state.currentIndex = 0;
   state.questionHistory = [];
   state.answers = [];
   state.pendingQueue = [];
   state.complete = false;
-  startView.classList.remove("hidden");
+  identityView.classList.remove("hidden");
+  startView.classList.add("hidden");
   resultsView.classList.add("hidden");
   assessmentView.classList.add("hidden");
   attemptsView.classList.add("hidden");
+  respondentNameInput.value = "";
+  respondentEmailInput.value = "";
+  identityError.textContent = "";
   seed = hashSeed();
   buildBaselineQueue();
   progressText.textContent = "Ready to begin";
+  progressPercent.textContent = "0%";
+  progressBar.style.width = "4%";
+}
+
+function continueToInstructions(event) {
+  event.preventDefault();
+  const name = respondentNameInput.value.trim();
+  const email = respondentEmailInput.value.trim();
+
+  if (!name) {
+    identityError.textContent = "Name is required to begin.";
+    respondentNameInput.focus();
+    return;
+  }
+
+  state.respondent = { name, email };
+  identityError.textContent = "";
+  identityView.classList.add("hidden");
+  startView.classList.remove("hidden");
+  progressText.textContent = "Instructions";
   progressPercent.textContent = "0%";
   progressBar.style.width = "4%";
 }
@@ -740,10 +782,11 @@ backToResultsButton.addEventListener("click", () => {
   if (window.lastAssessmentResult) {
     resultsView.classList.remove("hidden");
   } else {
-    startView.classList.remove("hidden");
+    identityView.classList.remove("hidden");
   }
 });
 exportAttemptsButton.addEventListener("click", exportAttempts);
+identityForm.addEventListener("submit", continueToInstructions);
 
 restartAssessment();
 

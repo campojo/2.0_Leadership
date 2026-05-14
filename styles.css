@@ -212,6 +212,48 @@ h2 {
   line-height: 1.5;
 }
 
+.identity-form {
+  display: grid;
+  gap: 18px;
+  margin-top: 32px;
+}
+
+.identity-form label {
+  display: grid;
+  gap: 8px;
+  color: var(--ink);
+  font-weight: 850;
+}
+
+.identity-form label small {
+  color: var(--muted);
+  font-size: 0.86rem;
+  font-weight: 700;
+}
+
+.identity-form input {
+  width: 100%;
+  min-height: 52px;
+  padding: 0 14px;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  background: #fbfcfa;
+  color: var(--ink);
+  font: inherit;
+}
+
+.identity-form input:focus {
+  outline: 3px solid rgba(15, 124, 120, 0.16);
+  border-color: var(--accent);
+}
+
+.form-error {
+  min-height: 22px;
+  margin: 0;
+  color: var(--rose);
+  font-weight: 800;
+}
+
 .rating-group {
   display: grid;
   grid-template-columns: repeat(5, minmax(0, 1fr));

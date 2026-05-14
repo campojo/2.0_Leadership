@@ -41,7 +41,8 @@ The next production architecture adds a server-side application layer and a pers
 
 ```mermaid
 flowchart TD
-  A["Respondent opens public assessment URL"] --> B["Instruction screen"]
+  A["Respondent opens public assessment URL"] --> N["Respondent info screen"]
+  N --> B["Instruction screen"]
   B --> C["Adaptive assessment engine in browser"]
   C --> D["Question bank and scoring data"]
   D --> C
@@ -54,6 +55,7 @@ flowchart TD
 
   subgraph CurrentPrototype["Current Prototype"]
     B
+    N
     C
     D
     E
@@ -80,12 +82,15 @@ sequenceDiagram
   participant Admin as Admin Dashboard
 
   R->>A: Opens assessment link
+  A->>R: Requests respondent name and optional email
+  R->>A: Provides name and optional email
   A->>R: Shows instructions
   R->>A: Answers randomized/adaptive questions
   A->>A: Scores styles and checks response quality
   A->>R: Shows result or response-quality warning
   A->>API: Sends completed attempt payload
   API->>API: Validates payload
+  API->>DB: Creates or links respondent record
   API->>DB: Saves attempt metadata
   API->>DB: Saves question/answer rows
   Admin->>DB: Reviews attempts and analytics
@@ -207,12 +212,13 @@ If a response pattern is not interpretable, the respondent is allowed to finish 
 ## Respondent Experience
 
 1. Respondent opens the public URL.
-2. Respondent reads an instruction screen.
-3. Respondent answers randomized self-assessment questions.
-4. Respondent may go back and review previous questions.
-5. The app preserves answers when reviewing.
-6. The app computes style scores and response-quality flags.
-7. Respondent receives a result, or a response-quality warning if the pattern is not interpretable.
+2. Respondent enters their name and, for now, may optionally enter email.
+3. Respondent reads an instruction screen.
+4. Respondent answers randomized self-assessment questions.
+5. Respondent may go back and review previous questions.
+6. The app preserves answers when reviewing.
+7. The app computes style scores and response-quality flags.
+8. Respondent receives a result, or a response-quality warning if the pattern is not interpretable.
 
 ## Current Review Logs
 
@@ -340,7 +346,9 @@ erDiagram
 
 `respondents`
 
-Stores optional respondent identity or labels. This enables longitudinal tracking when the same person takes the assessment multiple times. The app can also support anonymous attempts by leaving `respondent_id` empty.
+Stores respondent identity or labels. The prototype currently requires name and allows email to be skipped. A later production version should require both name and email if longitudinal tracking by person is required.
+
+This table enables repeated attempts to be tied back to the same person over time. The app can still support anonymous or partially identified attempts if a specific deployment requires it.
 
 `cohorts`
 
@@ -378,6 +386,8 @@ Each attempt stores:
 - Attempt id
 - Timestamp
 - Optional respondent id
+- Respondent label/name
+- Optional email through linked respondent record
 - Optional cohort id
 - Primary style or two-style tie
 - Confidence level
@@ -447,7 +457,7 @@ The browser should not write directly to the database with privileged credential
 - Results are not yet saved to a permanent database.
 - Admin analytics are planned but not yet implemented.
 - Local review logs exist only in the browser that completed the assessment.
-- No respondent identity capture exists yet.
+- Respondent name is captured in the prototype, and email is optional, but identity is not yet stored in a permanent database.
 - No authentication exists yet for admin-only views.
 - Timing metrics are not yet collected.
 
@@ -461,4 +471,4 @@ The browser should not write directly to the database with privileged credential
 6. Add admin authentication.
 7. Build the admin attempts table.
 8. Build the admin analytics dashboard.
-9. Add respondent identifiers if longitudinal tracking is required.
+9. Make email mandatory when production longitudinal tracking is ready.

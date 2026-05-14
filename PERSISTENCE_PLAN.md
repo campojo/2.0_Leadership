@@ -23,9 +23,10 @@ Instead:
 1. Respondent completes the assessment.
 2. Browser sends the full result payload to `/api/attempts`.
 3. Server validates the payload.
-4. Server writes one row to `assessment_attempts`.
-5. Server writes all asked questions and answers to `assessment_answers`.
-6. Admin dashboard reads attempts after owner authentication.
+4. Server creates or links a respondent record from name/email.
+5. Server writes one row to `assessment_attempts`.
+6. Server writes all asked questions and answers to `assessment_answers`.
+7. Admin dashboard reads attempts after owner authentication.
 
 ## Persisted Fields
 
@@ -34,6 +35,8 @@ Each attempt should persist:
 - Attempt id
 - Timestamp
 - Optional respondent id
+- Respondent name
+- Respondent email when provided
 - Optional cohort id
 - Primary style or two-style tie
 - Confidence level
@@ -60,7 +63,8 @@ The planned Supabase/Postgres model uses four main tables:
 
 This keeps the app flexible:
 
-- Anonymous respondents can complete an assessment without a respondent row.
+- The current prototype requires name and allows email to be skipped.
+- The planned production version can make both name and email mandatory.
 - Named or labeled respondents can be tracked over time through `respondent_id`.
 - Group trends can be analyzed through `cohort_id`.
 - Every attempt remains permanent until manually purged.

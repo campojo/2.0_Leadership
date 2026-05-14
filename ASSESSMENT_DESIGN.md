@@ -39,7 +39,11 @@ During the assessment, the app must not display the leadership style/category as
 
 ## Instructions
 
-The assessment opens with an instruction screen based on `Instructions for Taking the Leadership Assessment.docx.pdf`.
+The assessment opens with a respondent information screen before the instruction screen.
+
+The respondent information screen currently requires name and allows email to be skipped. A later version should make both name and email mandatory so repeated attempts can be tied to the same person more reliably.
+
+After respondent information is collected, the assessment shows an instruction screen based on `Instructions for Taking the Leadership Assessment.docx.pdf`.
 
 The start screen explains that the assessment is a self-assessment, asks respondents to answer honestly, discourages overthinking, and clarifies that there is no perfect leadership style.
 
