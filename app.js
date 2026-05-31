@@ -9,6 +9,105 @@ const HIGH_SCORE_CLUSTER_GAP = 12;
 const sourceData = window.LEADERSHIP_DATA;
 const styles = sourceData.styles;
 
+const correctedAutocraticQuestions = [
+  {
+    id: "corrected_autocratic_001",
+    style: "Autocratic",
+    direction: "positive",
+    derived: true,
+    derivedFrom: "Final Output.docx; H-M-L Scores v2.docx.pdf",
+    text: "When clear direction is needed, I make firm decisions without waiting for group agreement."
+  },
+  {
+    id: "corrected_autocratic_002",
+    style: "Autocratic",
+    direction: "positive",
+    derived: true,
+    derivedFrom: "Final Output.docx; H-M-L Scores v2.docx.pdf",
+    text: "I prefer to maintain clear authority over important decisions."
+  },
+  {
+    id: "corrected_autocratic_003",
+    style: "Autocratic",
+    direction: "positive",
+    derived: true,
+    derivedFrom: "Final Output.docx; H-M-L Scores v2.docx.pdf",
+    text: "I set clear expectations and expect team members to follow them."
+  },
+  {
+    id: "corrected_autocratic_004",
+    style: "Autocratic",
+    direction: "positive",
+    derived: true,
+    derivedFrom: "Final Output.docx; H-M-L Scores v2.docx.pdf",
+    text: "In high-pressure situations, I take control quickly to keep work moving."
+  },
+  {
+    id: "corrected_autocratic_005",
+    style: "Autocratic",
+    direction: "positive",
+    derived: true,
+    derivedFrom: "Final Output.docx; H-M-L Scores v2.docx.pdf",
+    text: "I closely monitor important work to make sure standards are met."
+  },
+  {
+    id: "corrected_autocratic_006",
+    style: "Autocratic",
+    direction: "positive",
+    derived: true,
+    derivedFrom: "Final Output.docx; H-M-L Scores v2.docx.pdf",
+    text: "I value efficiency and clear authority when decisions must be made."
+  },
+  {
+    id: "corrected_autocratic_007",
+    style: "Autocratic",
+    direction: "negative",
+    derived: true,
+    derivedFrom: "Final Output.docx; H-M-L Scores v2.docx.pdf",
+    text: "I usually wait for broad team input before making important decisions, even when speed matters."
+  },
+  {
+    id: "corrected_autocratic_008",
+    style: "Autocratic",
+    direction: "negative",
+    derived: true,
+    derivedFrom: "Final Output.docx; H-M-L Scores v2.docx.pdf",
+    text: "I prefer to distribute decision authority widely instead of keeping final control."
+  },
+  {
+    id: "corrected_autocratic_009",
+    style: "Autocratic",
+    direction: "negative",
+    derived: true,
+    derivedFrom: "Final Output.docx; H-M-L Scores v2.docx.pdf",
+    text: "I avoid closely supervising work because I prefer team members to operate independently."
+  },
+  {
+    id: "corrected_autocratic_010",
+    style: "Autocratic",
+    direction: "negative",
+    derived: true,
+    derivedFrom: "Final Output.docx; H-M-L Scores v2.docx.pdf",
+    text: "I am more comfortable building consensus than giving direct instructions."
+  },
+  {
+    id: "corrected_autocratic_011",
+    style: "Autocratic",
+    direction: "negative",
+    derived: true,
+    derivedFrom: "Final Output.docx; H-M-L Scores v2.docx.pdf",
+    text: "I tend to step back from control once the team understands the general goal."
+  },
+  {
+    id: "corrected_autocratic_012",
+    style: "Autocratic",
+    direction: "negative",
+    derived: true,
+    derivedFrom: "Final Output.docx; H-M-L Scores v2.docx.pdf",
+    text: "I usually prioritize shared ownership over centralized decision-making."
+  }
+];
+
 const finalOutputProfiles = {
   "Autocratic": {
     overview: "Autocratic leaders value structure, decisiveness, accountability, and clear expectations. They perform especially well in high-risk, time-sensitive, or crisis environments.",
@@ -374,7 +473,8 @@ const derivedQuestions = [
   }
 ];
 
-const questionBank = [...sourceData.questions, ...derivedQuestions];
+const sourceQuestions = sourceData.questions.filter((question) => question.style !== "Autocratic");
+const questionBank = [...sourceQuestions, ...correctedAutocraticQuestions, ...derivedQuestions];
 const state = {
   currentQuestion: null,
   selectedValue: null,
@@ -566,8 +666,12 @@ function responseQuality() {
   const maxSame = Math.max(...Object.values(counts), 0);
   const straightLineRatio = values.length ? maxSame / values.length : 0;
   const variance = standardDeviation(values);
-  const derivedCount = completeAnswers.filter((answer) => answer.derived).length;
-  const derivedRatio = completeAnswers.length ? derivedCount / completeAnswers.length : 0;
+  const totalDerivedCount = completeAnswers.filter((answer) => answer.derived).length;
+  const measurementSafeguardCount = completeAnswers.filter((answer) => (
+    answer.derived && !String(answer.questionId).startsWith("corrected_autocratic_")
+  )).length;
+  const derivedRatio = completeAnswers.length ? totalDerivedCount / completeAnswers.length : 0;
+  const measurementSafeguardRatio = completeAnswers.length ? measurementSafeguardCount / completeAnswers.length : 0;
   const neutralRatio = values.length ? (counts[3] || 0) / values.length : 0;
   const extremeRatio = values.length ? ((counts[1] || 0) + (counts[5] || 0)) / values.length : 0;
 
@@ -589,11 +693,21 @@ function responseQuality() {
     flags.push("Responses relied almost entirely on one extreme answer pattern.");
     invalid = true;
   }
-  if (derivedRatio > MAX_DERIVED_RATIO) {
+  if (measurementSafeguardRatio > MAX_DERIVED_RATIO) {
     flags.push("Too many derived check questions were used.");
   }
 
-  return { flags, invalid, straightLineRatio, variance, derivedRatio, neutralRatio, extremeRatio };
+  return {
+    flags,
+    invalid,
+    straightLineRatio,
+    variance,
+    derivedRatio,
+    measurementSafeguardRatio,
+    totalDerivedCount,
+    neutralRatio,
+    extremeRatio
+  };
 }
 
 function confidenceLevel(scoresData) {
@@ -658,7 +772,7 @@ function classificationDecision(scoresData, quality) {
 
 function buildBaselineQueue() {
   const perStyle = styles.flatMap((style) => {
-    const sourceItems = sourceData.questions.filter((question) => question.style === style);
+    const sourceItems = questionBank.filter((question) => question.style === style);
     return shuffle(sourceItems).slice(0, BASELINE_PER_STYLE);
   });
 

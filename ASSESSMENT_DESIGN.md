@@ -53,6 +53,14 @@ The assessment is a self-assessment, so displayed questions should be phrased in
 
 If source content uses third-person language such as `The leader...`, the app converts the displayed question to first person while preserving the original construct.
 
+## Source Data Correction
+
+The current `Questions 2.0 (5).xlsx` workbook labels one question block as `Autocratic Leadership`, but the questions in that block measure openness, honesty, feedback-seeking, ethics, and role modeling rather than autocratic leadership.
+
+That mislabeled Autocratic source block is excluded from scoring. The app uses corrected Autocratic items derived from the approved Autocratic descriptions in `Final Output.docx` and `H-M-L Scores v2.docx.pdf`.
+
+This correction prevents general positive leadership behaviors from being incorrectly scored as Autocratic leadership.
+
 ## Minimum Coverage
 
 At least one scored question from every leadership style must be answered before a result can be produced.

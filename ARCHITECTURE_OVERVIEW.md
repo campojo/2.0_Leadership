@@ -115,6 +115,8 @@ These contain:
 - Style qualities
 - Style-help transition content
 
+The app excludes the source workbook's mislabeled Autocratic question block because those questions measure openness, ethics, feedback-seeking, and role modeling rather than autocratic leadership. Corrected Autocratic items are derived from the approved Autocratic descriptions in the provided result/source materials.
+
 The original working source files were intentionally excluded from GitHub through `.gitignore` because they are local source materials, while the extracted app data is included for deployment.
 
 ## Leadership Framework
