@@ -160,7 +160,9 @@ The question’s leadership style is hidden while the respondent answers to redu
 
 ### Minimum Coverage
 
-The baseline phase asks questions across all eight leadership styles. The preferred baseline is two questions per style, for 16 initial items.
+The baseline phase asks questions across all eight leadership styles. The preferred baseline is three randomized questions per style, for 24 initial items.
+
+Baseline questions come from the original source question pool when the source block correctly maps to the measured style. The corrected Autocratic item pool is used instead of the original mislabeled Autocratic source block.
 
 ### Adaptive Questioning
 

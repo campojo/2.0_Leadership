@@ -33,7 +33,7 @@ The design goal is to ask fewer than 40 whenever confidence is sufficient. The a
 
 Questions must be randomized so respondents do not receive all questions from one leadership style in a block.
 
-The baseline phase should include coverage across every leadership style before narrowing adaptively.
+The baseline phase should include coverage across every leadership style before narrowing adaptively. Baseline items are randomized and interleaved so the respondent does not receive all questions from one style together.
 
 During the assessment, the app must not display the leadership style/category associated with the current question. This reduces obvious response gaming, especially for styles respondents may perceive as desirable or undesirable.
 
@@ -65,7 +65,9 @@ This correction prevents general positive leadership behaviors from being incorr
 
 At least one scored question from every leadership style must be answered before a result can be produced.
 
-The preferred baseline is two questions per style, randomized, for 16 initial questions. This gives each style an initial signal while keeping the assessment short.
+The preferred baseline is three questions per style, randomized, for 24 initial questions. This gives each style a stronger initial signal while keeping the assessment under the 40-question maximum.
+
+Baseline questions should come from the original source question pool whenever the source block correctly maps to the style being measured. The corrected Autocratic item pool is used instead of the original mislabeled Autocratic source block.
 
 ## Adaptive Questioning
 

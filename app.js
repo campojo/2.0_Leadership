@@ -1,5 +1,5 @@
 const MAX_QUESTIONS = 40;
-const BASELINE_PER_STYLE = 2;
+const BASELINE_PER_STYLE = 3;
 const MIN_LEAD_GAP = 8;
 const MIN_TOP_STYLE_ANSWERS = 4;
 const MAX_DERIVED_RATIO = 0.25;
@@ -787,8 +787,11 @@ function interleaveByStyle(questions) {
   }, {});
 
   while (result.length < questions.length) {
-    const candidates = shuffle(styles).filter((style) => buckets[style].length);
-    const nextStyle = candidates.find((style) => result[result.length - 1]?.style !== style) || candidates[0];
+    const previousStyle = result[result.length - 1]?.style;
+    const candidates = shuffle(styles)
+      .filter((style) => buckets[style].length)
+      .sort((a, b) => buckets[b].length - buckets[a].length);
+    const nextStyle = candidates.find((style) => style !== previousStyle) || candidates[0];
     result.push(buckets[nextStyle].shift());
   }
 
