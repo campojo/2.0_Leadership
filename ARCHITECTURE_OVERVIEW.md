@@ -85,8 +85,8 @@ sequenceDiagram
   participant Admin as Admin Dashboard
 
   R->>A: Opens assessment link
-  A->>R: Requests respondent name and optional email
-  R->>A: Provides name and optional email
+  A->>R: Requests respondent name and email
+  R->>A: Provides name and email
   A->>R: Shows instructions
   R->>A: Answers randomized/adaptive questions
   A->>A: Scores styles and checks response quality
@@ -96,6 +96,7 @@ sequenceDiagram
   API->>DB: Creates or links respondent record
   API->>DB: Saves attempt metadata
   API->>DB: Saves question/answer rows
+  API->>R: Emails result if email provider is configured
   API->>A: Confirms saved attempt
   Admin->>DB: Reviews attempts and analytics
 ```
@@ -223,7 +224,7 @@ If a response pattern is not interpretable, the attempt is saved, but the app sh
 ## Respondent Experience
 
 1. Respondent opens the public URL.
-2. Respondent enters their name and, for now, may optionally enter email.
+2. Respondent enters their name and email.
 3. Respondent reads an instruction screen.
 4. Respondent answers randomized self-assessment questions.
 5. Respondent may go back and review previous questions.
@@ -359,7 +360,7 @@ erDiagram
 
 `respondents`
 
-Stores respondent identity or labels. The prototype currently requires name and allows email to be skipped. A later production version should require both name and email if longitudinal tracking by person is required.
+Stores respondent identity or labels. The prototype requires name and email so repeated attempts and emailed results can be tied to the same person.
 
 This table enables repeated attempts to be tied back to the same person over time. The app can still support anonymous or partially identified attempts if a specific deployment requires it.
 
@@ -400,7 +401,7 @@ Each attempt stores:
 - Timestamp
 - Optional respondent id
 - Respondent label/name
-- Optional email through linked respondent record
+- Email through linked respondent record
 - Optional cohort id
 - Primary style or two-style tie
 - Confidence level
@@ -458,7 +459,7 @@ The browser should not write directly to the database with privileged credential
 | `index.html` | App structure and screens |
 | `styles.css` | Responsive UI and visual styling |
 | `app.js` | Assessment engine, scoring, result rendering, local review logs |
-| `api/attempts.js` | Vercel serverless route that validates and saves completed attempts to Supabase |
+| `api/attempts.js` | Vercel serverless route that validates attempts, saves to Supabase when configured, and emails results when configured |
 | `data/leadership-assessment.json` | Extracted assessment data |
 | `data/leadership-assessment.js` | Browser-loadable assessment data |
 | `ASSESSMENT_DESIGN.md` | Detailed assessment design decisions |
@@ -470,20 +471,21 @@ The browser should not write directly to the database with privileged credential
 ## Current Limitations
 
 - Permanent database saves require a Supabase project and Vercel environment variables.
+- Result emails require Resend environment variables.
 - Admin analytics are planned but not yet implemented.
 - Local review logs exist only in the browser that completed the assessment.
-- Respondent name is captured in the prototype, and email is optional.
+- Respondent name and email are required.
 - No authentication exists yet for admin-only views.
 - Timing metrics are not yet collected.
 
 ## Recommended Next Build Steps
 
-1. Create a Supabase project.
-2. Apply `DATABASE_SCHEMA.sql`.
-3. Add `SUPABASE_URL` and `SUPABASE_SERVICE_ROLE_KEY` to Vercel environment variables.
-4. Redeploy the Vercel project.
-5. Complete a test assessment and verify rows in `respondents`, `assessment_attempts`, and `assessment_answers`.
-6. Add admin authentication.
-7. Build the admin attempts table.
-8. Build the admin analytics dashboard.
-9. Make email mandatory when production longitudinal tracking is ready.
+1. Configure Resend and add `RESEND_API_KEY` plus `RESULT_EMAIL_FROM` to Vercel if participant result emails are needed first.
+2. Create a Supabase project.
+3. Apply `DATABASE_SCHEMA.sql`.
+4. Add `SUPABASE_URL` and `SUPABASE_SERVICE_ROLE_KEY` to Vercel environment variables.
+5. Redeploy the Vercel project.
+6. Complete a test assessment and verify the result email plus rows in `respondents`, `assessment_attempts`, and `assessment_answers`.
+7. Add admin authentication.
+8. Build the admin attempts table.
+9. Build the admin analytics dashboard.

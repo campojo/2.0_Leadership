@@ -517,7 +517,6 @@ const reviewAttemptsButton = document.querySelector("#reviewAttemptsButton");
 const copyButton = document.querySelector("#copyButton");
 const attemptsList = document.querySelector("#attemptsList");
 const backToResultsButton = document.querySelector("#backToResultsButton");
-const exportAttemptsButton = document.querySelector("#exportAttemptsButton");
 const identityForm = document.querySelector("#identityForm");
 const respondentNameInput = document.querySelector("#respondentName");
 const respondentEmailInput = document.querySelector("#respondentEmail");
@@ -1090,16 +1089,6 @@ function renderAttemptsView() {
   }).join("");
 }
 
-function exportAttempts() {
-  const payload = JSON.stringify(getSavedAttempts(), null, 2);
-  navigator.clipboard.writeText(payload).then(() => {
-    exportAttemptsButton.textContent = "Copied JSON";
-    window.setTimeout(() => {
-      exportAttemptsButton.textContent = "Export JSON";
-    }, 1400);
-  });
-}
-
 function renderList(items) {
   return `<ul>${items.map((item) => `<li>${item}</li>`).join("")}</ul>`;
 }
@@ -1249,6 +1238,16 @@ function continueToInstructions(event) {
     respondentNameInput.focus();
     return;
   }
+  if (!email) {
+    identityError.textContent = "Email is required to begin.";
+    respondentEmailInput.focus();
+    return;
+  }
+  if (!respondentEmailInput.validity.valid) {
+    identityError.textContent = "Enter a valid email address to begin.";
+    respondentEmailInput.focus();
+    return;
+  }
 
   state.respondent = { name, email };
   identityError.textContent = "";
@@ -1329,7 +1328,6 @@ backToResultsButton.addEventListener("click", () => {
     identityView.classList.remove("hidden");
   }
 });
-exportAttemptsButton.addEventListener("click", exportAttempts);
 identityForm.addEventListener("submit", continueToInstructions);
 
 restartAssessment();

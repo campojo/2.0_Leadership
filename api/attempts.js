@@ -1,6 +1,8 @@
 const SUPABASE_URL = process.env.SUPABASE_URL;
 const SUPABASE_SERVICE_ROLE_KEY = process.env.SUPABASE_SERVICE_ROLE_KEY;
 const ADMIN_REVIEW_TOKEN = process.env.ADMIN_REVIEW_TOKEN;
+const RESEND_API_KEY = process.env.RESEND_API_KEY;
+const RESULT_EMAIL_FROM = process.env.RESULT_EMAIL_FROM;
 const { randomUUID } = require("crypto");
 
 function json(response, statusCode, payload) {
@@ -68,6 +70,9 @@ function validateAttempt(payload) {
   if (!payload.respondent?.name && !payload.respondentLabel) {
     return "Respondent name is required.";
   }
+  if (!payload.respondent?.email) {
+    return "Respondent email is required.";
+  }
   if (!Array.isArray(payload.answers) || !payload.answers.length) {
     return "At least one answer is required.";
   }
@@ -75,6 +80,14 @@ function validateAttempt(payload) {
     return "Scores are required.";
   }
   return null;
+}
+
+function isSupabaseConfigured() {
+  return Boolean(SUPABASE_URL && SUPABASE_SERVICE_ROLE_KEY);
+}
+
+function isEmailConfigured() {
+  return Boolean(RESEND_API_KEY && RESULT_EMAIL_FROM);
 }
 
 async function findRespondentByEmail(email) {
@@ -168,6 +181,59 @@ async function saveAttempt(payload) {
   return { attemptId: payload.id, respondentId };
 }
 
+function textResultEmail(payload) {
+  const respondentName = payload.respondent?.name || payload.respondentLabel || "there";
+  const resultTitle = payload.primaryStyles?.length
+    ? `${payload.primaryStyles.join(" + ")} Leadership`
+    : "No Leadership Style Assigned";
+  const scoreLines = Object.entries(payload.scores || {})
+    .sort((a, b) => b[1] - a[1])
+    .map(([style, score]) => `${style}: ${score}/100`)
+    .join("\n");
+
+  return [
+    `Hi ${respondentName},`,
+    "",
+    "Here are your leadership assessment results.",
+    "",
+    `Result: ${resultTitle}`,
+    "",
+    payload.resultSummary || "",
+    "",
+    "Score profile:",
+    scoreLines,
+    "",
+    "This assessment is intended for leadership reflection and development. No leadership style is inherently better than another; effective leadership depends on context, adaptability, and the needs of the people being led."
+  ].join("\n");
+}
+
+async function emailResult(payload) {
+  if (!isEmailConfigured()) {
+    throw new Error("Result email environment variables are not configured.");
+  }
+
+  const response = await fetch("https://api.resend.com/emails", {
+    method: "POST",
+    headers: {
+      Authorization: `Bearer ${RESEND_API_KEY}`,
+      "Content-Type": "application/json"
+    },
+    body: JSON.stringify({
+      from: RESULT_EMAIL_FROM,
+      to: payload.respondent.email,
+      subject: "Your leadership assessment results",
+      text: textResultEmail(payload)
+    })
+  });
+
+  const data = await response.json().catch(() => ({}));
+  if (!response.ok) {
+    throw new Error(data.message || "Result email failed.");
+  }
+
+  return data;
+}
+
 async function listAttempts(request) {
   if (!ADMIN_REVIEW_TOKEN) {
     return { status: 501, payload: { error: "Admin review token is not configured." } };
@@ -199,8 +265,23 @@ module.exports = async function handler(request, response) {
         return;
       }
 
-      const saved = await saveAttempt(payload);
-      json(response, 201, { ok: true, ...saved });
+      const result = { saved: false, emailed: false };
+
+      if (isSupabaseConfigured()) {
+        Object.assign(result, await saveAttempt(payload), { saved: true });
+      }
+
+      if (isEmailConfigured()) {
+        await emailResult(payload);
+        result.emailed = true;
+      }
+
+      if (!result.saved && !result.emailed) {
+        json(response, 501, { error: "No database or email provider is configured." });
+        return;
+      }
+
+      json(response, 201, { ok: true, ...result });
       return;
     }
 

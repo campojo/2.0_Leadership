@@ -1,8 +1,10 @@
-# Supabase Database Setup
+# Supabase And Email Setup
 
 This project now includes a Vercel serverless API route at `/api/attempts`.
 
-The browser sends completed assessment payloads to that route. The route writes permanent records to Supabase Postgres using server-side environment variables.
+The browser sends completed assessment payloads to that route. The route can write permanent records to Supabase Postgres and can send result emails through Resend using server-side environment variables.
+
+Supabase is needed for permanent database review. Resend is needed for participant result emails. They can be configured independently.
 
 ## 1. Create The Supabase Project
 
@@ -35,6 +37,14 @@ The Supabase service-role key. This key must only be stored in Vercel environmen
 
 Optional temporary token for protected `GET /api/attempts` review access before the admin dashboard exists.
 
+`RESEND_API_KEY`
+
+API key from Resend for sending participant result emails.
+
+`RESULT_EMAIL_FROM`
+
+Verified sender address used for result emails, such as `Leadership Assessment <results@yourdomain.com>`.
+
 ## 3. Redeploy
 
 Redeploy the Vercel project after adding the environment variables.
@@ -43,10 +53,6 @@ Redeploy the Vercel project after adding the environment variables.
 
 Complete one assessment from the public URL.
 
-On the result screen, the save status should say:
-
-`Saved locally and to the review database.`
-
 Then verify Supabase rows were created in:
 
 - `respondents`
@@ -54,6 +60,8 @@ Then verify Supabase rows were created in:
 - `assessment_answers`
 
 Each completed attempt should create one `assessment_attempts` row and one `assessment_answers` row per question answered.
+
+If Resend is configured, the respondent should also receive a result email.
 
 ## 5. Temporary API Review
 

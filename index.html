@@ -41,7 +41,7 @@
           <p class="eyebrow">Start Assessment</p>
           <h2>Tell us who is taking the assessment.</h2>
           <p class="question-help">
-            Your name lets the assessment result be connected back to you. Email is optional for now, but will be required in a later version.
+            Your name and email let the assessment result be connected back to you.
           </p>
 
           <form id="identityForm" class="identity-form" novalidate>
@@ -50,8 +50,8 @@
               <input id="respondentName" name="respondentName" type="text" autocomplete="name" aria-describedby="identityError">
             </label>
             <label for="respondentEmail">
-              <span>Email <small>optional for now</small></span>
-              <input id="respondentEmail" name="respondentEmail" type="email" autocomplete="email">
+              <span>Email</span>
+              <input id="respondentEmail" name="respondentEmail" type="email" autocomplete="email" aria-describedby="identityError">
             </label>
 
             <p id="identityError" class="form-error" role="alert"></p>
@@ -182,7 +182,6 @@
 
           <div class="actions results-actions">
             <button id="backToResultsButton" class="secondary-button" type="button">Back</button>
-            <button id="exportAttemptsButton" class="primary-button" type="button">Export JSON</button>
           </div>
         </section>
       </section>

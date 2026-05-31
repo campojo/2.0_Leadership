@@ -1,8 +1,8 @@
 # Persistence Plan
 
-The current prototype saves completed attempts in browser `localStorage` as a fallback and posts completed attempts to `/api/attempts` for permanent database storage.
+The current prototype saves completed attempts in browser `localStorage` as a fallback and posts completed attempts to `/api/attempts` for permanent database storage and/or result email delivery.
 
-Permanent storage becomes active after a Supabase project is created, `DATABASE_SCHEMA.sql` is applied, and the required Vercel environment variables are configured.
+Permanent database storage becomes active after a Supabase project is created, `DATABASE_SCHEMA.sql` is applied, and the required Vercel environment variables are configured. Result email delivery becomes active after the email provider environment variables are configured.
 
 ## Final Architecture
 
@@ -12,6 +12,7 @@ Production persistence stack:
 - Database: Supabase/Postgres
 - Public assessment URL for respondents
 - Server-side API route `/api/attempts` for saving attempts
+- Email provider: Resend for sending participant result emails
 - Private admin view for reviewing results
 
 ## Why Server-Side Saving
@@ -27,9 +28,10 @@ Instead:
 5. Server creates or links a respondent record from name/email.
 6. Server writes one row to `assessment_attempts`.
 7. Server writes all asked questions and answers to `assessment_answers`.
-8. Admin dashboard reads attempts after owner authentication.
+8. Server emails the participant their result if email delivery is configured.
+9. Admin dashboard reads attempts after owner authentication.
 
-If the database is not configured yet, the app still keeps the local backup. Database setup warnings must not be shown on the respondent-facing result screen.
+If the database is not configured yet, the app still keeps the local backup. If email is configured, result emails can still be sent even before Supabase is connected. Database or email setup warnings must not be shown on the respondent-facing result screen.
 
 ## Persisted Fields
 
@@ -39,7 +41,7 @@ Each attempt should persist:
 - Timestamp
 - Optional respondent id
 - Respondent name
-- Respondent email when provided
+- Respondent email
 - Optional cohort id
 - Primary style or two-style tie
 - Confidence level
@@ -66,8 +68,7 @@ The planned Supabase/Postgres model uses four main tables:
 
 This keeps the app flexible:
 
-- The current prototype requires name and allows email to be skipped.
-- The planned production version can make both name and email mandatory.
+- The current prototype requires name and email.
 - Named or labeled respondents can be tracked over time through `respondent_id`.
 - Group trends can be analyzed through `cohort_id`.
 - Every attempt remains permanent until manually purged.
@@ -113,3 +114,11 @@ The Supabase service-role key. This must only be stored server-side in Vercel en
 `ADMIN_REVIEW_TOKEN`
 
 Optional temporary token for protected `GET /api/attempts` review access before a real admin dashboard exists.
+
+`RESEND_API_KEY`
+
+API key from Resend for sending result emails.
+
+`RESULT_EMAIL_FROM`
+
+Verified sender address used for result emails, such as `Leadership Assessment <results@yourdomain.com>`.
