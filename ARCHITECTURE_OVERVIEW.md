@@ -167,11 +167,12 @@ After the baseline phase, the app asks follow-up questions only when they improv
 Follow-up questions are selected when:
 
 - Leading styles are close.
+- More than two styles are scoring high together.
 - A style has internally inconsistent responses.
 - The top style does not have enough separation from the second style.
 - The system needs to distinguish between two plausible styles.
 
-The result may include two equally likely styles, but never more than two.
+The result may include two equally likely styles, but never more than two. If more than two styles remain high and close after targeted questioning, the app withholds classification instead of guessing.
 
 ### Scoring
 
@@ -189,12 +190,12 @@ Derived negative-framed questions are reverse-scored.
 
 ### Derived Items
 
-Most questions come directly from the source question bank. A small number of negative-framed questions may be derived from the original constructs to support response-quality checks and reduce agreement bias.
+Most questions come directly from the source question bank. A small number of negative-framed and contrast questions may be derived from the original constructs or final output materials to support response-quality checks, reduce agreement bias, and improve score differentiation.
 
 Policy:
 
 - Derived items preserve the original construct.
-- Derived items should be traceable to a source question.
+- Derived items should be traceable to a source question or approved source document.
 - Preferred target is 0-10% of asked questions.
 - Hard ceiling is 25% of asked questions.
 - Derived items are measurement safeguards, not new leadership theory.
@@ -210,8 +211,10 @@ Current checks include:
 - Mostly neutral responses.
 - Heavy extreme-answer pattern with little variation.
 - Derived-question ratio.
+- High-score clustering across more than two leadership styles.
+- Insufficient score separation after adaptive follow-up.
 
-If a response pattern is not interpretable, the respondent is allowed to finish and the attempt is saved, but the app shows `Result Needs Review` instead of presenting a leadership style as meaningful.
+If a response pattern is not interpretable, the attempt is saved, but the app shows `No Leadership Style Assigned` instead of presenting a leadership style as meaningful.
 
 ## Respondent Experience
 
@@ -222,7 +225,7 @@ If a response pattern is not interpretable, the respondent is allowed to finish 
 5. Respondent may go back and review previous questions.
 6. The app preserves answers when reviewing.
 7. The app computes style scores and response-quality flags.
-8. Respondent receives a result, or a response-quality warning if the pattern is not interpretable.
+8. Respondent receives one assigned style, two assigned styles, or a no-classification result if the pattern is not interpretable.
 
 ## Current Review Logs
 

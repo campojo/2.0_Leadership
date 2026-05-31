@@ -3,6 +3,8 @@ const BASELINE_PER_STYLE = 2;
 const MIN_LEAD_GAP = 8;
 const MIN_TOP_STYLE_ANSWERS = 4;
 const MAX_DERIVED_RATIO = 0.25;
+const HIGH_SCORE_CLUSTER_THRESHOLD = 70;
+const HIGH_SCORE_CLUSTER_GAP = 12;
 
 const sourceData = window.LEADERSHIP_DATA;
 const styles = sourceData.styles;
@@ -305,6 +307,70 @@ const derivedQuestions = [
     derived: true,
     derivedFrom: "q_situational_001",
     text: "I use the same leadership approach regardless of the person, task, or context."
+  },
+  {
+    id: "derived_contrast_transformational_001",
+    style: "Transformational",
+    direction: "positive",
+    derived: true,
+    derivedFrom: "Final Output.docx",
+    text: "When short-term tasks compete with long-term growth, I usually emphasize vision, purpose, and development."
+  },
+  {
+    id: "derived_contrast_transactional_001",
+    style: "Transactional",
+    direction: "positive",
+    derived: true,
+    derivedFrom: "Final Output.docx",
+    text: "When performance matters, I usually emphasize clear goals, standards, follow-up, and measurable outcomes over broad inspiration."
+  },
+  {
+    id: "derived_contrast_servant_001",
+    style: "Servant",
+    direction: "positive",
+    derived: true,
+    derivedFrom: "Final Output.docx",
+    text: "When leadership requires a tradeoff, I usually place the growth and well-being of others ahead of asserting authority."
+  },
+  {
+    id: "derived_contrast_autocratic_001",
+    style: "Autocratic",
+    direction: "positive",
+    derived: true,
+    derivedFrom: "Final Output.docx",
+    text: "When speed, risk, or clarity matters, I usually make firm decisions without waiting for group agreement."
+  },
+  {
+    id: "derived_contrast_charismatic_001",
+    style: "Charismatic",
+    direction: "positive",
+    derived: true,
+    derivedFrom: "Final Output.docx",
+    text: "When people need momentum, I usually rely on personal energy, communication, and influence to build enthusiasm."
+  },
+  {
+    id: "derived_contrast_democratic_001",
+    style: "Democratic",
+    direction: "positive",
+    derived: true,
+    derivedFrom: "Final Output.docx",
+    text: "When a decision affects the team, I usually slow down enough to include people and build shared ownership."
+  },
+  {
+    id: "derived_contrast_laissez_faire_001",
+    style: "Laissez-Faire",
+    direction: "positive",
+    derived: true,
+    derivedFrom: "Final Output.docx",
+    text: "When capable people own the work, I usually set expectations and give them room to decide how to complete it."
+  },
+  {
+    id: "derived_contrast_situational_001",
+    style: "Situational",
+    direction: "positive",
+    derived: true,
+    derivedFrom: "Final Output.docx",
+    text: "When team members need different kinds of support, I usually change my leadership approach rather than using one consistent style."
   }
 ];
 
@@ -544,6 +610,52 @@ function confidenceLevel(scoresData) {
   return "Developing";
 }
 
+function highScoreCluster(scoresData) {
+  const topScore = scoresData.ranked[0]?.[1] || 0;
+  return scoresData.ranked.filter(([, score]) => (
+    score >= HIGH_SCORE_CLUSTER_THRESHOLD && topScore - score <= HIGH_SCORE_CLUSTER_GAP
+  ));
+}
+
+function classificationDecision(scoresData, quality) {
+  const [first, second, third] = scoresData.ranked;
+  const gap = first[1] - second[1];
+  const thirdGap = second[1] - (third?.[1] || 0);
+  const topCount = scoresData.raw[first[0]].count;
+  const secondCount = scoresData.raw[second[0]].count;
+  const cluster = highScoreCluster(scoresData);
+  const flags = [...quality.flags];
+
+  if (quality.invalid) {
+    return { primaryStyles: [], isInterpretable: false, flags };
+  }
+
+  if (cluster.length > 2) {
+    flags.push("Scores were high across more than two leadership styles without enough differentiation.");
+  }
+
+  const validTwoStyleResult = gap <= 3
+    && thirdGap >= MIN_LEAD_GAP
+    && topCount >= MIN_TOP_STYLE_ANSWERS
+    && secondCount >= MIN_TOP_STYLE_ANSWERS
+    && cluster.length <= 2;
+
+  if (validTwoStyleResult) {
+    return { primaryStyles: [first[0], second[0]], isInterpretable: true, flags };
+  }
+
+  const validSingleStyleResult = gap >= MIN_LEAD_GAP
+    && topCount >= MIN_TOP_STYLE_ANSWERS
+    && cluster.length <= 2;
+
+  if (validSingleStyleResult) {
+    return { primaryStyles: [first[0]], isInterpretable: true, flags };
+  }
+
+  flags.push("Scores did not separate enough to assign a leadership style.");
+  return { primaryStyles: [], isInterpretable: false, flags };
+}
+
 function buildBaselineQueue() {
   const perStyle = styles.flatMap((style) => {
     const sourceItems = sourceData.questions.filter((question) => question.style === style);
@@ -587,8 +699,12 @@ function shouldStop() {
   const topCount = scoresData.raw[top[0]].count;
   const gap = top[1] - second[1];
   const quality = responseQuality();
+  const decision = classificationDecision(scoresData, quality);
 
-  return topCount >= MIN_TOP_STYLE_ANSWERS && gap >= MIN_LEAD_GAP && quality.flags.length === 0;
+  if (quality.invalid && answeredCount() >= styles.length * BASELINE_PER_STYLE) return true;
+  if (decision.isInterpretable) return true;
+
+  return false;
 }
 
 function nextAdaptiveQuestion() {
@@ -615,6 +731,14 @@ function nextAdaptiveQuestion() {
     const derived = getUnusedQuestions(inconsistent.style, true).find((question) => question.derived);
     if (derived && responseQuality().derivedRatio < 0.18) return derived;
     return shuffle(getUnusedQuestions(inconsistent.style))[0];
+  }
+
+  const clusteredStyles = highScoreCluster(scoresData).map(([style]) => style);
+  if (clusteredStyles.length > 2 && responseQuality().derivedRatio < 0.22) {
+    const contrastCandidates = clusteredStyles
+      .flatMap((style) => getUnusedQuestions(style, true))
+      .filter((question) => question.derived && question.id.includes("derived_contrast"));
+    if (contrastCandidates.length) return shuffle(contrastCandidates)[0];
   }
 
   const closeStyles = topStyles.filter((style) => getUnusedQuestions(style).length);
@@ -707,18 +831,12 @@ function resultPayload() {
   const scoresData = calculateScores();
   const quality = responseQuality();
   const confidence = confidenceLevel(scoresData);
-  const [first, second] = scoresData.ranked;
-  const gap = first[1] - second[1];
-  const primaryStyles = quality.invalid
-    ? []
-    : gap <= 3 && scoresData.raw[first[0]].count >= 4 && scoresData.raw[second[0]].count >= 4
-    ? [first[0], second[0]]
-    : [first[0]];
-  const resultSummary = quality.invalid
+  const decision = classificationDecision(scoresData, quality);
+  const resultSummary = !decision.isInterpretable
     ? "Your response pattern does not provide enough evidence to assign a leadership style. This can happen when answers are too evenly distributed, too inconsistent, or do not provide enough differentiation between styles."
-    : primaryStyles.length === 2
-    ? `Your leadership profile shows both ${primaryStyles[0]} and ${primaryStyles[1]} leadership. The sections below describe the strengths, possible challenges, coaching guidance, and development focus connected to those styles.`
-    : `Your leadership style is ${primaryStyles[0]}. The sections below describe the strengths, possible challenges, coaching guidance, and development focus connected to this style.`;
+    : decision.primaryStyles.length === 2
+    ? `Your leadership profile shows both ${decision.primaryStyles[0]} and ${decision.primaryStyles[1]} leadership. The sections below describe the strengths, possible challenges, coaching guidance, and development focus connected to those styles.`
+    : `Your leadership style is ${decision.primaryStyles[0]}. The sections below describe the strengths, possible challenges, coaching guidance, and development focus connected to this style.`;
 
   return {
     id: crypto.randomUUID(),
@@ -728,10 +846,14 @@ function resultPayload() {
       email: state.respondent.email
     },
     respondentLabel: state.respondent.name,
-    primaryStyles,
+    primaryStyles: decision.primaryStyles,
     scores: scoresData.scores,
     confidence,
-    quality,
+    quality: {
+      ...quality,
+      classificationFlags: decision.flags,
+      isInterpretable: decision.isInterpretable
+    },
     resultSummary,
     answers: state.answers.filter(Boolean),
     questionsAsked: answeredCount()
@@ -944,13 +1066,14 @@ function renderResults() {
   progressText.textContent = `Complete after ${payload.questionsAsked} questions`;
   progressPercent.textContent = "100%";
   progressBar.style.width = "100%";
-  profileTitle.textContent = payload.quality.invalid ? "No Leadership Style Assigned" : `${primaryLabel} Leadership`;
+  const hasClassification = payload.primaryStyles.length > 0 && payload.quality.isInterpretable;
+  profileTitle.textContent = hasClassification ? `${primaryLabel} Leadership` : "No Leadership Style Assigned";
   profileSummary.textContent = payload.resultSummary;
-  overallScore.textContent = payload.quality.invalid ? "!" : primaryScore;
+  overallScore.textContent = hasClassification ? primaryScore : "!";
 
   dimensionScores.innerHTML = ranked
     .map(([style, score]) => `
-      <article class="score-card ${payload.primaryStyles.includes(style) ? "primary-style" : ""} ${payload.quality.invalid ? "muted-score" : ""}">
+      <article class="score-card ${payload.primaryStyles.includes(style) ? "primary-style" : ""} ${hasClassification ? "" : "muted-score"}">
         <header>
           <span>${style}</span>
           <strong>${score}</strong>
@@ -961,7 +1084,7 @@ function renderResults() {
     .join("");
 
   const lowest = ranked[ranked.length - 1];
-  recommendations.innerHTML = payload.quality.invalid
+  recommendations.innerHTML = !hasClassification
     ? renderNoClassificationResult()
     : [
       ...payload.primaryStyles.map((style) => renderProfileCard(style)),

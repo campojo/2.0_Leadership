@@ -122,7 +122,7 @@ function attemptRow(payload, respondentId) {
     email: payload.respondent?.email || null,
     primary_styles: payload.primaryStyles || [],
     confidence: payload.confidence || "Unclassified",
-    is_interpretable: !quality.invalid && Boolean(payload.primaryStyles?.length),
+    is_interpretable: Boolean(quality.isInterpretable && payload.primaryStyles?.length),
     questions_asked: payload.questionsAsked || payload.answers?.length || 0,
     scores: payload.scores || {},
     response_quality: quality,

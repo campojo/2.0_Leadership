@@ -66,12 +66,15 @@ After the baseline phase, the app should ask follow-up questions only where they
 Follow-up questions should be selected when:
 
 - The leading styles are close.
+- More than two styles are scoring high together.
 - A style has internally inconsistent responses.
 - A respondent gives a mix of strong disagreement, strong agreement, and neutral answers within the same style.
 - The top style does not have enough separation from the second style.
 - The system needs to distinguish between two plausible styles.
 
 The assessment may return two equally likely styles, but only after additional targeted questions fail to create a reliable distinction. It should never return more than two primary styles.
+
+If more than two styles remain high and close together after targeted questioning, the app should not assign a leadership type.
 
 ## Review Navigation
 
@@ -84,11 +87,11 @@ Rules:
 - If a respondent selects a different answer on a previous question, that answer is updated.
 - Already asked questions remain in the sequence so review does not unexpectedly erase answers.
 
-## Derived Negative-Framed Questions
+## Derived Negative-Framed And Contrast Questions
 
-The source workbook currently contains positive-framed questions. To improve measurement quality, the app may include a small number of derived negative-framed questions.
+The source workbook currently contains positive-framed questions. To improve measurement quality, the app may include a small number of derived negative-framed questions and contrast questions.
 
-These questions are not new leadership theory. They must preserve the construct of a specific source question and should be traceable to that source question.
+These questions are not new leadership theory. They must preserve the source constructs and should be traceable to either a source question or the approved final output/style-description materials.
 
 Example:
 
@@ -100,8 +103,8 @@ Policy:
 - Derived questions should be used sparingly.
 - The preferred target is 0-10% of asked questions.
 - The hard ceiling is 25% of asked questions.
-- Derived questions should mainly support response-quality checks, agreement-bias checks, and score confidence.
-- Every derived item should store provenance: style, source question, and reverse-scored direction.
+- Derived questions should mainly support response-quality checks, agreement-bias checks, score differentiation, and high-score cluster resolution.
+- Every derived item should store provenance: style, source question or source document, and scoring direction.
 
 ## Scoring
 
@@ -111,9 +114,9 @@ Positive items score in the normal direction. Negative-framed derived items are 
 
 Style scores should use the answered questions for that style. Scores should be normalized so styles can be compared even if adaptive questioning asks different counts per style.
 
-## Confidence and Response Quality
+## Classification and Response Quality
 
-The app should calculate a confidence level for the final classification.
+The app may calculate confidence and diagnostic values internally for admin review, but respondent-facing output should be decisive: assign one style, assign two styles only when justified, or assign no style.
 
 Signals include:
 
@@ -126,7 +129,7 @@ Signals include:
 
 The assessment should not accuse the respondent of gaming the system. It may mark a result as lower confidence and recommend retaking if response quality is weak.
 
-If a response pattern is not interpretable, such as selecting the same answer for nearly all questions or using almost no variation, the respondent should still be allowed to finish. The attempt should be saved, but the app should not present the output as a meaningful leadership profile. Instead, it should explain that the response pattern does not support a reliable interpretation and recommend retaking the assessment.
+If a response pattern is not interpretable, such as selecting the same answer for nearly all questions, using almost no variation, or scoring high across more than two styles without enough separation, the attempt should be saved, but the app should not present the output as a meaningful leadership profile. Instead, it should explain that the response pattern does not provide enough evidence to assign a leadership style.
 
 ## Result Output
 
