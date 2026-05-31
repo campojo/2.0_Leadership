@@ -29,7 +29,7 @@ Instead:
 7. Server writes all asked questions and answers to `assessment_answers`.
 8. Admin dashboard reads attempts after owner authentication.
 
-If the database is not configured yet, the app still keeps the local backup and shows a database setup warning on the result screen.
+If the database is not configured yet, the app still keeps the local backup. Database setup warnings must not be shown on the respondent-facing result screen.
 
 ## Persisted Fields
 

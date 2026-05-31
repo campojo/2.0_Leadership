@@ -7,6 +7,240 @@ const MAX_DERIVED_RATIO = 0.25;
 const sourceData = window.LEADERSHIP_DATA;
 const styles = sourceData.styles;
 
+const finalOutputProfiles = {
+  "Autocratic": {
+    overview: "Autocratic leaders value structure, decisiveness, accountability, and clear expectations. They perform especially well in high-risk, time-sensitive, or crisis environments.",
+    strengths: [
+      "Makes decisions quickly.",
+      "Provides clear direction.",
+      "Maintains standards and accountability.",
+      "Effective in emergencies or high-pressure situations.",
+      "Creates operational clarity."
+    ],
+    challenges: [
+      "Can unintentionally discourage collaboration.",
+      "Team members may feel unheard.",
+      "Innovation may decrease if control becomes excessive.",
+      "Risk of over-supervision.",
+      "Morale may decline if autonomy is limited."
+    ],
+    coaching: "Your decisiveness is valuable, especially in environments where precision matters. The next stage of leadership growth is learning when to direct and when to empower.",
+    teamNeeds: [
+      "Creative employees often need flexibility and ownership.",
+      "Experienced professionals may resist excessive oversight.",
+      "Younger or developing employees may initially appreciate structure but later desire autonomy."
+    ],
+    development: [
+      "Delegate decision-making intentionally.",
+      "Invite input before final decisions when appropriate.",
+      "Differentiate between urgency and preference.",
+      "Focus on developing leaders, not just followers."
+    ]
+  },
+  "Charismatic": {
+    overview: "Charismatic leaders inspire others through confidence, energy, communication, and personal influence. People naturally gravitate toward them because they create emotional engagement and excitement around goals.",
+    strengths: [
+      "Inspires enthusiasm and momentum.",
+      "Strong communicator and motivator.",
+      "Builds emotional connection quickly.",
+      "Effective during change or uncertainty.",
+      "Encourages belief in vision and possibility."
+    ],
+    challenges: [
+      "Can unintentionally dominate conversations.",
+      "May rely too heavily on personality over systems.",
+      "Risk of emotional decision-making.",
+      "Team members may become dependent on leader presence.",
+      "Can overlook quieter contributors."
+    ],
+    coaching: "Your influence is one of your greatest assets. However, long-term leadership effectiveness requires balancing inspiration with structure, consistency, and accountability. Focus on building systems that succeed even when you are not in the room.",
+    teamNeeds: [
+      "High-performing independent employees may desire more autonomy than inspiration.",
+      "Analytical team members may want data and clarity rather than emotional motivation.",
+      "Introverted employees may need intentional space to contribute ideas."
+    ],
+    development: [
+      "Practice active listening before influencing.",
+      "Create leadership depth within the team.",
+      "Balance inspiration with measurable execution.",
+      "Encourage dissenting opinions and diverse perspectives."
+    ]
+  },
+  "Democratic": {
+    overview: "Democratic leaders emphasize collaboration, participation, and shared decision-making. They value team input and collective ownership.",
+    strengths: [
+      "Encourages engagement and buy-in.",
+      "Builds collaboration and trust.",
+      "Promotes diverse perspectives.",
+      "Improves morale and inclusion.",
+      "Encourages creativity and innovation."
+    ],
+    challenges: [
+      "Decision-making can become slow.",
+      "Consensus may be prioritized over clarity.",
+      "Risk of unclear authority.",
+      "Difficult decisions may be delayed.",
+      "Stronger personalities may dominate discussions."
+    ],
+    coaching: "Your collaborative style helps people feel valued and included. Continued leadership growth requires balancing participation with decisiveness.",
+    teamNeeds: [
+      "Some employees prefer direct instruction.",
+      "Crisis situations often require faster decision-making.",
+      "Independent workers may not desire extensive collaboration."
+    ],
+    development: [
+      "Set clear decision timelines.",
+      "Know when collaboration is necessary versus optional.",
+      "Maintain authority while encouraging participation.",
+      "Ensure all voices are heard equally."
+    ]
+  },
+  "Laissez-Faire": {
+    overview: "Laissez-faire leaders prioritize autonomy, independence, and trust. They often empower highly capable teams by avoiding unnecessary interference.",
+    strengths: [
+      "Encourages independence and creativity.",
+      "Builds trust and ownership.",
+      "Works well with highly skilled professionals.",
+      "Promotes self-direction.",
+      "Avoids micromanagement."
+    ],
+    challenges: [
+      "Team members may feel unsupported.",
+      "Accountability may become inconsistent.",
+      "Communication gaps may emerge.",
+      "Underperformers may drift without guidance.",
+      "Conflict may go unaddressed."
+    ],
+    coaching: "Your trust in others is valuable. However, leadership still requires visible engagement, accountability, and consistent communication.",
+    teamNeeds: [
+      "New employees usually need more structure and feedback.",
+      "Some team members require reassurance and direction.",
+      "High achievers thrive under autonomy, but struggling employees may not."
+    ],
+    development: [
+      "Increase intentional check-ins.",
+      "Clarify expectations and accountability.",
+      "Address issues earlier.",
+      "Balance freedom with support."
+    ]
+  },
+  "Servant": {
+    overview: "Servant leaders prioritize the growth, well-being, and success of others. They lead through humility, empathy, support, and service.",
+    strengths: [
+      "Builds trust and loyalty.",
+      "Develops strong team culture.",
+      "Demonstrates empathy and emotional intelligence.",
+      "Encourages collaboration.",
+      "Invests deeply in people development."
+    ],
+    challenges: [
+      "May avoid difficult conversations.",
+      "Risk of overextending emotionally.",
+      "Can prioritize harmony over accountability.",
+      "Decision-making may become delayed.",
+      "Personal boundaries may weaken."
+    ],
+    coaching: "Your people-centered leadership creates strong relationships and healthy culture. Continued growth requires balancing compassion with accountability and decisiveness.",
+    teamNeeds: [
+      "High-accountability employees still need direct performance feedback.",
+      "Strong personalities may exploit overly accommodating leadership.",
+      "Some team members prefer clear direction over relational leadership."
+    ],
+    development: [
+      "Strengthen difficult conversation skills.",
+      "Set clearer boundaries.",
+      "Maintain accountability consistently.",
+      "Remember that serving others sometimes requires correction."
+    ]
+  },
+  "Situational": {
+    overview: "Situational leaders adapt their leadership approach based on the needs, maturity, and readiness of the team or situation.",
+    strengths: [
+      "Highly adaptable.",
+      "Flexible communicator.",
+      "Adjusts leadership to team needs.",
+      "Effective across diverse personalities.",
+      "Balances support and direction well."
+    ],
+    challenges: [
+      "Inconsistency may confuse teams.",
+      "Employees may struggle predicting expectations.",
+      "Can appear indecisive if over-adjusting.",
+      "Leadership identity may feel unclear."
+    ],
+    coaching: "Your adaptability is one of the most advanced leadership traits. The next step is ensuring consistency in values and communication while maintaining flexibility in approach.",
+    teamNeeds: [
+      "New employees often need more structure.",
+      "Experienced employees may prefer autonomy.",
+      "Some employees need emotional encouragement while others prefer efficiency."
+    ],
+    development: [
+      "Clarify consistent leadership expectations.",
+      "Avoid changing approaches too frequently.",
+      "Communicate the why behind adjustments.",
+      "Balance flexibility with stability."
+    ]
+  },
+  "Transactional": {
+    overview: "Transactional leaders focus on structure, accountability, goals, rewards, and performance management. They excel at maintaining consistency and measurable outcomes.",
+    strengths: [
+      "Creates clarity and order.",
+      "Strong accountability systems.",
+      "Effective performance management.",
+      "Clearly communicates expectations.",
+      "Maintains operational consistency."
+    ],
+    challenges: [
+      "May feel overly process-driven.",
+      "Innovation may become limited.",
+      "Relationships can feel secondary to performance.",
+      "Employees may feel motivated only by rewards or consequences.",
+      "Can struggle with emotional engagement."
+    ],
+    coaching: "Your ability to create structure and accountability drives results. Long-term influence grows when performance management is balanced with inspiration, development, and relationship-building.",
+    teamNeeds: [
+      "Creative employees may desire flexibility.",
+      "Relationship-oriented employees need emotional connection.",
+      "Highly autonomous employees may resist rigid systems."
+    ],
+    development: [
+      "Increase recognition beyond measurable outcomes.",
+      "Focus on intrinsic motivation.",
+      "Build stronger relational engagement.",
+      "Encourage innovation alongside accountability."
+    ]
+  },
+  "Transformational": {
+    overview: "Transformational leaders focus on vision, growth, inspiration, and helping others exceed expectations. They often create highly motivated and purpose-driven teams.",
+    strengths: [
+      "Inspires growth and innovation.",
+      "Creates strong organizational vision.",
+      "Encourages creativity and development.",
+      "Motivates people toward meaningful goals.",
+      "Builds strong commitment to mission."
+    ],
+    challenges: [
+      "May overlook operational details.",
+      "Can unintentionally exhaust teams with constant change.",
+      "Vision may outpace execution.",
+      "Risk of insufficient follow-through.",
+      "Team members may struggle with unclear priorities."
+    ],
+    coaching: "Your ability to elevate people is a major strength. Continued success depends on balancing visionary thinking with operational discipline and sustainable pacing.",
+    teamNeeds: [
+      "Detail-oriented employees may need clearer execution plans.",
+      "Stability-focused team members may feel overwhelmed by constant change.",
+      "Some employees need practical direction before inspiration."
+    ],
+    development: [
+      "Strengthen systems and accountability structures.",
+      "Celebrate progress, not just future vision.",
+      "Slow down enough to reinforce clarity.",
+      "Ensure goals are measurable and actionable."
+    ]
+  }
+};
+
 const derivedQuestions = [
   {
     id: "derived_transformational_001",
@@ -108,7 +342,6 @@ const ratingOptions = Array.from(document.querySelectorAll(".rating-option"));
 const dimensionPills = Array.from(document.querySelectorAll(".dimension-pill"));
 const profileTitle = document.querySelector("#profileTitle");
 const profileSummary = document.querySelector("#profileSummary");
-const saveStatus = document.querySelector("#saveStatus");
 const overallScore = document.querySelector("#overallScore");
 const dimensionScores = document.querySelector("#dimensionScores");
 const recommendations = document.querySelector("#recommendations");
@@ -470,12 +703,6 @@ function styleSummary(style, score) {
   return sourceData.scoreDescriptions[style]?.[tendencyFor(score)] || "";
 }
 
-function briefStyleSummary(style, score) {
-  const summary = styleSummary(style, score);
-  const firstSentence = summary.match(/^.*?[.!?](\s|$)/);
-  return firstSentence ? firstSentence[0].trim() : summary;
-}
-
 function resultPayload() {
   const scoresData = calculateScores();
   const quality = responseQuality();
@@ -488,8 +715,10 @@ function resultPayload() {
     ? [first[0], second[0]]
     : [first[0]];
   const resultSummary = quality.invalid
-    ? "Your responses show very little variation, so this assessment cannot produce a reliable leadership profile. For a more useful result, retake the assessment and choose the response that best describes your usual behavior for each item."
-    : `Your strongest signal is ${primaryStyles.join(" + ")}. Confidence: ${confidence}. The detailed profile below explains what that style usually means, where it tends to be strong, and where it can create friction.`;
+    ? "Your response pattern does not provide enough evidence to assign a leadership style. This can happen when answers are too evenly distributed, too inconsistent, or do not provide enough differentiation between styles."
+    : primaryStyles.length === 2
+    ? `Your leadership profile shows both ${primaryStyles[0]} and ${primaryStyles[1]} leadership. The sections below describe the strengths, possible challenges, coaching guidance, and development focus connected to those styles.`
+    : `Your leadership style is ${primaryStyles[0]}. The sections below describe the strengths, possible challenges, coaching guidance, and development focus connected to this style.`;
 
   return {
     id: crypto.randomUUID(),
@@ -532,22 +761,12 @@ async function persistAttemptToDatabase(payload) {
   return data;
 }
 
-function updateSaveStatus(message, type = "") {
-  saveStatus.textContent = message;
-  saveStatus.classList.toggle("success", type === "success");
-  saveStatus.classList.toggle("warning", type === "warning");
-}
-
 function persistAttempt(payload) {
   persistAttemptLocally(payload);
-  updateSaveStatus("Saved locally. Saving to database...", "");
 
   persistAttemptToDatabase(payload)
-    .then(() => {
-      updateSaveStatus("Saved locally and to the review database.", "success");
-    })
     .catch((error) => {
-      updateSaveStatus(`Saved locally. Database save pending setup: ${error.message}`, "warning");
+      console.warn("Assessment database save did not complete.", error);
     });
 }
 
@@ -604,9 +823,9 @@ function renderAttemptsView() {
       <article class="attempt-card">
         <header>
           <div>
-            <h3>${attempt.primaryStyles.length ? `${attempt.primaryStyles.join(" + ")} Leadership` : "Result Needs Review"}</h3>
+            <h3>${attempt.primaryStyles.length ? `${attempt.primaryStyles.join(" + ")} Leadership` : "No Leadership Style Assigned"}</h3>
             <p>${attempt.respondent?.name || attempt.respondentLabel || "Unknown respondent"}${attempt.respondent?.email ? ` · ${attempt.respondent.email}` : ""}</p>
-            <p>${created} · ${attempt.questionsAsked} questions · ${attempt.confidence} confidence</p>
+            <p>${created} · ${attempt.questionsAsked} questions</p>
           </div>
         </header>
         <div class="score-strip">${scoreRows}</div>
@@ -642,6 +861,70 @@ function exportAttempts() {
   });
 }
 
+function renderList(items) {
+  return `<ul>${items.map((item) => `<li>${item}</li>`).join("")}</ul>`;
+}
+
+function renderProfileCard(style) {
+  const profile = finalOutputProfiles[style];
+  if (!profile) {
+    return `
+      <article class="detail-card">
+        <h4>${style} Leadership</h4>
+        <p>${styleSummary(style, 100)}</p>
+      </article>
+    `;
+  }
+
+  return `
+    <article class="detail-card profile-section">
+      <h4>${style} Leadership</h4>
+      <div>
+        <h5>Overview</h5>
+        <p>${profile.overview}</p>
+      </div>
+      <div>
+        <h5>Strengths</h5>
+        ${renderList(profile.strengths)}
+      </div>
+      <div>
+        <h5>Potential Challenges</h5>
+        ${renderList(profile.challenges)}
+      </div>
+      <div>
+        <h5>Coaching Guidance</h5>
+        <p>${profile.coaching}</p>
+      </div>
+      <div>
+        <h5>Working With Different Team Needs</h5>
+        ${renderList(profile.teamNeeds)}
+      </div>
+      <div>
+        <h5>Development Focus</h5>
+        ${renderList(profile.development)}
+      </div>
+    </article>
+  `;
+}
+
+function renderLowestStyleNote(style, score) {
+  return `
+    <article class="detail-card">
+      <h4>Lowest Scoring Style: ${style}</h4>
+      <p>${styleSummary(style, score)}</p>
+    </article>
+  `;
+}
+
+function renderNoClassificationResult() {
+  return `
+    <article class="detail-card warning-card">
+      <h4>No Leadership Style Assigned</h4>
+      <p>Your response pattern does not provide enough evidence to assign a leadership style. Please retake the assessment and use the full response range honestly where it applies.</p>
+    </article>
+  `;
+}
+
 function renderResults() {
   state.complete = true;
   const payload = resultPayload();
@@ -661,7 +944,7 @@ function renderResults() {
   progressText.textContent = `Complete after ${payload.questionsAsked} questions`;
   progressPercent.textContent = "100%";
   progressBar.style.width = "100%";
-  profileTitle.textContent = payload.quality.invalid ? "Result Needs Review" : `Likely ${primaryLabel} Leadership`;
+  profileTitle.textContent = payload.quality.invalid ? "No Leadership Style Assigned" : `${primaryLabel} Leadership`;
   profileSummary.textContent = payload.resultSummary;
   overallScore.textContent = payload.quality.invalid ? "!" : primaryScore;
 
@@ -673,40 +956,21 @@ function renderResults() {
           <strong>${score}</strong>
         </header>
         <div class="meter" aria-hidden="true"><span style="width: ${score}%"></span></div>
-        <p>${briefStyleSummary(style, score)}</p>
       </article>
     `)
     .join("");
 
-  const primaryDetails = payload.quality.invalid ? [] : payload.primaryStyles.flatMap((style) => {
-    const qualities = sourceData.styleQualities[style] || [];
-    return [
-      `
-        <article class="detail-card">
-          <h4>${style} Leadership</h4>
-          <p>${styleSummary(style, payload.scores[style])}</p>
-          <div class="detail-list">
-            ${qualities.slice(0, 4).map((quality) => `<p class="recommendation">${quality}</p>`).join("")}
-          </div>
-        </article>
-      `
-    ];
-  });
-
   const lowest = ranked[ranked.length - 1];
-  const qualityNotes = payload.quality.flags.length
-    ? [
-      `<article class="detail-card warning-card">
-        <h4>Response Quality Warning</h4>
-        <p>This attempt was saved, but the response pattern is not strong enough to interpret as a reliable leadership profile.</p>
-        <div class="detail-list">
-          ${payload.quality.flags.map((flag) => `<p class="recommendation">${flag}</p>`).join("")}
-        </div>
+  recommendations.innerHTML = payload.quality.invalid
+    ? renderNoClassificationResult()
+    : [
+      ...payload.primaryStyles.map((style) => renderProfileCard(style)),
+      renderLowestStyleNote(lowest[0], lowest[1]),
+      `<article class="detail-card">
+        <h4>Final Summary</h4>
+        <p>No leadership style is inherently better than another. Effective leadership depends on context, emotional intelligence, adaptability, and the ability to meet the needs of the people being led. Your dominant style represents your natural tendencies, not your limitations. The strongest leaders learn when to lean into their strengths and when to adapt for the benefit of the team.</p>
       </article>`
-    ]
-    : [`<p class="recommendation"><strong>Least-like style:</strong> ${lowest[0]} scored lowest at ${lowest[1]}.</p>`];
-
-  recommendations.innerHTML = [...primaryDetails, ...qualityNotes].join("");
+    ].join("");
   window.lastAssessmentResult = payload;
 }
 
@@ -771,7 +1035,10 @@ function copySummary() {
     .map(([style, score]) => `${style}: ${score}/100`)
     .join("\n");
 
-  const summary = `Likely ${payload.primaryStyles.join(" + ")} Leadership\nConfidence: ${payload.confidence}\nQuestions asked: ${payload.questionsAsked}\n\n${scoreLines}`;
+  const title = payload.primaryStyles.length
+    ? `${payload.primaryStyles.join(" + ")} Leadership`
+    : "No Leadership Style Assigned";
+  const summary = `${title}\nQuestions asked: ${payload.questionsAsked}\n\n${scoreLines}`;
 
   navigator.clipboard.writeText(summary).then(() => {
     copyButton.textContent = "Copied";

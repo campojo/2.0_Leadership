@@ -165,21 +165,6 @@ h2 {
   line-height: 1.6;
 }
 
-.save-status {
-  margin: -6px 0 0;
-  color: var(--muted);
-  font-size: 0.88rem;
-  font-weight: 700;
-}
-
-.save-status.success {
-  color: var(--accent-dark);
-}
-
-.save-status.warning {
-  color: #9f5f00;
-}
-
 .instruction-list {
   display: grid;
   gap: 0;
@@ -443,13 +428,6 @@ h2 {
   background: var(--accent);
 }
 
-.score-card p {
-  margin: 12px 0 0;
-  color: var(--muted);
-  font-size: 0.94rem;
-  line-height: 1.45;
-}
-
 .score-card.primary-style {
   border-color: rgba(15, 124, 120, 0.5);
   background: #eef8f5;
@@ -471,8 +449,8 @@ h2 {
 }
 
 .recommendation-panel h3 {
-  margin: 0 0 14px;
-  font-size: 1.1rem;
+  margin: 0 0 22px;
+  font-size: 1.3rem;
 }
 
 .recommendations {
@@ -500,7 +478,7 @@ h2 {
 }
 
 .detail-card {
-  padding: 20px;
+  padding: 24px;
   border: 1px solid var(--line);
   border-radius: 8px;
   background: #fbfcfa;
@@ -512,8 +490,8 @@ h2 {
 }
 
 .detail-card h4 {
-  margin: 0 0 10px;
-  font-size: 1rem;
+  margin: 0 0 14px;
+  font-size: 1.18rem;
 }
 
 .detail-card p {
@@ -526,6 +504,45 @@ h2 {
   display: grid;
   gap: 10px;
   margin-top: 16px;
+}
+
+.profile-section {
+  display: grid;
+  gap: 18px;
+}
+
+.profile-section h5 {
+  margin: 22px 0 8px;
+  font-size: 0.88rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--accent-dark);
+}
+
+.profile-section ul {
+  display: grid;
+  gap: 9px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.profile-section li {
+  position: relative;
+  padding-left: 22px;
+  color: var(--muted);
+  line-height: 1.48;
+}
+
+.profile-section li::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 0.58em;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--amber);
 }
 
 .attempts-list {

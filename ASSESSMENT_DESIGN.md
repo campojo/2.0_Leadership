@@ -132,14 +132,16 @@ If a response pattern is not interpretable, such as selecting the same answer fo
 
 Respondents should receive:
 
-- Their most likely leadership style.
+- Their assigned leadership style, or a clear no-classification result if the response pattern does not support assignment.
 - A second style only if the evidence supports a true tie.
 - A visual showing which styles they are most like and least like.
-- Brief descriptions of all leadership styles.
-- A detailed explanation for the primary style.
-- Practical strengths and possible challenges grounded in the provided materials.
+- A score visual that does not repeat the written interpretation.
+- A structured written output modeled on `Final Output.docx`: overview, strengths, potential challenges, coaching guidance, working with different team needs, development focus, and final summary.
+- A brief lowest-scoring style note.
 
 The result language must not contradict the provided dissertation-derived source materials.
+
+Respondent-facing output must not reveal technical save status, database configuration, confidence labels, scoring internals, or debugging language. Those details are reserved for admin review and stored attempt records.
 
 ## Persistence
 
