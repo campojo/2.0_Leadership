@@ -1,17 +1,17 @@
 # Persistence Plan
 
-The current static prototype saves completed attempts in browser `localStorage` so the scoring and result payload can be tested immediately.
+The current prototype saves completed attempts in browser `localStorage` as a fallback and posts completed attempts to `/api/attempts` for permanent database storage.
 
-That is not sufficient for the final product because the requirement is permanent owner-reviewable persistence across devices and repeated attempts.
+Permanent storage becomes active after a Supabase project is created, `DATABASE_SCHEMA.sql` is applied, and the required Vercel environment variables are configured.
 
 ## Final Architecture
 
-Recommended production stack:
+Production persistence stack:
 
-- Hosted web app: Next.js or another server-capable React framework
+- Hosted web app: Vercel static frontend with a Vercel serverless API route
 - Database: Supabase/Postgres
 - Public assessment URL for respondents
-- Server-side API route for saving attempts
+- Server-side API route `/api/attempts` for saving attempts
 - Private admin view for reviewing results
 
 ## Why Server-Side Saving
@@ -21,12 +21,15 @@ The app should not write directly to Supabase from the browser using privileged 
 Instead:
 
 1. Respondent completes the assessment.
-2. Browser sends the full result payload to `/api/attempts`.
-3. Server validates the payload.
-4. Server creates or links a respondent record from name/email.
-5. Server writes one row to `assessment_attempts`.
-6. Server writes all asked questions and answers to `assessment_answers`.
-7. Admin dashboard reads attempts after owner authentication.
+2. Browser saves a backup copy in `localStorage`.
+3. Browser sends the full result payload to `/api/attempts`.
+4. Server validates the payload.
+5. Server creates or links a respondent record from name/email.
+6. Server writes one row to `assessment_attempts`.
+7. Server writes all asked questions and answers to `assessment_answers`.
+8. Admin dashboard reads attempts after owner authentication.
+
+If the database is not configured yet, the app still keeps the local backup and shows a database setup warning on the result screen.
 
 ## Persisted Fields
 
@@ -96,3 +99,17 @@ The schema supports:
 Records should remain indefinitely until manually deleted by the owner.
 
 Deletion should cascade from `assessment_attempts` to `assessment_answers`, as shown in `DATABASE_SCHEMA.sql`.
+
+## Required Vercel Environment Variables
+
+`SUPABASE_URL`
+
+The project URL from the Supabase project settings.
+
+`SUPABASE_SERVICE_ROLE_KEY`
+
+The Supabase service-role key. This must only be stored server-side in Vercel environment variables. It must never be placed in browser JavaScript.
+
+`ADMIN_REVIEW_TOKEN`
+
+Optional temporary token for protected `GET /api/attempts` review access before a real admin dashboard exists.

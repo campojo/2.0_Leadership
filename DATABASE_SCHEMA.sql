@@ -25,6 +25,7 @@ create table if not exists public.assessment_attempts (
   respondent_id uuid references public.respondents(id) on delete set null,
   cohort_id uuid references public.cohorts(id) on delete set null,
   respondent_label text,
+  email text,
   primary_styles text[] not null,
   confidence text not null,
   is_interpretable boolean not null default true,
@@ -59,6 +60,10 @@ create table if not exists public.assessment_answers (
 
 create index if not exists respondents_email_idx
   on public.respondents (email);
+
+create unique index if not exists respondents_email_unique_idx
+  on public.respondents (email)
+  where email is not null;
 
 create index if not exists cohorts_name_idx
   on public.cohorts (name);

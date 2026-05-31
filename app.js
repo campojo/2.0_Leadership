@@ -108,6 +108,7 @@ const ratingOptions = Array.from(document.querySelectorAll(".rating-option"));
 const dimensionPills = Array.from(document.querySelectorAll(".dimension-pill"));
 const profileTitle = document.querySelector("#profileTitle");
 const profileSummary = document.querySelector("#profileSummary");
+const saveStatus = document.querySelector("#saveStatus");
 const overallScore = document.querySelector("#overallScore");
 const dimensionScores = document.querySelector("#dimensionScores");
 const recommendations = document.querySelector("#recommendations");
@@ -508,10 +509,46 @@ function resultPayload() {
   };
 }
 
-function persistAttempt(payload) {
+function persistAttemptLocally(payload) {
   const existing = JSON.parse(localStorage.getItem("leadershipAssessmentAttempts") || "[]");
   existing.push(payload);
   localStorage.setItem("leadershipAssessmentAttempts", JSON.stringify(existing));
+}
+
+async function persistAttemptToDatabase(payload) {
+  const response = await fetch("/api/attempts", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json"
+    },
+    body: JSON.stringify(payload)
+  });
+
+  const data = await response.json().catch(() => ({}));
+  if (!response.ok) {
+    throw new Error(data.error || "Database save failed.");
+  }
+
+  return data;
+}
+
+function updateSaveStatus(message, type = "") {
+  saveStatus.textContent = message;
+  saveStatus.classList.toggle("success", type === "success");
+  saveStatus.classList.toggle("warning", type === "warning");
+}
+
+function persistAttempt(payload) {
+  persistAttemptLocally(payload);
+  updateSaveStatus("Saved locally. Saving to database...", "");
+
+  persistAttemptToDatabase(payload)
+    .then(() => {
+      updateSaveStatus("Saved locally and to the review database.", "success");
+    })
+    .catch((error) => {
+      updateSaveStatus(`Saved locally. Database save pending setup: ${error.message}`, "warning");
+    });
 }
 
 function getSavedAttempts() {

@@ -2,18 +2,18 @@
 
 ## Executive Summary
 
-This application is a research-informed leadership style self-assessment built from dissertation-derived leadership assessment materials. The current deployed prototype is a static browser application hosted on Vercel. It uses JavaScript in the browser to present randomized and adaptive questions, score responses, detect low-quality response patterns, generate respondent-facing results, and save local review logs.
+This application is a research-informed leadership style self-assessment built from dissertation-derived leadership assessment materials. The current deployed prototype is a browser application hosted on Vercel. It uses JavaScript in the browser to present randomized and adaptive questions, score responses, detect low-quality response patterns, generate respondent-facing results, save local review logs, and post completed attempts to a server-side API route for database persistence.
 
-The next production architecture adds a server-side application layer and a persistent database so every completed attempt can be reviewed by an authenticated admin and analyzed over time.
+The persistence architecture uses a Vercel serverless function and Supabase Postgres so every completed attempt can be reviewed by the owner and analyzed over time once the required environment variables and database schema are configured.
 
 ## Current Deployment
 
 - Public URL: `https://2-0-leadership.vercel.app`
 - Source control: GitHub repository `campojo/2.0_Leadership`
-- Hosting: Vercel static deployment
+- Hosting: Vercel deployment
 - Runtime: Browser JavaScript
-- Persistence today: Browser `localStorage`
-- Permanent database: planned, not yet connected
+- Persistence today: Browser `localStorage` plus `/api/attempts` database save route
+- Permanent database: Supabase Postgres once configured in Vercel
 
 ## Current Tech Stack
 
@@ -24,14 +24,16 @@ The next production architecture adds a server-side application layer and a pers
 | Logic | Vanilla JavaScript | Adaptive assessment engine, scoring, response quality checks |
 | Data | JSON + JavaScript data bundle | Extracted leadership question bank and result descriptions |
 | Hosting | Vercel | Public shareable URL |
+| API | Vercel serverless function | Server-side attempt saving without exposing database credentials |
 | Source Control | GitHub | Versioning and Vercel deployment source |
-| Local Persistence | `localStorage` | Temporary saved attempts and debug review logs |
+| Local Persistence | `localStorage` | Backup saved attempts and debug review logs |
+| Database Persistence | Supabase Postgres | Permanent attempts, answers, scores, and review records |
 
-## Planned Production Stack
+## Production Stack Target
 
 | Layer | Recommended Choice | Purpose |
 | --- | --- | --- |
-| Frontend + Server | Next.js on Vercel | Public assessment, API routes, admin UI |
+| Frontend + Server | Vercel static frontend plus serverless API, later Next.js if admin UI grows | Public assessment, API routes, admin UI |
 | Database | Supabase Postgres | Permanent assessment attempts, answers, scores, admin analytics |
 | Auth | Supabase Auth or equivalent | Admin-only access |
 | API | Server-side routes | Validate and save attempts without exposing privileged database keys |
@@ -52,6 +54,8 @@ flowchart TD
   F --> G
   G --> H["Respondent result screen"]
   G --> I["Local review log in browser"]
+  G --> J["Server API route /api/attempts"]
+  J --> K["Supabase Postgres"]
 
   subgraph CurrentPrototype["Current Prototype"]
     B
@@ -63,15 +67,14 @@ flowchart TD
     G
     H
     I
+    J
   end
 
-  G -. "planned production save" .-> J["Server API route /api/attempts"]
-  J --> K["Supabase Postgres"]
   K --> L["Admin dashboard"]
   L --> M["Attempt review, trend analysis, item analysis"]
 ```
 
-## Production Data Flow
+## Database Save Flow
 
 ```mermaid
 sequenceDiagram
@@ -88,11 +91,12 @@ sequenceDiagram
   R->>A: Answers randomized/adaptive questions
   A->>A: Scores styles and checks response quality
   A->>R: Shows result or response-quality warning
-  A->>API: Sends completed attempt payload
+  A->>API: Sends completed attempt payload to /api/attempts
   API->>API: Validates payload
   API->>DB: Creates or links respondent record
   API->>DB: Saves attempt metadata
   API->>DB: Saves question/answer rows
+  API->>A: Confirms saved attempt
   Admin->>DB: Reviews attempts and analytics
 ```
 
@@ -309,6 +313,8 @@ erDiagram
     timestamptz completed_at
     uuid respondent_id
     uuid cohort_id
+    text respondent_label
+    text email
     text[] primary_styles
     text confidence
     boolean is_interpretable
@@ -445,29 +451,31 @@ The browser should not write directly to the database with privileged credential
 | `index.html` | App structure and screens |
 | `styles.css` | Responsive UI and visual styling |
 | `app.js` | Assessment engine, scoring, result rendering, local review logs |
+| `api/attempts.js` | Vercel serverless route that validates and saves completed attempts to Supabase |
 | `data/leadership-assessment.json` | Extracted assessment data |
 | `data/leadership-assessment.js` | Browser-loadable assessment data |
 | `ASSESSMENT_DESIGN.md` | Detailed assessment design decisions |
 | `ADMIN_ANALYTICS_PLAN.md` | Admin panel and analytics roadmap |
 | `PERSISTENCE_PLAN.md` | Database persistence plan |
-| `DATABASE_SCHEMA.sql` | Planned Supabase/Postgres schema |
+| `DATABASE_SCHEMA.sql` | Supabase/Postgres schema for permanent attempt storage |
+| `SUPABASE_SETUP.md` | Step-by-step Supabase and Vercel environment setup |
 
 ## Current Limitations
 
-- Results are not yet saved to a permanent database.
+- Permanent database saves require a Supabase project and Vercel environment variables.
 - Admin analytics are planned but not yet implemented.
 - Local review logs exist only in the browser that completed the assessment.
-- Respondent name is captured in the prototype, and email is optional, but identity is not yet stored in a permanent database.
+- Respondent name is captured in the prototype, and email is optional.
 - No authentication exists yet for admin-only views.
 - Timing metrics are not yet collected.
 
 ## Recommended Next Build Steps
 
-1. Convert the static prototype to a server-capable app, preferably Next.js on Vercel.
-2. Create a Supabase project.
-3. Apply `DATABASE_SCHEMA.sql`.
-4. Add a secure `/api/attempts` endpoint.
-5. Persist every completed attempt and answer row.
+1. Create a Supabase project.
+2. Apply `DATABASE_SCHEMA.sql`.
+3. Add `SUPABASE_URL` and `SUPABASE_SERVICE_ROLE_KEY` to Vercel environment variables.
+4. Redeploy the Vercel project.
+5. Complete a test assessment and verify rows in `respondents`, `assessment_attempts`, and `assessment_answers`.
 6. Add admin authentication.
 7. Build the admin attempts table.
 8. Build the admin analytics dashboard.
