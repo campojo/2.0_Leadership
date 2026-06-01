@@ -25,13 +25,14 @@ Instead:
 2. Browser saves a backup copy in `localStorage`.
 3. Browser sends the full result payload to `/api/attempts`.
 4. Server validates the payload.
-5. Server creates or links a respondent record from name/email.
-6. Server writes one row to `assessment_attempts`.
-7. Server writes all asked questions and answers to `assessment_answers`.
-8. Server emails the participant their result if email delivery is configured.
-9. Admin dashboard reads attempts after owner authentication.
+5. Server attempts database persistence if Supabase is configured.
+6. Server creates or links a respondent record from name/email.
+7. Server writes one row to `assessment_attempts`.
+8. Server writes all asked questions and answers to `assessment_answers`.
+9. Server attempts the participant result email if Resend is configured.
+10. Admin dashboard reads attempts after owner authentication.
 
-If the database is not configured yet, the app still keeps the local backup. If email is configured, result emails can still be sent even before Supabase is connected. Database or email setup warnings must not be shown on the respondent-facing result screen.
+If the database is not configured yet, the app still keeps the local backup. If email is configured, result emails can still be sent even before Supabase is connected. Database save failures and email failures are handled independently so one service cannot block the other. Database or email setup warnings must not be shown on the respondent-facing result screen.
 
 ## Persisted Fields
 

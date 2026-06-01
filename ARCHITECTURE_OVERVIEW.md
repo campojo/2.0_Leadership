@@ -56,6 +56,7 @@ flowchart TD
   G --> I["Local review log in browser"]
   G --> J["Server API route /api/attempts"]
   J --> K["Supabase Postgres"]
+  J --> O["Resend Email API"]
 
   subgraph CurrentPrototype["Current Prototype"]
     B
@@ -82,6 +83,7 @@ sequenceDiagram
   participant A as Assessment App
   participant API as Server API
   participant DB as Supabase Postgres
+  participant Email as Resend Email API
   participant Admin as Admin Dashboard
 
   R->>A: Opens assessment link
@@ -93,11 +95,16 @@ sequenceDiagram
   A->>R: Shows result or response-quality warning
   A->>API: Sends completed attempt payload to /api/attempts
   API->>API: Validates payload
-  API->>DB: Creates or links respondent record
-  API->>DB: Saves attempt metadata
-  API->>DB: Saves question/answer rows
-  API->>R: Emails result if email provider is configured
-  API->>A: Confirms saved attempt
+  opt Supabase is configured
+    API->>DB: Creates or links respondent record
+    API->>DB: Saves attempt metadata
+    API->>DB: Saves question/answer rows
+  end
+  opt Resend is configured
+    API->>Email: Sends participant result email
+    Email->>R: Delivers result email
+  end
+  API->>A: Confirms any completed delivery path or logs setup errors
   Admin->>DB: Reviews attempts and analytics
 ```
 

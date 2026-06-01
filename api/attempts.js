@@ -265,19 +265,40 @@ module.exports = async function handler(request, response) {
         return;
       }
 
-      const result = { saved: false, emailed: false };
+      const result = { saved: false, emailed: false, errors: [] };
 
       if (isSupabaseConfigured()) {
-        Object.assign(result, await saveAttempt(payload), { saved: true });
+        try {
+          Object.assign(result, await saveAttempt(payload), { saved: true });
+        } catch (error) {
+          result.errors.push({ service: "database", message: error.message || "Database save failed." });
+        }
       }
 
       if (isEmailConfigured()) {
-        await emailResult(payload);
-        result.emailed = true;
+        try {
+          await emailResult(payload);
+          result.emailed = true;
+        } catch (error) {
+          result.errors.push({ service: "email", message: error.message || "Result email failed." });
+        }
       }
 
       if (!result.saved && !result.emailed) {
-        json(response, 501, { error: "No database or email provider is configured." });
+        const configuredServices = {
+          database: isSupabaseConfigured(),
+          email: isEmailConfigured()
+        };
+        console.error("Assessment delivery failed.", {
+          attemptId: payload.id,
+          configuredServices,
+          errors: result.errors
+        });
+        json(response, 500, {
+          error: "Assessment result could not be saved or emailed.",
+          configuredServices,
+          errors: result.errors
+        });
         return;
       }
 
