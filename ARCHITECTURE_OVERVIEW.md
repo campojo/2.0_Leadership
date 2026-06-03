@@ -473,7 +473,20 @@ The browser should not write directly to the database with privileged credential
 | `ADMIN_ANALYTICS_PLAN.md` | Admin panel and analytics roadmap |
 | `PERSISTENCE_PLAN.md` | Database persistence plan |
 | `DATABASE_SCHEMA.sql` | Supabase/Postgres schema for permanent attempt storage |
+| `SUPABASE_VERIFY.sql` | Supabase SQL checks for stored respondents, attempts, and answers |
 | `SUPABASE_SETUP.md` | Step-by-step Supabase and Vercel environment setup |
+| `benchmark/respondents.json` | Synthetic respondent fixture for scoring regression testing |
+| `benchmark/run-benchmark.js` | Node benchmark runner that loads the current app scoring code |
+
+## Benchmark Workflow
+
+Run the scoring benchmark after any scoring, adaptive-questioning, item-selection, or classification update:
+
+```bash
+node benchmark/run-benchmark.js
+```
+
+The benchmark uses 15 controlled synthetic respondent patterns to confirm that clear single-style cases, dual-style cases, broad high-scoring cases, neutral cases, and low-quality response patterns still behave as expected.
 
 ## Current Limitations
 
@@ -493,6 +506,7 @@ The browser should not write directly to the database with privileged credential
 4. Add `SUPABASE_URL` and `SUPABASE_SERVICE_ROLE_KEY` to Vercel environment variables.
 5. Redeploy the Vercel project.
 6. Complete a test assessment and verify the result email plus rows in `respondents`, `assessment_attempts`, and `assessment_answers`.
-7. Add admin authentication.
-8. Build the admin attempts table.
-9. Build the admin analytics dashboard.
+7. Run `node benchmark/run-benchmark.js` before releasing scoring changes.
+8. Add admin authentication.
+9. Build the admin attempts table.
+10. Build the admin analytics dashboard.

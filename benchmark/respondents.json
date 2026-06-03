@@ -1,0 +1,242 @@
+[
+  {
+    "id": "clear_autocratic",
+    "name": "Clear Autocratic Respondent",
+    "description": "Clearly high Autocratic pattern with lower collaborative/autonomy styles.",
+    "answersByStyle": {
+      "Autocratic": [5, 5, 4, 5, 4],
+      "Charismatic": [3, 3, 2],
+      "Democratic": [2, 2, 3],
+      "Laissez-Faire": [2, 2, 1],
+      "Servant": [2, 3, 2],
+      "Situational": [3, 3, 3],
+      "Transactional": [3, 4, 3],
+      "Transformational": [3, 3, 2]
+    },
+    "expected": { "interpretable": true, "primaryStyles": ["Autocratic"] }
+  },
+  {
+    "id": "clear_servant",
+    "name": "Clear Servant Respondent",
+    "description": "Clearly high Servant pattern with lower control and low autonomy preference.",
+    "answersByStyle": {
+      "Autocratic": [1, 2, 2],
+      "Charismatic": [3, 3, 3],
+      "Democratic": [4, 4, 3],
+      "Laissez-Faire": [2, 2, 3],
+      "Servant": [5, 5, 4, 5, 4],
+      "Situational": [4, 3, 4],
+      "Transactional": [2, 2, 3],
+      "Transformational": [4, 4, 3]
+    },
+    "expected": { "interpretable": true, "primaryStyles": ["Servant"] }
+  },
+  {
+    "id": "clear_transformational",
+    "name": "Clear Transformational Respondent",
+    "description": "Clearly high Transformational pattern with moderate related styles.",
+    "answersByStyle": {
+      "Autocratic": [2, 2, 3],
+      "Charismatic": [4, 4, 3],
+      "Democratic": [3, 4, 3],
+      "Laissez-Faire": [2, 3, 2],
+      "Servant": [3, 4, 3],
+      "Situational": [4, 3, 4],
+      "Transactional": [2, 3, 3],
+      "Transformational": [5, 5, 4, 5, 4]
+    },
+    "expected": { "interpretable": true, "primaryStyles": ["Transformational"] }
+  },
+  {
+    "id": "all_c_neutral",
+    "name": "All C Neutral Respondent",
+    "description": "Selects the neutral middle option for every question.",
+    "answersByStyle": {
+      "Autocratic": [3, 3, 3],
+      "Charismatic": [3, 3, 3],
+      "Democratic": [3, 3, 3],
+      "Laissez-Faire": [3, 3, 3],
+      "Servant": [3, 3, 3],
+      "Situational": [3, 3, 3],
+      "Transactional": [3, 3, 3],
+      "Transformational": [3, 3, 3]
+    },
+    "expected": { "interpretable": false, "primaryStyles": [] }
+  },
+  {
+    "id": "dual_transformational_charismatic",
+    "name": "Dual Transformational Charismatic Respondent",
+    "description": "High Transformational and Charismatic, low Autocratic and Transactional, neutral elsewhere.",
+    "answersByStyle": {
+      "Autocratic": [1, 2, 2],
+      "Charismatic": [5, 4, 5, 4],
+      "Democratic": [3, 3, 3],
+      "Laissez-Faire": [3, 3, 3],
+      "Servant": [3, 4, 3],
+      "Situational": [3, 3, 4],
+      "Transactional": [1, 2, 2],
+      "Transformational": [5, 4, 5, 4]
+    },
+    "expected": { "interpretable": true, "primaryStyles": ["Charismatic", "Transformational"] }
+  },
+  {
+    "id": "dual_democratic_servant",
+    "name": "Dual Democratic Servant Respondent",
+    "description": "High Democratic and Servant, low Autocratic and Laissez-Faire, neutral elsewhere.",
+    "answersByStyle": {
+      "Autocratic": [1, 2, 1],
+      "Charismatic": [3, 3, 3],
+      "Democratic": [5, 4, 5, 4],
+      "Laissez-Faire": [1, 2, 2],
+      "Servant": [5, 4, 5, 4],
+      "Situational": [3, 4, 3],
+      "Transactional": [3, 3, 3],
+      "Transformational": [3, 3, 4]
+    },
+    "expected": { "interpretable": true, "primaryStyles": ["Democratic", "Servant"] }
+  },
+  {
+    "id": "dual_situational_transformational",
+    "name": "Dual Situational Transformational Respondent",
+    "description": "High Situational and Transformational, low control-heavy styles, neutral elsewhere.",
+    "answersByStyle": {
+      "Autocratic": [1, 2, 2],
+      "Charismatic": [3, 4, 3],
+      "Democratic": [3, 3, 4],
+      "Laissez-Faire": [3, 3, 3],
+      "Servant": [3, 4, 3],
+      "Situational": [5, 4, 5, 4],
+      "Transactional": [1, 2, 2],
+      "Transformational": [5, 4, 5, 4]
+    },
+    "expected": { "interpretable": true, "primaryStyles": ["Situational", "Transformational"] }
+  },
+  {
+    "id": "dual_transactional_autocratic",
+    "name": "Dual Transactional Autocratic Respondent",
+    "description": "High Transactional and Autocratic, low Servant and Democratic, neutral elsewhere.",
+    "answersByStyle": {
+      "Autocratic": [5, 4, 5, 4],
+      "Charismatic": [3, 3, 3],
+      "Democratic": [1, 2, 2],
+      "Laissez-Faire": [2, 2, 3],
+      "Servant": [1, 2, 2],
+      "Situational": [3, 3, 3],
+      "Transactional": [5, 4, 5, 4],
+      "Transformational": [3, 3, 3]
+    },
+    "expected": { "interpretable": true, "primaryStyles": ["Autocratic", "Transactional"] }
+  },
+  {
+    "id": "high_everywhere_varied",
+    "name": "High Everywhere Varied Respondent",
+    "description": "Endorses almost every style positively, but not with a one-option straight-line pattern.",
+    "answersByStyle": {
+      "Autocratic": [5, 4, 5],
+      "Charismatic": [4, 5, 4],
+      "Democratic": [5, 4, 4],
+      "Laissez-Faire": [4, 4, 5],
+      "Servant": [5, 4, 5],
+      "Situational": [4, 5, 5],
+      "Transactional": [4, 4, 5],
+      "Transformational": [5, 5, 4]
+    },
+    "expected": { "interpretable": true, "primaryStyleCount": 1 }
+  },
+  {
+    "id": "high_everywhere_straightline",
+    "name": "High Everywhere Straight-Line Respondent",
+    "description": "Selects Strongly Agree for every question.",
+    "answersByStyle": {
+      "Autocratic": [5, 5, 5],
+      "Charismatic": [5, 5, 5],
+      "Democratic": [5, 5, 5],
+      "Laissez-Faire": [5, 5, 5],
+      "Servant": [5, 5, 5],
+      "Situational": [5, 5, 5],
+      "Transactional": [5, 5, 5],
+      "Transformational": [5, 5, 5]
+    },
+    "expected": { "interpretable": false, "primaryStyles": [] }
+  },
+  {
+    "id": "low_everywhere_varied",
+    "name": "Low Everywhere Varied Respondent",
+    "description": "Generally low endorsement, but with enough variation to identify the strongest relative tendency.",
+    "answersByStyle": {
+      "Autocratic": [2, 1, 2],
+      "Charismatic": [2, 2, 1],
+      "Democratic": [2, 2, 3],
+      "Laissez-Faire": [1, 2, 2],
+      "Servant": [2, 3, 2],
+      "Situational": [3, 2, 2],
+      "Transactional": [1, 2, 2],
+      "Transformational": [2, 2, 3]
+    },
+    "expected": { "interpretable": true, "primaryStyleCount": 1 }
+  },
+  {
+    "id": "low_everywhere_straightline",
+    "name": "Low Everywhere Straight-Line Respondent",
+    "description": "Selects Strongly Disagree for every question.",
+    "answersByStyle": {
+      "Autocratic": [1, 1, 1],
+      "Charismatic": [1, 1, 1],
+      "Democratic": [1, 1, 1],
+      "Laissez-Faire": [1, 1, 1],
+      "Servant": [1, 1, 1],
+      "Situational": [1, 1, 1],
+      "Transactional": [1, 1, 1],
+      "Transformational": [1, 1, 1]
+    },
+    "expected": { "interpretable": false, "primaryStyles": [] }
+  },
+  {
+    "id": "neutral_everywhere_straightline",
+    "name": "Neutral Everywhere Straight-Line Respondent",
+    "description": "A second neutral-only respondent to make sure middle-option straight-lining remains invalid.",
+    "answersByStyle": {
+      "Autocratic": [3, 3, 3, 3],
+      "Charismatic": [3, 3, 3, 3],
+      "Democratic": [3, 3, 3, 3],
+      "Laissez-Faire": [3, 3, 3, 3],
+      "Servant": [3, 3, 3, 3],
+      "Situational": [3, 3, 3, 3],
+      "Transactional": [3, 3, 3, 3],
+      "Transformational": [3, 3, 3, 3]
+    },
+    "expected": { "interpretable": false, "primaryStyles": [] }
+  },
+  {
+    "id": "neutral_with_democratic_situational_signal",
+    "name": "Neutral With Democratic Situational Signal",
+    "description": "Mostly neutral but with honest leaning toward Democratic and Situational.",
+    "answersByStyle": {
+      "Autocratic": [3, 2, 3],
+      "Charismatic": [3, 3, 3],
+      "Democratic": [4, 4, 5, 4],
+      "Laissez-Faire": [3, 3, 2],
+      "Servant": [3, 3, 4],
+      "Situational": [4, 5, 4, 4],
+      "Transactional": [3, 2, 3],
+      "Transformational": [3, 4, 3]
+    },
+    "expected": { "interpretable": true, "primaryStyles": ["Democratic", "Situational"] }
+  },
+  {
+    "id": "inconsistent_servant_resolved_by_transformational",
+    "name": "Inconsistent Servant Resolved By Transformational",
+    "description": "Servant has a mixed strong-disagree/strong-agree pattern while Transformational is consistently high.",
+    "answersByStyle": {
+      "Autocratic": [2, 2, 3],
+      "Charismatic": [3, 4, 3],
+      "Democratic": [3, 4, 3],
+      "Laissez-Faire": [2, 3, 3],
+      "Servant": [1, 5, 3, 5, 1],
+      "Situational": [4, 3, 4],
+      "Transactional": [2, 3, 2],
+      "Transformational": [5, 4, 5, 4]
+    },
+    "expected": { "interpretable": true, "primaryStyles": ["Transformational"] }
+  }
+]

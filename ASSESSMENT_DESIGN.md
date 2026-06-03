@@ -157,6 +157,20 @@ The result language must not contradict the provided dissertation-derived source
 
 Respondent-facing output must not reveal technical save status, database configuration, confidence labels, scoring internals, or debugging language. Those details are reserved for admin review and stored attempt records.
 
+## Benchmark Regression Testing
+
+Scoring, adaptive-questioning, and classification changes should be checked against the benchmark fixture before release.
+
+The benchmark lives in `benchmark/respondents.json` and currently includes 15 synthetic respondents covering clear single-style patterns, dual-style patterns, all-neutral responses, high-everywhere responses, low-everywhere responses, and inconsistent within-style responses.
+
+Run:
+
+```bash
+node benchmark/run-benchmark.js
+```
+
+The benchmark should pass before pushing scoring or model changes. If an expectation changes intentionally, update the fixture and document why the new behavior is preferred.
+
 ## Persistence
 
 The final product must be shareable by link on mobile and desktop.
