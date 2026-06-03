@@ -82,9 +82,9 @@ Follow-up questions should be selected when:
 - The top style does not have enough separation from the second style.
 - The system needs to distinguish between two plausible styles.
 
-The assessment may return two equally likely styles, but only after additional targeted questions fail to create a reliable distinction. It should never return more than two primary styles.
+The assessment may return two equally likely styles, but only after additional targeted questions support a true two-style result. It should never return more than two primary styles.
 
-If more than two styles remain high and close together after targeted questioning, the app should not assign a leadership type.
+If more than two styles remain high and close together after targeted questioning, the app should use relative evidence indicators to select the strongest style rather than withholding a result solely because the respondent endorsed many positive leadership behaviors.
 
 ## Review Navigation
 
@@ -126,20 +126,21 @@ Style scores should use the answered questions for that style. Scores should be 
 
 ## Classification and Response Quality
 
-The app may calculate confidence and diagnostic values internally for admin review, but respondent-facing output should be decisive: assign one style, assign two styles only when justified, or assign no style.
+The app may calculate confidence and diagnostic values internally for admin review, but respondent-facing output should be decisive: assign one style, assign two styles only when justified, or assign no style only when the response pattern itself is not interpretable.
 
 Signals include:
 
 - Separation between the top style and second style.
 - Number of questions answered for the leading style.
+- Relative support indicators, such as strong scored answers, contradictions, and style averages.
 - Internal consistency within each style.
 - Straight-lining behavior, such as selecting the same answer repeatedly.
 - Low variance across all answers.
 - Contradictions between paired positive and reverse-keyed items.
 
-The assessment should not accuse the respondent of gaming the system. It may mark a result as lower confidence and recommend retaking if response quality is weak.
+The assessment should not accuse the respondent of gaming the system. It may withhold classification only when response quality is weak enough that the pattern is not interpretable.
 
-If a response pattern is not interpretable, such as selecting the same answer for nearly all questions, using almost no variation, or scoring high across more than two styles without enough separation, the attempt should be saved, but the app should not present the output as a meaningful leadership profile. Instead, it should explain that the response pattern does not provide enough evidence to assign a leadership style.
+If a response pattern is not interpretable, such as selecting the same answer for nearly all questions, using almost no variation, or selecting mostly neutral responses, the attempt should be saved, but the app should not present the output as a meaningful leadership profile. Instead, it should explain that the response pattern does not provide enough evidence to assign a leadership style.
 
 ## Result Output
 

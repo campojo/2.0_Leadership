@@ -158,7 +158,7 @@ The assessment is a self-assessment. Questions are presented in first person whe
 
 The assessment asks no more than 40 scored questions.
 
-The design goal is to stop earlier when the system has enough confidence to classify the respondent.
+The design goal is to stop earlier when the system has enough evidence to classify the respondent, while still completing the full baseline coverage before any result is produced.
 
 ### Randomization
 
@@ -184,7 +184,7 @@ Follow-up questions are selected when:
 - The top style does not have enough separation from the second style.
 - The system needs to distinguish between two plausible styles.
 
-The result may include two equally likely styles, but never more than two. If more than two styles remain high and close after targeted questioning, the app withholds classification instead of guessing.
+The result may include two equally likely styles, but never more than two. If more than two styles remain high and close after targeted questioning, the app uses relative evidence indicators to select the strongest style instead of withholding classification solely because multiple positive leadership behaviors were endorsed.
 
 ### Scoring
 
@@ -223,10 +223,10 @@ Current checks include:
 - Mostly neutral responses.
 - Heavy extreme-answer pattern with little variation.
 - Derived-question ratio.
-- High-score clustering across more than two leadership styles.
-- Insufficient score separation after adaptive follow-up.
+- High-score clustering across more than two leadership styles, used as a reason to ask follow-up questions.
+- Insufficient score separation after adaptive follow-up, resolved with relative evidence indicators unless the response pattern is invalid.
 
-If a response pattern is not interpretable, the attempt is saved, but the app shows `No Leadership Style Assigned` instead of presenting a leadership style as meaningful.
+If a response pattern is not interpretable because of straight-lining, very low variation, mostly neutral responses, or an extreme one-option response pattern, the attempt is saved, but the app shows `No Leadership Style Assigned` instead of presenting a leadership style as meaningful.
 
 ## Respondent Experience
 
@@ -237,7 +237,7 @@ If a response pattern is not interpretable, the attempt is saved, but the app sh
 5. Respondent may go back and review previous questions.
 6. The app preserves answers when reviewing.
 7. The app computes style scores and response-quality flags.
-8. Respondent receives one assigned style, two assigned styles, or a no-classification result if the pattern is not interpretable.
+8. Respondent receives one assigned style, two assigned styles, or a no-classification result only if the response pattern is not interpretable.
 
 ## Current Review Logs
 

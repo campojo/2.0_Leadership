@@ -1,10 +1,12 @@
 const MAX_QUESTIONS = 40;
 const BASELINE_PER_STYLE = 3;
 const MIN_LEAD_GAP = 8;
-const MIN_TOP_STYLE_ANSWERS = 4;
+const MIN_TOP_STYLE_ANSWERS = 3;
 const MAX_DERIVED_RATIO = 0.25;
 const HIGH_SCORE_CLUSTER_THRESHOLD = 70;
 const HIGH_SCORE_CLUSTER_GAP = 12;
+const CLOSE_SCORE_GAP = 4;
+const EXTENDED_DIFFERENTIATION_QUESTIONS = 32;
 
 const sourceData = window.LEADERSHIP_DATA;
 const styles = sourceData.styles;
@@ -730,12 +732,36 @@ function highScoreCluster(scoresData) {
   ));
 }
 
+function styleEvidence(style, scoresData) {
+  const values = scoresData.raw[style]?.values || [];
+  return {
+    style,
+    score: scoresData.scores[style] || 0,
+    count: values.length,
+    highSupport: values.filter((value) => value >= 4).length,
+    lowContradiction: values.filter((value) => value <= 2).length,
+    average: values.length ? values.reduce((sum, value) => sum + value, 0) / values.length : 0,
+    spread: values.length ? Math.max(...values) - Math.min(...values) : 0
+  };
+}
+
+function rankedStylesWithEvidence(scoresData) {
+  return styles
+    .map((style) => styleEvidence(style, scoresData))
+    .sort((a, b) => (
+      b.score - a.score
+      || b.highSupport - a.highSupport
+      || a.lowContradiction - b.lowContradiction
+      || b.average - a.average
+      || b.count - a.count
+      || a.style.localeCompare(b.style)
+    ));
+}
+
 function classificationDecision(scoresData, quality) {
-  const [first, second, third] = scoresData.ranked;
-  const gap = first[1] - second[1];
-  const thirdGap = second[1] - (third?.[1] || 0);
-  const topCount = scoresData.raw[first[0]].count;
-  const secondCount = scoresData.raw[second[0]].count;
+  const [first, second, third] = rankedStylesWithEvidence(scoresData);
+  const gap = first.score - second.score;
+  const thirdGap = second.score - (third?.score || 0);
   const cluster = highScoreCluster(scoresData);
   const flags = [...quality.flags];
 
@@ -744,28 +770,25 @@ function classificationDecision(scoresData, quality) {
   }
 
   if (cluster.length > 2) {
-    flags.push("Scores were high across more than two leadership styles without enough differentiation.");
+    flags.push("Several leadership styles scored closely together; classification used relative strength indicators.");
   }
 
   const validTwoStyleResult = gap <= 3
-    && thirdGap >= MIN_LEAD_GAP
-    && topCount >= MIN_TOP_STYLE_ANSWERS
-    && secondCount >= MIN_TOP_STYLE_ANSWERS
-    && cluster.length <= 2;
+    && thirdGap >= CLOSE_SCORE_GAP
+    && first.count >= MIN_TOP_STYLE_ANSWERS
+    && second.count >= MIN_TOP_STYLE_ANSWERS;
 
   if (validTwoStyleResult) {
-    return { primaryStyles: [first[0], second[0]], isInterpretable: true, flags };
+    return { primaryStyles: [first.style, second.style], isInterpretable: true, flags };
   }
 
-  const validSingleStyleResult = gap >= MIN_LEAD_GAP
-    && topCount >= MIN_TOP_STYLE_ANSWERS
-    && cluster.length <= 2;
+  const validSingleStyleResult = first.count >= MIN_TOP_STYLE_ANSWERS;
 
   if (validSingleStyleResult) {
-    return { primaryStyles: [first[0]], isInterpretable: true, flags };
+    return { primaryStyles: [first.style], isInterpretable: true, flags };
   }
 
-  flags.push("Scores did not separate enough to assign a leadership style.");
+  flags.push("Additional questions are needed before assigning a leadership style.");
   return { primaryStyles: [], isInterpretable: false, flags };
 }
 
@@ -807,26 +830,34 @@ function getUnusedQuestions(style, includeDerived = false) {
 }
 
 function shouldStop() {
-  if (answeredCount() < styles.length) return false;
+  const minimumBaselineQuestions = styles.length * BASELINE_PER_STYLE;
+  if (answeredCount() < minimumBaselineQuestions) return false;
   if (answeredCount() >= MAX_QUESTIONS) return true;
 
   const scoresData = calculateScores();
-  const [top, second] = scoresData.ranked;
-  const topCount = scoresData.raw[top[0]].count;
-  const gap = top[1] - second[1];
+  const ranked = rankedStylesWithEvidence(scoresData);
+  const [top, second, third] = ranked;
+  const gap = top.score - second.score;
+  const thirdGap = second.score - (third?.score || 0);
+  const topCount = top.count;
   const quality = responseQuality();
   const decision = classificationDecision(scoresData, quality);
+  const cluster = highScoreCluster(scoresData);
 
-  if (quality.invalid && answeredCount() >= styles.length * BASELINE_PER_STYLE) return true;
-  if (decision.isInterpretable) return true;
+  if (quality.invalid) return true;
+  if (!decision.isInterpretable) return false;
+  if (gap >= MIN_LEAD_GAP && topCount >= MIN_TOP_STYLE_ANSWERS) return true;
+  if (gap <= 3 && thirdGap >= CLOSE_SCORE_GAP && answeredCount() >= EXTENDED_DIFFERENTIATION_QUESTIONS) return true;
+  if (cluster.length > 2 && answeredCount() < EXTENDED_DIFFERENTIATION_QUESTIONS) return false;
+  if (answeredCount() >= EXTENDED_DIFFERENTIATION_QUESTIONS && topCount >= MIN_TOP_STYLE_ANSWERS) return true;
 
   return false;
 }
 
 function nextAdaptiveQuestion() {
   const scoresData = calculateScores();
-  const ranked = scoresData.ranked;
-  const topStyles = ranked.slice(0, 3).map(([style]) => style);
+  const ranked = rankedStylesWithEvidence(scoresData);
+  const topStyles = ranked.slice(0, 3).map((item) => item.style);
   const lowestCoverage = styles
     .map((style) => ({ style, count: scoresData.raw[style].count }))
     .sort((a, b) => a.count - b.count)[0];
