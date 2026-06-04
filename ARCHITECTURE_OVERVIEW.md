@@ -491,6 +491,7 @@ The benchmark uses 15 controlled synthetic respondent patterns to confirm that c
 ## Current Limitations
 
 - Permanent database saves require a Supabase project and Vercel environment variables.
+- Supabase server-side API access supports the newer `sb_secret_` secret key and legacy `service_role` key, both stored only in Vercel.
 - Result emails require Resend environment variables.
 - Admin analytics are planned but not yet implemented.
 - Local review logs exist only in the browser that completed the assessment.

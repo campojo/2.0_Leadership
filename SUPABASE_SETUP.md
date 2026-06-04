@@ -31,7 +31,7 @@ The Supabase project URL.
 
 `SUPABASE_SERVICE_ROLE_KEY`
 
-The Supabase service-role key. This key must only be stored in Vercel environment variables. Do not put it in `app.js`, `index.html`, or any browser-loaded file.
+The Supabase server-side key. With the newer Supabase API key screen, this is the secret key that starts with `sb_secret_`. With the legacy API key screen, this is the `service_role` key. This key must only be stored in Vercel environment variables. Do not put it in `app.js`, `index.html`, or any browser-loaded file.
 
 `ADMIN_REVIEW_TOKEN`
 
