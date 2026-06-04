@@ -8,7 +8,7 @@ Run it after every scoring, question-selection, or result-classification update:
 node benchmark/run-benchmark.js
 ```
 
-The benchmark loads the actual browser scoring code from `app.js`, applies the synthetic respondent answer fixtures in `benchmark/respondents.json`, and fails if the current model output no longer matches the expected behavior.
+The benchmark loads the actual browser scoring code from `app.js`, expands each fixture to the production assessment shape of five answers per style, applies the synthetic respondent answer fixtures in `benchmark/respondents.json`, and fails if the current model output no longer matches the expected behavior.
 
 ## Fixture Coverage
 

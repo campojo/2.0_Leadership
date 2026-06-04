@@ -156,9 +156,9 @@ The assessment is a self-assessment. Questions are presented in first person whe
 
 ### Question Count
 
-The assessment asks no more than 40 scored questions.
+The assessment asks exactly 40 scored questions.
 
-The design goal is to stop earlier when the system has enough evidence to classify the respondent, while still completing the full baseline coverage before any result is produced.
+The design goal is to use the full question allowance so each leadership style receives equal coverage and scoring is less dependent on a small number of broadly agreeable items.
 
 ### Randomization
 
@@ -168,13 +168,13 @@ The question’s leadership style is hidden while the respondent answers to redu
 
 ### Minimum Coverage
 
-The baseline phase asks questions across all eight leadership styles. The preferred baseline is three randomized questions per style, for 24 initial items.
+The baseline phase asks questions across all eight leadership styles. The required baseline is five randomized questions per style, for 40 total items.
 
 Baseline questions come from the original source question pool when the source block correctly maps to the measured style. The corrected Autocratic item pool is used instead of the original mislabeled Autocratic source block.
 
 ### Adaptive Questioning
 
-After the baseline phase, the app asks follow-up questions only when they improve classification quality.
+The current production flow uses the full 40-question baseline and does not stop early. Adaptive follow-up logic remains available for future experimentation, but production respondents complete all 40 questions.
 
 Follow-up questions are selected when:
 
@@ -224,7 +224,7 @@ Current checks include:
 - Heavy extreme-answer pattern with little variation.
 - Derived-question ratio.
 - High-score clustering across more than two leadership styles, used as a reason to ask follow-up questions.
-- Insufficient score separation after adaptive follow-up, resolved with relative evidence indicators unless the response pattern is invalid.
+- Insufficient score separation after the full 40-question baseline, resolved with relative evidence indicators unless the response pattern is invalid.
 
 If a response pattern is not interpretable because of straight-lining, very low variation, mostly neutral responses, or an extreme one-option response pattern, the attempt is saved, but the app shows `No Leadership Style Assigned` instead of presenting a leadership style as meaningful.
 

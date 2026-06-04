@@ -173,7 +173,7 @@
       "Transactional": [1, 2, 2],
       "Transformational": [2, 2, 3]
     },
-    "expected": { "interpretable": true, "primaryStyleCount": 1 }
+    "expected": { "interpretable": true, "primaryStyles": ["Servant", "Situational"] }
   },
   {
     "id": "low_everywhere_straightline",

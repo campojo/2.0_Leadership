@@ -25,15 +25,15 @@ The active question bank includes eight leadership styles:
 
 ## Question Count
 
-The app must ask no more than 40 scored assessment questions.
+The app asks exactly 40 scored assessment questions.
 
-The design goal is to ask fewer than 40 whenever confidence is sufficient. The assessment should not continue asking questions merely to fill a quota.
+The current design uses the full 40-question allowance so each leadership style receives equal coverage and the result is not overly dependent on a small number of broadly agreeable items.
 
 ## Randomization
 
 Questions must be randomized so respondents do not receive all questions from one leadership style in a block.
 
-The baseline phase should include coverage across every leadership style before narrowing adaptively. Baseline items are randomized and interleaved so the respondent does not receive all questions from one style together.
+The baseline phase includes coverage across every leadership style. Baseline items are randomized and interleaved so the respondent does not receive all questions from one style together.
 
 During the assessment, the app must not display the leadership style/category associated with the current question. This reduces obvious response gaming, especially for styles respondents may perceive as desirable or undesirable.
 
@@ -63,17 +63,17 @@ This correction prevents general positive leadership behaviors from being incorr
 
 ## Minimum Coverage
 
-At least one scored question from every leadership style must be answered before a result can be produced.
+At least five scored questions from every leadership style must be answered before a result can be produced.
 
-The preferred baseline is three questions per style, randomized, for 24 initial questions. This gives each style a stronger initial signal while keeping the assessment under the 40-question maximum.
+The required baseline is five questions per style, randomized and interleaved, for 40 total questions.
 
 Baseline questions should come from the original source question pool whenever the source block correctly maps to the style being measured. The corrected Autocratic item pool is used instead of the original mislabeled Autocratic source block.
 
 ## Adaptive Questioning
 
-After the baseline phase, the app should ask follow-up questions only where they improve classification quality.
+The current 40-question design uses the full baseline as the assessment. Adaptive follow-up logic remains available in the codebase for future experimentation, but the production flow does not stop early or ask fewer than 40 questions.
 
-Follow-up questions should be selected when:
+If adaptive follow-up is reintroduced later, follow-up questions should be selected when:
 
 - The leading styles are close.
 - More than two styles are scoring high together.

@@ -1,12 +1,11 @@
 const MAX_QUESTIONS = 40;
-const BASELINE_PER_STYLE = 3;
+const BASELINE_PER_STYLE = 5;
 const MIN_LEAD_GAP = 8;
 const MIN_TOP_STYLE_ANSWERS = 3;
 const MAX_DERIVED_RATIO = 0.25;
 const HIGH_SCORE_CLUSTER_THRESHOLD = 70;
 const HIGH_SCORE_CLUSTER_GAP = 12;
 const CLOSE_SCORE_GAP = 4;
-const EXTENDED_DIFFERENTIATION_QUESTIONS = 32;
 
 const sourceData = window.LEADERSHIP_DATA;
 const styles = sourceData.styles;
@@ -794,7 +793,10 @@ function classificationDecision(scoresData, quality) {
 
 function buildBaselineQueue() {
   const perStyle = styles.flatMap((style) => {
-    const sourceItems = questionBank.filter((question) => question.style === style);
+    const sourceItems = questionBank.filter((question) => (
+      question.style === style
+      && (!question.derived || String(question.id).startsWith("corrected_autocratic_"))
+    ));
     return shuffle(sourceItems).slice(0, BASELINE_PER_STYLE);
   });
 
@@ -830,28 +832,7 @@ function getUnusedQuestions(style, includeDerived = false) {
 }
 
 function shouldStop() {
-  const minimumBaselineQuestions = styles.length * BASELINE_PER_STYLE;
-  if (answeredCount() < minimumBaselineQuestions) return false;
-  if (answeredCount() >= MAX_QUESTIONS) return true;
-
-  const scoresData = calculateScores();
-  const ranked = rankedStylesWithEvidence(scoresData);
-  const [top, second, third] = ranked;
-  const gap = top.score - second.score;
-  const thirdGap = second.score - (third?.score || 0);
-  const topCount = top.count;
-  const quality = responseQuality();
-  const decision = classificationDecision(scoresData, quality);
-  const cluster = highScoreCluster(scoresData);
-
-  if (quality.invalid) return true;
-  if (!decision.isInterpretable) return false;
-  if (gap >= MIN_LEAD_GAP && topCount >= MIN_TOP_STYLE_ANSWERS) return true;
-  if (gap <= 3 && thirdGap >= CLOSE_SCORE_GAP && answeredCount() >= EXTENDED_DIFFERENTIATION_QUESTIONS) return true;
-  if (cluster.length > 2 && answeredCount() < EXTENDED_DIFFERENTIATION_QUESTIONS) return false;
-  if (answeredCount() >= EXTENDED_DIFFERENTIATION_QUESTIONS && topCount >= MIN_TOP_STYLE_ANSWERS) return true;
-
-  return false;
+  return answeredCount() >= MAX_QUESTIONS;
 }
 
 function nextAdaptiveQuestion() {
@@ -924,7 +905,7 @@ function renderQuestion() {
 
   state.currentQuestion = question;
   state.selectedValue = existingAnswer ? existingAnswer.value : null;
-  progressText.textContent = `Question ${state.currentIndex + 1} of up to ${MAX_QUESTIONS}`;
+  progressText.textContent = `Question ${state.currentIndex + 1} of ${MAX_QUESTIONS}`;
   progressPercent.textContent = `${progress}%`;
   progressBar.style.width = `${Math.max(progress, 4)}%`;
   dimensionLabel.textContent = "Assessment Item";

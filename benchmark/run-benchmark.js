@@ -5,6 +5,7 @@ const vm = require("vm");
 const repoRoot = path.resolve(__dirname, "..");
 const respondentsPath = path.join(__dirname, "respondents.json");
 const respondents = JSON.parse(fs.readFileSync(respondentsPath, "utf8"));
+const ANSWERS_PER_STYLE = 5;
 
 function mockElement() {
   return {
@@ -74,7 +75,9 @@ function buildAnswers(respondent, styles) {
       throw new Error(`${respondent.id} is missing answers for ${style}.`);
     }
 
-    return values.map((value, index) => ({
+    const expandedValues = Array.from({ length: ANSWERS_PER_STYLE }, (_, index) => values[index % values.length]);
+
+    return expandedValues.map((value, index) => ({
       questionId: `${respondent.id}_${style.toLowerCase().replace(/[^a-z0-9]+/g, "_")}_${index + 1}`,
       text: `Benchmark item for ${style}`,
       style,
