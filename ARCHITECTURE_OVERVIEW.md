@@ -469,6 +469,7 @@ The browser should not write directly to the database with privileged credential
 | `api/attempts.js` | Vercel serverless route that validates attempts, saves to Supabase when configured, and emails results when configured |
 | `data/leadership-assessment.json` | Extracted assessment data |
 | `data/leadership-assessment.js` | Browser-loadable assessment data |
+| `QUESTION_BANK_REVIEW.md` | Human-readable inventory of every active question, category, direction, provenance, and selection status |
 | `ASSESSMENT_DESIGN.md` | Detailed assessment design decisions |
 | `ADMIN_ANALYTICS_PLAN.md` | Admin panel and analytics roadmap |
 | `PERSISTENCE_PLAN.md` | Database persistence plan |
@@ -477,6 +478,7 @@ The browser should not write directly to the database with privileged credential
 | `SUPABASE_SETUP.md` | Step-by-step Supabase and Vercel environment setup |
 | `benchmark/respondents.json` | Synthetic respondent fixture for scoring regression testing |
 | `benchmark/run-benchmark.js` | Node benchmark runner that loads the current app scoring code |
+| `benchmark/export-question-bank.js` | Regenerates the active question-bank review from the current app code |
 
 ## Benchmark Workflow
 
