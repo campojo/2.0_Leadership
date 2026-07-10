@@ -605,12 +605,83 @@ function strengthLabel(score) {
   return "Strong tendency";
 }
 
-function barWidthForScore(score) {
-  return Math.max(4, Math.min(100, Math.round(((score - MIN_STYLE_SCORE) / (MAX_STYLE_SCORE - MIN_STYLE_SCORE)) * 100)));
-}
-
 function styleSummary(style, score) {
   return sourceData.scoreDescriptions[style]?.[tendencyFor(score)] || "";
+}
+
+function radarRatio(score) {
+  return Math.max(0, Math.min(1, (score - MIN_STYLE_SCORE) / (MAX_STYLE_SCORE - MIN_STYLE_SCORE)));
+}
+
+function polarPoint(center, radius, index, total) {
+  const angle = (-Math.PI / 2) + ((Math.PI * 2 * index) / total);
+  return {
+    x: center + Math.cos(angle) * radius,
+    y: center + Math.sin(angle) * radius,
+    angle
+  };
+}
+
+function renderLeadershipMap(payload, ranked, hasClassification) {
+  const center = 180;
+  const maxRadius = 112;
+  const total = styles.length;
+  const stylePoints = styles.map((style, index) => {
+    const ratio = radarRatio(payload.scores[style]);
+    const point = polarPoint(center, maxRadius * ratio, index, total);
+    const labelPoint = polarPoint(center, maxRadius + 34, index, total);
+    const axisPoint = polarPoint(center, maxRadius, index, total);
+    return { style, ratio, point, labelPoint, axisPoint };
+  });
+  const polygonPoints = stylePoints.map(({ point }) => `${point.x.toFixed(1)},${point.y.toFixed(1)}`).join(" ");
+  const vector = stylePoints.reduce((memo, item) => {
+    memo.x += Math.cos(item.axisPoint.angle) * item.ratio;
+    memo.y += Math.sin(item.axisPoint.angle) * item.ratio;
+    memo.weight += item.ratio;
+    return memo;
+  }, { x: 0, y: 0, weight: 0 });
+  const pull = vector.weight ? Math.min(1, Math.hypot(vector.x, vector.y) / vector.weight) : 0;
+  const landingAngle = Math.atan2(vector.y, vector.x);
+  const landingRadius = maxRadius * pull;
+  const landing = {
+    x: center + Math.cos(landingAngle) * landingRadius,
+    y: center + Math.sin(landingAngle) * landingRadius
+  };
+  const pullLabel = pull < 0.18 ? "Balanced across styles" : pull < 0.38 ? "Moderately differentiated" : "Concentrated tendency";
+
+  return `
+    <section class="leadership-map" aria-label="Leadership style map">
+      <div class="map-copy">
+        <h3>Leadership Style Map</h3>
+        <p>The marker shows where your overall pattern lands. Near the center means your answers are spread across styles; closer to an edge means one direction is pulling more strongly.</p>
+        <strong>${hasClassification ? pullLabel : "Review response pattern"}</strong>
+      </div>
+      <svg class="radar-map" viewBox="0 0 360 360" role="img" aria-label="Dartboard style leadership map">
+        <circle class="radar-ring" cx="${center}" cy="${center}" r="28"></circle>
+        <circle class="radar-ring" cx="${center}" cy="${center}" r="56"></circle>
+        <circle class="radar-ring" cx="${center}" cy="${center}" r="84"></circle>
+        <circle class="radar-ring outer" cx="${center}" cy="${center}" r="${maxRadius}"></circle>
+        ${stylePoints.map(({ style, labelPoint, axisPoint }) => `
+          <line class="radar-axis" x1="${center}" y1="${center}" x2="${axisPoint.x.toFixed(1)}" y2="${axisPoint.y.toFixed(1)}"></line>
+          <text class="radar-label" x="${labelPoint.x.toFixed(1)}" y="${labelPoint.y.toFixed(1)}" text-anchor="middle">${style}</text>
+        `).join("")}
+        <polygon class="radar-shape ${hasClassification ? "" : "muted"}" points="${polygonPoints}"></polygon>
+        ${stylePoints.map(({ point }) => `
+          <circle class="radar-style-point" cx="${point.x.toFixed(1)}" cy="${point.y.toFixed(1)}" r="4"></circle>
+        `).join("")}
+        <circle class="radar-center" cx="${center}" cy="${center}" r="4"></circle>
+        <circle class="radar-landing" cx="${landing.x.toFixed(1)}" cy="${landing.y.toFixed(1)}" r="${hasClassification ? 9 : 7}"></circle>
+      </svg>
+      <div class="map-legend" aria-label="Leadership tendency labels">
+        ${ranked.map(([style, score]) => `
+          <article class="${payload.primaryStyles.includes(style) ? "primary-style" : ""} ${hasClassification ? "" : "muted-score"}">
+            <span>${style}</span>
+            <strong>${strengthLabel(score)}</strong>
+          </article>
+        `).join("")}
+      </div>
+    </section>
+  `;
 }
 
 function resultPayload() {
@@ -620,8 +691,8 @@ function resultPayload() {
   const resultSummary = !decision.isInterpretable
     ? "Your response pattern does not provide enough evidence to assign a leadership style. This can happen when answers are too evenly distributed, too inconsistent, or do not provide enough differentiation between styles."
     : decision.primaryStyles.length === 2
-    ? `Your strongest tendencies are ${decision.primaryStyles[0]} and ${decision.primaryStyles[1]}. The bars below show how strongly your answers aligned with each leadership style.`
-    : `Your strongest tendency is ${decision.primaryStyles[0]}. The bars below show how strongly your answers aligned with each leadership style.`;
+    ? `Your strongest tendencies are ${decision.primaryStyles[0]} and ${decision.primaryStyles[1]}. The leadership map below shows how your answers are distributed across styles.`
+    : `Your strongest tendency is ${decision.primaryStyles[0]}. The leadership map below shows how your answers are distributed across styles.`;
 
   return {
     id: crypto.randomUUID(),
@@ -634,7 +705,6 @@ function resultPayload() {
     primaryStyles: decision.primaryStyles,
     scores: scoresData.scores,
     scoreLabels: Object.fromEntries(Object.entries(scoresData.scores).map(([style, score]) => [style, strengthLabel(score)])),
-    scoreBars: Object.fromEntries(Object.entries(scoresData.scores).map(([style, score]) => [style, barWidthForScore(score)])),
     confidence: quality.invalid ? "Invalid response pattern" : "Arithmetic scoring",
     quality: {
       ...quality,
@@ -844,17 +914,7 @@ function renderResults() {
   profileSummary.textContent = payload.resultSummary;
   overallScore.textContent = hasClassification ? topLabel.replace(" tendency", "") : "Review";
 
-  dimensionScores.innerHTML = ranked
-    .map(([style, score]) => `
-      <article class="score-card ${payload.primaryStyles.includes(style) ? "primary-style" : ""} ${hasClassification ? "" : "muted-score"}">
-        <header>
-          <span>${style}</span>
-          <strong>${strengthLabel(score)}</strong>
-        </header>
-        <div class="meter" aria-hidden="true"><span style="width: ${barWidthForScore(score)}%"></span></div>
-      </article>
-    `)
-    .join("");
+  dimensionScores.innerHTML = renderLeadershipMap(payload, ranked, hasClassification);
 
   const lowest = ranked[ranked.length - 1];
   recommendations.innerHTML = !hasClassification

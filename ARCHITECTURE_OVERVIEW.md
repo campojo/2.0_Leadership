@@ -204,7 +204,7 @@ Scores are not normalized because each style receives the same number of questio
 
 Negative-direction items reverse the weighted value.
 
-Respondents do not see raw numerical totals. The result screen uses bar visuals and text labels:
+Respondents do not see raw numerical totals. The result screen uses a leadership map and text labels:
 
 - Low correlation
 - Low tendency

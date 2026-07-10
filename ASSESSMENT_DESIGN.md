@@ -106,7 +106,7 @@ Because every style receives the same number of questions, scores are not normal
 
 Items score according to the direction stored in the original source data. A negative-direction item reverses the weighted value.
 
-Respondents should not see raw numerical totals. The user-facing output should use strength labels and bars.
+Respondents should not see raw numerical totals. The user-facing output should use strength labels and a graphical leadership map.
 
 Current strength labels:
 
@@ -141,8 +141,9 @@ Respondents should receive:
 
 - Their assigned leadership style, or a clear no-classification result if the response pattern does not support assignment.
 - A second style only if the evidence supports a true tie.
-- A visual showing the relative strength of each leadership tendency.
-- Bar visuals and text labels, not raw numerical scores.
+- A leadership map showing how the respondent's pattern lands across styles.
+- A center-to-edge landing marker, where center indicates a broadly distributed pattern and edge indicates a more concentrated style pull.
+- Text labels, not raw numerical scores.
 - A structured written output modeled on `Final Output.docx`: overview, strengths, potential challenges, coaching guidance, working with different team needs, development focus, and final summary.
 - A brief lowest-scoring style note.
 
