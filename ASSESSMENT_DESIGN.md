@@ -152,6 +152,14 @@ The result language must not contradict the provided dissertation-derived source
 
 Respondent-facing output must not reveal technical save status, database configuration, confidence labels, scoring internals, or debugging language. Those details are reserved for admin review and stored attempt records.
 
+## Mock Result Preview
+
+The app includes a mock result preview button for output validation during development.
+
+The mock preview uses 40 real questions from the active question bank and scores them through the same arithmetic scoring functions as a completed respondent attempt.
+
+The current mock respondent is a coherent Transformational-led profile with moderate supporting tendencies and lower Autocratic/Transactional tendencies. It is marked as mock data and is not persisted.
+
 ## Benchmark Regression Testing
 
 Scoring, question-selection, and classification changes should be checked against the benchmark fixture before release.

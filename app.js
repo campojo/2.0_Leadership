@@ -260,6 +260,7 @@ const state = {
   questionHistory: [],
   answers: [],
   pendingQueue: [],
+  mockPreview: false,
   complete: false
 };
 
@@ -294,6 +295,7 @@ const identityForm = document.querySelector("#identityForm");
 const respondentNameInput = document.querySelector("#respondentName");
 const respondentEmailInput = document.querySelector("#respondentEmail");
 const identityError = document.querySelector("#identityError");
+const mockResultButton = document.querySelector("#mockResultButton");
 
 function hashSeed() {
   const values = new Uint32Array(1);
@@ -396,6 +398,18 @@ function scoreAnswer(question, value) {
     return -weightedScore;
   }
   return weightedScore;
+}
+
+function answerValueForScoredValue(question, desiredScore) {
+  const scoreToValue = {
+    "-3": 1,
+    "-1": 2,
+    0: 3,
+    1: 4,
+    3: 5
+  };
+  const neededWeight = question.direction === "negative" ? -desiredScore : desiredScore;
+  return scoreToValue[neededWeight] || 3;
 }
 
 function getAnswersByStyle(style) {
@@ -615,7 +629,7 @@ function radarRatio(score) {
 
 function profileConcentration(scores) {
   const vector = styles.reduce((memo, style, index) => {
-    const ratio = radarRatio(scores[style]);
+    const ratio = Math.max(0, Math.min(1, scores[style] / MAX_STYLE_SCORE));
     const angle = (-Math.PI / 2) + ((Math.PI * 2 * index) / styles.length);
     memo.x += Math.cos(angle) * ratio;
     memo.y += Math.sin(angle) * ratio;
@@ -721,6 +735,7 @@ function resultPayload() {
       email: state.respondent.email
     },
     respondentLabel: state.respondent.name,
+    isMock: Boolean(state.mockPreview),
     primaryStyles: decision.primaryStyles,
     scores: scoresData.scores,
     scoreLabels: Object.fromEntries(Object.entries(scoresData.scores).map(([style, score]) => [style, strengthLabel(score)])),
@@ -911,10 +926,13 @@ function renderNoClassificationResult() {
   `;
 }
 
-function renderResults() {
+function renderResults(options = {}) {
+  const { persist = true } = options;
   state.complete = true;
   const payload = resultPayload();
-  persistAttempt(payload);
+  if (persist) {
+    persistAttempt(payload);
+  }
 
   const ranked = Object.entries(payload.scores).sort((a, b) => b[1] - a[1]);
   const primaryLabel = payload.primaryStyles.join(" + ");
@@ -958,6 +976,7 @@ function restartAssessment() {
   state.questionHistory = [];
   state.answers = [];
   state.pendingQueue = [];
+  state.mockPreview = false;
   state.complete = false;
   identityView.classList.remove("hidden");
   startView.classList.add("hidden");
@@ -1006,9 +1025,76 @@ function continueToInstructions(event) {
 
 function startAssessment() {
   state.started = true;
+  state.mockPreview = false;
   startView.classList.add("hidden");
   assessmentView.classList.remove("hidden");
   advanceQuestion();
+}
+
+function buildMockQuestionQueue() {
+  const buckets = styles.reduce((memo, style) => {
+    memo[style] = questionBank
+      .filter((question) => question.style === style)
+      .slice(0, BASELINE_PER_STYLE);
+    return memo;
+  }, {});
+  const queue = [];
+
+  for (let index = 0; index < BASELINE_PER_STYLE; index += 1) {
+    styles.forEach((style) => {
+      if (buckets[style][index]) queue.push(buckets[style][index]);
+    });
+  }
+
+  return queue;
+}
+
+function previewMockResult() {
+  const desiredScores = {
+    Transformational: [3, 3, 3, 1, 1],
+    Charismatic: [1, 1, 1, 1, 0],
+    Situational: [1, 1, 1, 0, 0],
+    Democratic: [1, 1, 0, 0, 0],
+    Servant: [1, 0, 0, 0, -1],
+    "Laissez-Faire": [0, 0, -1, -1, -1],
+    Transactional: [-1, -1, -1, -1, 0],
+    Autocratic: [-3, -3, -1, -1, -1]
+  };
+  const styleCounts = {};
+  const mockQuestions = buildMockQuestionQueue();
+
+  state.currentQuestion = null;
+  state.selectedValue = null;
+  state.started = false;
+  state.respondent = {
+    name: "Mock Respondent",
+    email: "mock.respondent@example.com"
+  };
+  state.currentIndex = mockQuestions.length - 1;
+  state.questionHistory = mockQuestions;
+  state.pendingQueue = [];
+  state.mockPreview = true;
+  state.complete = false;
+  state.answers = mockQuestions.map((question) => {
+    const index = styleCounts[question.style] || 0;
+    styleCounts[question.style] = index + 1;
+    const desiredScore = desiredScores[question.style]?.[index] ?? 0;
+    const value = answerValueForScoredValue(question, desiredScore);
+
+    return {
+      questionId: question.id,
+      text: firstPersonQuestion(question.text),
+      style: question.style,
+      value,
+      score: scoreAnswer(question, value),
+      direction: question.direction,
+      derived: Boolean(question.derived),
+      derivedFrom: question.derivedFrom || null
+    };
+  });
+
+  renderResults({ persist: false });
+  progressText.textContent = "Mock result preview";
 }
 
 function copySummary() {
@@ -1063,6 +1149,7 @@ backButton.addEventListener("click", () => {
   renderQuestion();
 });
 startButton.addEventListener("click", startAssessment);
+mockResultButton.addEventListener("click", previewMockResult);
 restartButton.addEventListener("click", restartAssessment);
 reviewAttemptsButton.addEventListener("click", renderAttemptsView);
 copyButton.addEventListener("click", copySummary);

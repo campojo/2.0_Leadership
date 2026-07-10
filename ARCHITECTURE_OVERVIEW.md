@@ -235,6 +235,10 @@ If a response pattern is not interpretable because of straight-lining, very low 
 7. The app computes weighted style strengths and response-quality flags.
 8. Respondent receives one assigned style, two assigned styles, or a no-classification result only if the response pattern is not interpretable.
 
+## Mock Output Preview
+
+For development and output validation, the start screen includes a mock result preview button. This path builds a complete 40-answer payload from real active questions and renders the same result screen without saving the attempt locally or posting it to the API.
+
 ## Current Review Logs
 
 The prototype includes a local review log in the browser.
