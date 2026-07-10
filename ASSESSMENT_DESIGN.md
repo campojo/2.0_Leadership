@@ -143,7 +143,7 @@ Respondents should receive:
 - A second style only if the evidence supports a true tie.
 - A leadership map showing how the respondent's pattern lands across styles.
 - A center-to-edge landing marker, where center indicates a broadly distributed pattern and edge indicates a more concentrated style pull.
-- A pattern concentration badge, such as Balanced, Mixed, or Defined, separate from the strongest leadership style. This label describes how concentrated the response pattern is across the style map; it is not a separate leadership type.
+- A pattern badge, such as Balanced, Mixed, or Defined, separate from the strongest leadership style. This label describes whether answers are spread across styles or point more toward one area of the style map; it is not a separate leadership type.
 - Text labels, not raw numerical scores.
 - A structured written output modeled on `Final Output.docx`: overview, strengths, potential challenges, coaching guidance, working with different team needs, development focus, and final summary.
 - A brief lowest-scoring style note.

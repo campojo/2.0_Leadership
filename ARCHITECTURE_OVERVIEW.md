@@ -204,7 +204,7 @@ Scores are not normalized because each style receives the same number of questio
 
 Negative-direction items reverse the weighted value.
 
-Respondents do not see raw numerical totals. The result screen uses a leadership map, a pattern concentration badge, and text labels. The pattern badge describes whether the respondent's answers are balanced, mixed, or defined across the style map; it is not a separate leadership type.
+Respondents do not see raw numerical totals. The result screen uses a leadership map, a pattern badge, and text labels. The pattern badge describes whether the respondent's answers are spread across styles or point more toward one area of the style map; it is not a separate leadership type.
 
 - Low correlation
 - Low tendency

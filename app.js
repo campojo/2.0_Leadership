@@ -639,12 +639,12 @@ function profileConcentration(scores) {
   const pull = vector.weight ? Math.min(1, Math.hypot(vector.x, vector.y) / vector.weight) : 0;
 
   if (pull < 0.18) {
-    return { pull, shortLabel: "Balanced", longLabel: "Balanced across styles" };
+    return { pull, shortLabel: "Balanced" };
   }
   if (pull < 0.38) {
-    return { pull, shortLabel: "Mixed", longLabel: "Moderately differentiated" };
+    return { pull, shortLabel: "Mixed" };
   }
-  return { pull, shortLabel: "Defined", longLabel: "Concentrated tendency" };
+  return { pull, shortLabel: "Defined" };
 }
 
 function polarPoint(center, radius, index, total) {
@@ -687,7 +687,6 @@ function renderLeadershipMap(payload, ranked, hasClassification) {
       <div class="map-copy">
         <h3>Leadership Style Map</h3>
         <p>The marker shows where your overall pattern lands. Near the center means your answers are spread across styles; closer to an edge means one direction is pulling more strongly.</p>
-        <strong>${hasClassification ? concentration.longLabel : "Review response pattern"}</strong>
       </div>
       <svg class="radar-map" viewBox="0 0 360 360" role="img" aria-label="Dartboard style leadership map">
         <circle class="radar-ring" cx="${center}" cy="${center}" r="28"></circle>
