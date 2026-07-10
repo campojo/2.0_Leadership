@@ -295,7 +295,7 @@ const identityForm = document.querySelector("#identityForm");
 const respondentNameInput = document.querySelector("#respondentName");
 const respondentEmailInput = document.querySelector("#respondentEmail");
 const identityError = document.querySelector("#identityError");
-const mockResultButton = document.querySelector("#mockResultButton");
+const mockResultButtons = Array.from(document.querySelectorAll(".mock-result-button"));
 
 function hashSeed() {
   const values = new Uint32Array(1);
@@ -1149,7 +1149,7 @@ backButton.addEventListener("click", () => {
   renderQuestion();
 });
 startButton.addEventListener("click", startAssessment);
-mockResultButton.addEventListener("click", previewMockResult);
+mockResultButtons.forEach((button) => button.addEventListener("click", previewMockResult));
 restartButton.addEventListener("click", restartAssessment);
 reviewAttemptsButton.addEventListener("click", renderAttemptsView);
 copyButton.addEventListener("click", copySummary);
