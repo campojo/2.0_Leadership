@@ -644,7 +644,7 @@ function profileConcentration(scores) {
   if (pull < 0.38) {
     return { pull, shortLabel: "Mixed", longLabel: "Moderately differentiated" };
   }
-  return { pull, shortLabel: "Focused", longLabel: "Concentrated tendency" };
+  return { pull, shortLabel: "Defined", longLabel: "Concentrated tendency" };
 }
 
 function polarPoint(center, radius, index, total) {
