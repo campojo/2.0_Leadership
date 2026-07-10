@@ -381,7 +381,7 @@ h2 {
 
 .score-ring span {
   max-width: 92px;
-  font-size: 1.15rem;
+  font-size: 1.05rem;
   font-weight: 900;
   line-height: 1.05;
   text-align: center;
@@ -488,20 +488,27 @@ h2 {
 .map-legend {
   grid-column: 1 / -1;
   display: grid;
-  grid-template-columns: repeat(4, minmax(0, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
   gap: 10px;
 }
 
 .map-legend article {
-  display: flex;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
   align-items: center;
-  justify-content: space-between;
   gap: 12px;
   padding: 12px 14px;
+  min-height: 68px;
   border: 1px solid var(--line);
   border-radius: 8px;
   background: #fff;
   font-weight: 850;
+}
+
+.map-legend span {
+  min-width: 0;
+  line-height: 1.08;
+  overflow-wrap: anywhere;
 }
 
 .map-legend article.primary-style {
@@ -514,9 +521,12 @@ h2 {
 }
 
 .map-legend strong {
+  max-width: 7.5rem;
   color: var(--accent-dark);
   font-size: 0.82rem;
+  line-height: 1.05;
   text-align: right;
+  white-space: normal;
 }
 
 .recommendation strong {

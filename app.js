@@ -613,6 +613,26 @@ function radarRatio(score) {
   return Math.max(0, Math.min(1, (score - MIN_STYLE_SCORE) / (MAX_STYLE_SCORE - MIN_STYLE_SCORE)));
 }
 
+function profileConcentration(scores) {
+  const vector = styles.reduce((memo, style, index) => {
+    const ratio = radarRatio(scores[style]);
+    const angle = (-Math.PI / 2) + ((Math.PI * 2 * index) / styles.length);
+    memo.x += Math.cos(angle) * ratio;
+    memo.y += Math.sin(angle) * ratio;
+    memo.weight += ratio;
+    return memo;
+  }, { x: 0, y: 0, weight: 0 });
+  const pull = vector.weight ? Math.min(1, Math.hypot(vector.x, vector.y) / vector.weight) : 0;
+
+  if (pull < 0.18) {
+    return { pull, shortLabel: "Balanced", longLabel: "Balanced across styles" };
+  }
+  if (pull < 0.38) {
+    return { pull, shortLabel: "Mixed", longLabel: "Moderately differentiated" };
+  }
+  return { pull, shortLabel: "Focused", longLabel: "Concentrated tendency" };
+}
+
 function polarPoint(center, radius, index, total) {
   const angle = (-Math.PI / 2) + ((Math.PI * 2 * index) / total);
   return {
@@ -634,27 +654,26 @@ function renderLeadershipMap(payload, ranked, hasClassification) {
     return { style, ratio, point, labelPoint, axisPoint };
   });
   const polygonPoints = stylePoints.map(({ point }) => `${point.x.toFixed(1)},${point.y.toFixed(1)}`).join(" ");
+  const concentration = profileConcentration(payload.scores);
   const vector = stylePoints.reduce((memo, item) => {
     memo.x += Math.cos(item.axisPoint.angle) * item.ratio;
     memo.y += Math.sin(item.axisPoint.angle) * item.ratio;
-    memo.weight += item.ratio;
     return memo;
-  }, { x: 0, y: 0, weight: 0 });
-  const pull = vector.weight ? Math.min(1, Math.hypot(vector.x, vector.y) / vector.weight) : 0;
+  }, { x: 0, y: 0 });
+  const pull = concentration.pull;
   const landingAngle = Math.atan2(vector.y, vector.x);
   const landingRadius = maxRadius * pull;
   const landing = {
     x: center + Math.cos(landingAngle) * landingRadius,
     y: center + Math.sin(landingAngle) * landingRadius
   };
-  const pullLabel = pull < 0.18 ? "Balanced across styles" : pull < 0.38 ? "Moderately differentiated" : "Concentrated tendency";
 
   return `
     <section class="leadership-map" aria-label="Leadership style map">
       <div class="map-copy">
         <h3>Leadership Style Map</h3>
         <p>The marker shows where your overall pattern lands. Near the center means your answers are spread across styles; closer to an edge means one direction is pulling more strongly.</p>
-        <strong>${hasClassification ? pullLabel : "Review response pattern"}</strong>
+        <strong>${hasClassification ? concentration.longLabel : "Review response pattern"}</strong>
       </div>
       <svg class="radar-map" viewBox="0 0 360 360" role="img" aria-label="Dartboard style leadership map">
         <circle class="radar-ring" cx="${center}" cy="${center}" r="28"></circle>
@@ -899,7 +918,7 @@ function renderResults() {
 
   const ranked = Object.entries(payload.scores).sort((a, b) => b[1] - a[1]);
   const primaryLabel = payload.primaryStyles.join(" + ");
-  const topLabel = payload.primaryStyles.length ? strengthLabel(payload.scores[payload.primaryStyles[0]]) : "Review";
+  const concentration = profileConcentration(payload.scores);
 
   identityView.classList.add("hidden");
   startView.classList.add("hidden");
@@ -912,7 +931,7 @@ function renderResults() {
   const hasClassification = payload.primaryStyles.length > 0 && payload.quality.isInterpretable;
   profileTitle.textContent = hasClassification ? `Strongest tendency: ${primaryLabel}` : "No Leadership Style Assigned";
   profileSummary.textContent = payload.resultSummary;
-  overallScore.textContent = hasClassification ? topLabel.replace(" tendency", "") : "Review";
+  overallScore.textContent = hasClassification ? concentration.shortLabel : "Review";
 
   dimensionScores.innerHTML = renderLeadershipMap(payload, ranked, hasClassification);
 
