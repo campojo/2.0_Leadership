@@ -53,13 +53,11 @@ The assessment is a self-assessment, so displayed questions should be phrased in
 
 If source content uses third-person language such as `The leader...`, the app converts the displayed question to first person while preserving the original construct.
 
-## Source Data Correction
+## Active Source Set
 
-The current `Questions 2.0 (5).xlsx` workbook labels one question block as `Autocratic Leadership`, but the questions in that block measure openness, honesty, feedback-seeking, ethics, and role modeling rather than autocratic leadership.
+The active assessment uses the original imported question set without corrected, derived, reverse-framed, or contrast additions.
 
-That mislabeled Autocratic source block is excluded from scoring. The app uses corrected Autocratic items derived from the approved Autocratic descriptions in `Final Output.docx` and `H-M-L Scores v2.docx.pdf`.
-
-This correction prevents general positive leadership behaviors from being incorrectly scored as Autocratic leadership.
+The original Autocratic block is active pending manual review and revision by the assessment owner.
 
 ## Minimum Coverage
 
@@ -67,24 +65,15 @@ At least five scored questions from every leadership style must be answered befo
 
 The required baseline is five questions per style, randomized and interleaved, for 40 total questions.
 
-Baseline questions should come from the original source question pool whenever the source block correctly maps to the style being measured. The corrected Autocratic item pool is used instead of the original mislabeled Autocratic source block.
+All assessment questions come from the original source question pool.
 
-## Adaptive Questioning
+## Administration Model
 
-The current 40-question design uses the full baseline as the assessment. Adaptive follow-up logic remains available in the codebase for future experimentation, but the production flow does not stop early or ask fewer than 40 questions.
+The current production assessment is not adaptive. It asks the full 40-question baseline every time.
 
-If adaptive follow-up is reintroduced later, follow-up questions should be selected when:
+The app randomly selects five questions from each of the eight leadership styles, then interleaves those questions so styles are not asked in blocks.
 
-- The leading styles are close.
-- More than two styles are scoring high together.
-- A style has internally inconsistent responses.
-- A respondent gives a mix of strong disagreement, strong agreement, and neutral answers within the same style.
-- The top style does not have enough separation from the second style.
-- The system needs to distinguish between two plausible styles.
-
-The assessment may return two equally likely styles, but only after additional targeted questions support a true two-style result. It should never return more than two primary styles.
-
-If more than two styles remain high and close together after targeted questioning, the app should use relative evidence indicators to select the strongest style rather than withholding a result solely because the respondent endorsed many positive leadership behaviors.
+The assessment must not stop early. Any future adaptive or shortened version should be treated as a separate redesign and benchmarked before release.
 
 ## Review Navigation
 
@@ -97,48 +86,52 @@ Rules:
 - If a respondent selects a different answer on a previous question, that answer is updated.
 - Already asked questions remain in the sequence so review does not unexpectedly erase answers.
 
-## Derived Negative-Framed And Contrast Questions
+## Derived Questions
 
-The source workbook currently contains positive-framed questions. To improve measurement quality, the app may include a small number of derived negative-framed questions and contrast questions.
-
-These questions are not new leadership theory. They must preserve the source constructs and should be traceable to either a source question or the approved final output/style-description materials.
-
-Example:
-
-- Source construct: `I often communicate a clear and inspiring vision of the future.`
-- Derived reverse-keyed version: `I rarely connect day-to-day work to a clear future direction.`
-
-Policy:
-
-- Derived questions should be used sparingly.
-- The preferred target is 0-10% of asked questions.
-- The hard ceiling is 25% of asked questions.
-- Derived questions should mainly support response-quality checks, agreement-bias checks, score differentiation, and high-score cluster resolution.
-- Every derived item should store provenance: style, source question or source document, and scoring direction.
+Derived, reverse-framed, and contrast questions are not active. Any future additions require explicit review and approval before entering the assessment question bank.
 
 ## Scoring
 
-Responses should be scored on a Likert scale.
+Responses use a five-point Likert scale with weighted arithmetic scoring:
 
-Positive items score in the normal direction. Negative-framed derived items are reverse-scored.
+- Strongly Disagree: `-3`
+- Disagree: `-1`
+- Neutral: `0`
+- Agree: `1`
+- Strongly Agree: `3`
 
-Style scores should use the answered questions for that style. Scores should be normalized so styles can be compared even if adaptive questioning asks different counts per style.
+Each style receives five answered questions. The style strength is the sum of the five weighted answer scores for that style.
+
+Because every style receives the same number of questions, scores are not normalized. Each style can range from `-15` to `15`.
+
+Items score according to the direction stored in the original source data. A negative-direction item reverses the weighted value.
+
+Respondents should not see raw numerical totals. The user-facing output should use strength labels and bars.
+
+Current strength labels:
+
+- `-15` through `-8`: Low correlation
+- `-7` through `-2`: Low tendency
+- `-1` through `4`: Moderate tendency
+- `5` through `10`: High tendency
+- `11` through `15`: Strong tendency
 
 ## Classification and Response Quality
 
-The app may calculate confidence and diagnostic values internally for admin review, but respondent-facing output should be decisive: assign one style, assign two styles only when justified, or assign no style only when the response pattern itself is not interpretable.
+The strongest style is the style with the highest weighted sum.
 
-Signals include:
+If exactly two styles tie for the highest weighted sum, the result may show both styles. The result should never show more than two primary styles.
 
-- Separation between the top style and second style.
-- Number of questions answered for the leading style.
-- Relative support indicators, such as strong scored answers, contradictions, and style averages.
-- Internal consistency within each style.
+The app may withhold classification only when the response pattern itself is not interpretable.
+
+Response-quality signals include:
+
 - Straight-lining behavior, such as selecting the same answer repeatedly.
 - Low variance across all answers.
-- Contradictions between paired positive and reverse-keyed items.
+- Mostly neutral responses.
+- Heavy extreme-answer patterns with little variation.
 
-The assessment should not accuse the respondent of gaming the system. It may withhold classification only when response quality is weak enough that the pattern is not interpretable.
+The assessment should not accuse the respondent of gaming the system.
 
 If a response pattern is not interpretable, such as selecting the same answer for nearly all questions, using almost no variation, or selecting mostly neutral responses, the attempt should be saved, but the app should not present the output as a meaningful leadership profile. Instead, it should explain that the response pattern does not provide enough evidence to assign a leadership style.
 
@@ -148,8 +141,8 @@ Respondents should receive:
 
 - Their assigned leadership style, or a clear no-classification result if the response pattern does not support assignment.
 - A second style only if the evidence supports a true tie.
-- A visual showing which styles they are most like and least like.
-- A score visual that does not repeat the written interpretation.
+- A visual showing the relative strength of each leadership tendency.
+- Bar visuals and text labels, not raw numerical scores.
 - A structured written output modeled on `Final Output.docx`: overview, strengths, potential challenges, coaching guidance, working with different team needs, development focus, and final summary.
 - A brief lowest-scoring style note.
 
@@ -159,7 +152,7 @@ Respondent-facing output must not reveal technical save status, database configu
 
 ## Benchmark Regression Testing
 
-Scoring, adaptive-questioning, and classification changes should be checked against the benchmark fixture before release.
+Scoring, question-selection, and classification changes should be checked against the benchmark fixture before release.
 
 The benchmark lives in `benchmark/respondents.json` and currently includes 15 synthetic respondents covering clear single-style patterns, dual-style patterns, all-neutral responses, high-everywhere responses, low-everywhere responses, and inconsistent within-style responses.
 
@@ -182,9 +175,9 @@ Persisted data should include:
 - Attempt metadata.
 - Questions asked.
 - Answer selected for each question.
-- Whether each question was source-based or derived.
+- Whether each question came from the original source pool.
 - Per-style scores.
-- Confidence indicators.
+- Response-quality indicators.
 - Final style result.
 - Full response text shown to the respondent.
 

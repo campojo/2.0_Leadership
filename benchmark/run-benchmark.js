@@ -6,6 +6,13 @@ const repoRoot = path.resolve(__dirname, "..");
 const respondentsPath = path.join(__dirname, "respondents.json");
 const respondents = JSON.parse(fs.readFileSync(respondentsPath, "utf8"));
 const ANSWERS_PER_STYLE = 5;
+const ANSWER_WEIGHTS = {
+  1: -3,
+  2: -1,
+  3: 0,
+  4: 1,
+  5: 3
+};
 
 function mockElement() {
   return {
@@ -82,7 +89,7 @@ function buildAnswers(respondent, styles) {
       text: `Benchmark item for ${style}`,
       style,
       value,
-      score: value,
+      score: ANSWER_WEIGHTS[value] ?? 0,
       direction: "positive",
       derived: false,
       derivedFrom: null

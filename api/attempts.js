@@ -154,6 +154,14 @@ function attemptRow(payload, respondentId) {
   };
 }
 
+function strengthLabel(score) {
+  if (score <= -8) return "Low correlation";
+  if (score <= -2) return "Low tendency";
+  if (score <= 4) return "Moderate tendency";
+  if (score <= 10) return "High tendency";
+  return "Strong tendency";
+}
+
 function answerRows(payload) {
   return payload.answers.map((answer, index) => ({
     attempt_id: payload.id,
@@ -193,7 +201,7 @@ function textResultEmail(payload) {
     : "No Leadership Style Assigned";
   const scoreLines = Object.entries(payload.scores || {})
     .sort((a, b) => b[1] - a[1])
-    .map(([style, score]) => `${style}: ${score}/100`)
+    .map(([style, score]) => `${style}: ${payload.scoreLabels?.[style] || strengthLabel(score)}`)
     .join("\n");
 
   return [
@@ -205,7 +213,7 @@ function textResultEmail(payload) {
     "",
     payload.resultSummary || "",
     "",
-    "Score profile:",
+    "Strength profile:",
     scoreLines,
     "",
     "This assessment is intended for leadership reflection and development. No leadership style is inherently better than another; effective leadership depends on context, adaptability, and the needs of the people being led."

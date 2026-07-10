@@ -2,7 +2,7 @@
 
 ## Executive Summary
 
-This application is a research-informed leadership style self-assessment built from dissertation-derived leadership assessment materials. The current deployed prototype is a browser application hosted on Vercel. It uses JavaScript in the browser to present randomized and adaptive questions, score responses, detect low-quality response patterns, generate respondent-facing results, save local review logs, and post completed attempts to a server-side API route for database persistence.
+This application is a research-informed leadership style self-assessment built from dissertation-derived leadership assessment materials. The current deployed prototype is a browser application hosted on Vercel. It uses JavaScript in the browser to present 40 randomized questions, score responses with weighted arithmetic, detect low-quality response patterns, generate respondent-facing results, save local review logs, and post completed attempts to a server-side API route for database persistence when configured.
 
 The persistence architecture uses a Vercel serverless function and Supabase Postgres so every completed attempt can be reviewed by the owner and analyzed over time once the required environment variables and database schema are configured.
 
@@ -21,7 +21,7 @@ The persistence architecture uses a Vercel serverless function and Supabase Post
 | --- | --- | --- |
 | Markup | HTML | App structure and content |
 | Styling | CSS | Responsive UI, assessment layout, result cards |
-| Logic | Vanilla JavaScript | Adaptive assessment engine, scoring, response quality checks |
+| Logic | Vanilla JavaScript | Assessment engine, weighted scoring, response quality checks |
 | Data | JSON + JavaScript data bundle | Extracted leadership question bank and result descriptions |
 | Hosting | Vercel | Public shareable URL |
 | API | Vercel serverless function | Server-side attempt saving without exposing database credentials |
@@ -45,7 +45,7 @@ The persistence architecture uses a Vercel serverless function and Supabase Post
 flowchart TD
   A["Respondent opens public assessment URL"] --> N["Respondent info screen"]
   N --> B["Instruction screen"]
-  B --> C["Adaptive assessment engine in browser"]
+  B --> C["Assessment engine in browser"]
   C --> D["Question bank and scoring data"]
   D --> C
   C --> E["Response quality checks"]
@@ -90,7 +90,7 @@ sequenceDiagram
   A->>R: Requests respondent name and email
   R->>A: Provides name and email
   A->>R: Shows instructions
-  R->>A: Answers randomized/adaptive questions
+  R->>A: Answers 40 randomized questions
   A->>A: Scores styles and checks response quality
   A->>R: Shows result or response-quality warning
   A->>API: Sends completed attempt payload to /api/attempts
@@ -123,7 +123,7 @@ These contain:
 - Style qualities
 - Style-help transition content
 
-The app excludes the source workbook's mislabeled Autocratic question block because those questions measure openness, ethics, feedback-seeking, and role modeling rather than autocratic leadership. Corrected Autocratic items are derived from the approved Autocratic descriptions in the provided result/source materials.
+The active app uses the original imported question set. No corrected, derived, reverse-framed, or contrast questions are active in the current production assessment.
 
 The original working source files were intentionally excluded from GitHub through `.gitignore` because they are local source materials, while the extracted app data is included for deployment.
 
@@ -170,21 +170,15 @@ The question’s leadership style is hidden while the respondent answers to redu
 
 The baseline phase asks questions across all eight leadership styles. The required baseline is five randomized questions per style, for 40 total items.
 
-Baseline questions come from the original source question pool when the source block correctly maps to the measured style. The corrected Autocratic item pool is used instead of the original mislabeled Autocratic source block.
+All baseline questions come from the original imported source question pool.
 
-### Adaptive Questioning
+### Administration Model
 
-The current production flow uses the full 40-question baseline and does not stop early. Adaptive follow-up logic remains available for future experimentation, but production respondents complete all 40 questions.
+The current production flow uses the full 40-question baseline and does not stop early.
 
-Follow-up questions are selected when:
+The app randomly selects five questions from each leadership style and interleaves those questions so the respondent does not receive style blocks.
 
-- Leading styles are close.
-- More than two styles are scoring high together.
-- A style has internally inconsistent responses.
-- The top style does not have enough separation from the second style.
-- The system needs to distinguish between two plausible styles.
-
-The result may include two equally likely styles, but never more than two. If more than two styles remain high and close after targeted questioning, the app uses relative evidence indicators to select the strongest style instead of withholding classification solely because multiple positive leadership behaviors were endorsed.
+The result may include two equally likely styles only when exactly two styles tie for the highest weighted sum. It never returns more than two primary styles.
 
 ### Scoring
 
@@ -196,21 +190,27 @@ Responses use a five-point Likert scale:
 - Agree
 - Strongly Agree
 
-Style scores are normalized so styles can be compared even if adaptive questioning asks different numbers of questions per style.
+Responses are converted to weighted values:
 
-Derived negative-framed questions are reverse-scored.
+- Strongly Disagree: `-3`
+- Disagree: `-1`
+- Neutral: `0`
+- Agree: `1`
+- Strongly Agree: `3`
 
-### Derived Items
+Each style receives five questions. The style strength is the sum of those five weighted answers, giving each style a possible range from `-15` to `15`.
 
-Most questions come directly from the source question bank. A small number of negative-framed and contrast questions may be derived from the original constructs or final output materials to support response-quality checks, reduce agreement bias, and improve score differentiation.
+Scores are not normalized because each style receives the same number of questions.
 
-Policy:
+Negative-direction items reverse the weighted value.
 
-- Derived items preserve the original construct.
-- Derived items should be traceable to a source question or approved source document.
-- Preferred target is 0-10% of asked questions.
-- Hard ceiling is 25% of asked questions.
-- Derived items are measurement safeguards, not new leadership theory.
+Respondents do not see raw numerical totals. The result screen uses bar visuals and text labels:
+
+- Low correlation
+- Low tendency
+- Moderate tendency
+- High tendency
+- Strong tendency
 
 ## Response Quality Methodology
 
@@ -222,10 +222,6 @@ Current checks include:
 - Very low response variance.
 - Mostly neutral responses.
 - Heavy extreme-answer pattern with little variation.
-- Derived-question ratio.
-- High-score clustering across more than two leadership styles, used as a reason to ask follow-up questions.
-- Insufficient score separation after the full 40-question baseline, resolved with relative evidence indicators unless the response pattern is invalid.
-
 If a response pattern is not interpretable because of straight-lining, very low variation, mostly neutral responses, or an extreme one-option response pattern, the attempt is saved, but the app shows `No Leadership Style Assigned` instead of presenting a leadership style as meaningful.
 
 ## Respondent Experience
@@ -236,7 +232,7 @@ If a response pattern is not interpretable because of straight-lining, very low 
 4. Respondent answers randomized self-assessment questions.
 5. Respondent may go back and review previous questions.
 6. The app preserves answers when reviewing.
-7. The app computes style scores and response-quality flags.
+7. The app computes weighted style strengths and response-quality flags.
 8. Respondent receives one assigned style, two assigned styles, or a no-classification result only if the response pattern is not interpretable.
 
 ## Current Review Logs
@@ -248,9 +244,9 @@ After a completed assessment, the reviewer can inspect:
 - Saved attempts in that browser.
 - Exact questions shown.
 - Answers selected.
-- Scored values.
-- Source vs derived question status.
-- Style scores and confidence labels.
+- Scored values for debugging.
+- Original source question status.
+- Style strength labels and response-quality labels.
 
 This is a temporary debugging feature until permanent database persistence is connected.
 
@@ -271,10 +267,9 @@ Planned admin capabilities:
 Admin-only metrics should include:
 
 - Primary style distribution.
-- Average score by style.
-- Score spread by style.
+- Average weighted strength by style.
+- Strength spread by style.
 - Tie frequency.
-- Confidence distribution.
 - Invalid/needs-review attempt rate.
 - Completion length.
 - Answer distribution across Likert options.
@@ -377,7 +372,7 @@ Stores optional grouping information, such as a workshop, client organization, t
 
 `assessment_attempts`
 
-Stores one completed assessment attempt. This is the primary admin row for reporting. It stores summary fields such as primary style, confidence, interpretability, score JSON, response-quality metrics, result text, and the full app payload.
+Stores one completed assessment attempt. This is the primary admin row for reporting. It stores summary fields such as primary style, interpretability, weighted score JSON, response-quality metrics, result text, and the full app payload.
 
 `assessment_answers`
 
@@ -389,14 +384,12 @@ The database stores important analytics fields as first-class columns and also s
 
 First-class columns make admin analytics easier:
 
-- `confidence`
 - `is_interpretable`
 - `questions_asked`
 - `straight_line_ratio`
 - `neutral_ratio`
 - `extreme_ratio`
 - `response_variance`
-- `derived_ratio`
 
 The `full_result` JSON keeps the exact historical result generated by the app, which is useful for debugging, audit trails, and future migrations.
 
@@ -411,7 +404,7 @@ Each attempt stores:
 - Email through linked respondent record
 - Optional cohort id
 - Primary style or two-style tie
-- Confidence level
+- Response-quality status
 - Whether the result is interpretable
 - Per-style scores
 - Response-quality flags
@@ -428,7 +421,7 @@ Each answer stores:
 - Answer value
 - Scored value
 - Scoring direction
-- Whether the question was source-based or derived
+- Whether the question came from the original source pool
 - Question order
 - Optional response timing once implemented
 
@@ -482,7 +475,7 @@ The browser should not write directly to the database with privileged credential
 
 ## Benchmark Workflow
 
-Run the scoring benchmark after any scoring, adaptive-questioning, item-selection, or classification update:
+Run the scoring benchmark after any scoring, question-selection, or classification update:
 
 ```bash
 node benchmark/run-benchmark.js

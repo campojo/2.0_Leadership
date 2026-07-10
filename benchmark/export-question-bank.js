@@ -62,52 +62,37 @@ const inventory = JSON.parse(vm.runInContext(`
     questions: questionBank.map((question) => ({
       id: question.id,
       style: question.style,
-      text: firstPersonQuestion(question.text),
-      direction: question.direction,
-      derived: Boolean(question.derived),
-      derivedFrom: question.derivedFrom || null,
-      baselineEligible: !question.derived || String(question.id).startsWith("corrected_autocratic_")
+      originalText: question.text,
+      displayedText: firstPersonQuestion(question.text),
+      direction: question.direction
     }))
   })
 `, context));
 
-function questionType(question) {
-  if (String(question.id).startsWith("corrected_autocratic_")) return "Corrected Autocratic";
-  if (question.derived) return "Derived";
-  return "Original source";
-}
-
 const lines = [
-  "# Active Leadership Assessment Question Bank",
+  "# Original Leadership Assessment Question Set",
   "",
-  "This file lists every question currently available to the application. It is generated from the active `questionBank` in `app.js`, not from inactive or excluded source rows.",
+  "This file lists the original source questions currently active in the application. No corrected, derived, reverse-framed, or contrast questions are included.",
   "",
-  "## Reading The Labels",
+  "The application displays questions in first person. When the displayed wording differs from the source wording, both versions are shown.",
   "",
-  "- **Original source:** Loaded from the active source question data.",
-  "- **Corrected Autocratic:** Replacement item based on the approved Autocratic materials. The original spreadsheet block labeled Autocratic is excluded because its content did not measure Autocratic leadership.",
-  "- **Derived:** A reverse-framed or contrast item created from an approved source construct.",
-  "- **Baseline eligible:** The item may be selected for the current five-per-style production baseline.",
-  "- **Adaptive only:** The item is available to adaptive selection logic but is excluded from the current baseline.",
-  "",
-  `**Total active questions:** ${inventory.questions.length}`,
+  `**Total original questions:** ${inventory.questions.length}`,
   ""
 ];
 
 for (const style of inventory.styles) {
   const questions = inventory.questions.filter((question) => question.style === style);
-  const baselineCount = questions.filter((question) => question.baselineEligible).length;
 
   lines.push(`## ${style}`, "");
-  lines.push(`Active items: ${questions.length}. Baseline eligible: ${baselineCount}.`, "");
+  lines.push(`Original items: ${questions.length}.`, "");
 
   questions.forEach((question, index) => {
     lines.push(`### ${index + 1}. ${question.id}`, "");
-    lines.push(question.text, "");
-    lines.push(`- Type: ${questionType(question)}`);
+    lines.push(`**Displayed wording:** ${question.displayedText}`, "");
+    if (question.originalText !== question.displayedText) {
+      lines.push(`**Original source wording:** ${question.originalText}`, "");
+    }
     lines.push(`- Scoring direction: ${question.direction}`);
-    lines.push(`- Selection status: ${question.baselineEligible ? "Baseline eligible" : "Adaptive only"}`);
-    if (question.derivedFrom) lines.push(`- Provenance: ${question.derivedFrom}`);
     lines.push("");
   });
 }

@@ -1,113 +1,17 @@
 const MAX_QUESTIONS = 40;
 const BASELINE_PER_STYLE = 5;
-const MIN_LEAD_GAP = 8;
-const MIN_TOP_STYLE_ANSWERS = 3;
-const MAX_DERIVED_RATIO = 0.25;
-const HIGH_SCORE_CLUSTER_THRESHOLD = 70;
-const HIGH_SCORE_CLUSTER_GAP = 12;
-const CLOSE_SCORE_GAP = 4;
+const MIN_STYLE_SCORE = -15;
+const MAX_STYLE_SCORE = 15;
+const ANSWER_WEIGHTS = {
+  1: -3,
+  2: -1,
+  3: 0,
+  4: 1,
+  5: 3
+};
 
 const sourceData = window.LEADERSHIP_DATA;
 const styles = sourceData.styles;
-
-const correctedAutocraticQuestions = [
-  {
-    id: "corrected_autocratic_001",
-    style: "Autocratic",
-    direction: "positive",
-    derived: true,
-    derivedFrom: "Final Output.docx; H-M-L Scores v2.docx.pdf",
-    text: "When clear direction is needed, I make firm decisions without waiting for group agreement."
-  },
-  {
-    id: "corrected_autocratic_002",
-    style: "Autocratic",
-    direction: "positive",
-    derived: true,
-    derivedFrom: "Final Output.docx; H-M-L Scores v2.docx.pdf",
-    text: "I prefer to maintain clear authority over important decisions."
-  },
-  {
-    id: "corrected_autocratic_003",
-    style: "Autocratic",
-    direction: "positive",
-    derived: true,
-    derivedFrom: "Final Output.docx; H-M-L Scores v2.docx.pdf",
-    text: "I set clear expectations and expect team members to follow them."
-  },
-  {
-    id: "corrected_autocratic_004",
-    style: "Autocratic",
-    direction: "positive",
-    derived: true,
-    derivedFrom: "Final Output.docx; H-M-L Scores v2.docx.pdf",
-    text: "In high-pressure situations, I take control quickly to keep work moving."
-  },
-  {
-    id: "corrected_autocratic_005",
-    style: "Autocratic",
-    direction: "positive",
-    derived: true,
-    derivedFrom: "Final Output.docx; H-M-L Scores v2.docx.pdf",
-    text: "I closely monitor important work to make sure standards are met."
-  },
-  {
-    id: "corrected_autocratic_006",
-    style: "Autocratic",
-    direction: "positive",
-    derived: true,
-    derivedFrom: "Final Output.docx; H-M-L Scores v2.docx.pdf",
-    text: "I value efficiency and clear authority when decisions must be made."
-  },
-  {
-    id: "corrected_autocratic_007",
-    style: "Autocratic",
-    direction: "negative",
-    derived: true,
-    derivedFrom: "Final Output.docx; H-M-L Scores v2.docx.pdf",
-    text: "I usually wait for broad team input before making important decisions, even when speed matters."
-  },
-  {
-    id: "corrected_autocratic_008",
-    style: "Autocratic",
-    direction: "negative",
-    derived: true,
-    derivedFrom: "Final Output.docx; H-M-L Scores v2.docx.pdf",
-    text: "I prefer to distribute decision authority widely instead of keeping final control."
-  },
-  {
-    id: "corrected_autocratic_009",
-    style: "Autocratic",
-    direction: "negative",
-    derived: true,
-    derivedFrom: "Final Output.docx; H-M-L Scores v2.docx.pdf",
-    text: "I avoid closely supervising work because I prefer team members to operate independently."
-  },
-  {
-    id: "corrected_autocratic_010",
-    style: "Autocratic",
-    direction: "negative",
-    derived: true,
-    derivedFrom: "Final Output.docx; H-M-L Scores v2.docx.pdf",
-    text: "I am more comfortable building consensus than giving direct instructions."
-  },
-  {
-    id: "corrected_autocratic_011",
-    style: "Autocratic",
-    direction: "negative",
-    derived: true,
-    derivedFrom: "Final Output.docx; H-M-L Scores v2.docx.pdf",
-    text: "I tend to step back from control once the team understands the general goal."
-  },
-  {
-    id: "corrected_autocratic_012",
-    style: "Autocratic",
-    direction: "negative",
-    derived: true,
-    derivedFrom: "Final Output.docx; H-M-L Scores v2.docx.pdf",
-    text: "I usually prioritize shared ownership over centralized decision-making."
-  }
-];
 
 const finalOutputProfiles = {
   "Autocratic": {
@@ -343,139 +247,7 @@ const finalOutputProfiles = {
   }
 };
 
-const derivedQuestions = [
-  {
-    id: "derived_transformational_001",
-    style: "Transformational",
-    direction: "negative",
-    derived: true,
-    derivedFrom: "q_transformational_001",
-    text: "I rarely connect day-to-day work to a clear and inspiring future direction."
-  },
-  {
-    id: "derived_transactional_001",
-    style: "Transactional",
-    direction: "negative",
-    derived: true,
-    derivedFrom: "q_transactional_001",
-    text: "I often leave goals, expectations, or performance consequences unclear."
-  },
-  {
-    id: "derived_servant_001",
-    style: "Servant",
-    direction: "negative",
-    derived: true,
-    derivedFrom: "q_servant_001",
-    text: "I rarely prioritize understanding what my team members need in order to succeed."
-  },
-  {
-    id: "derived_autocratic_001",
-    style: "Autocratic",
-    direction: "negative",
-    derived: true,
-    derivedFrom: "q_autocratic_001",
-    text: "I avoid making firm decisions independently, even when clear direction is needed."
-  },
-  {
-    id: "derived_charismatic_001",
-    style: "Charismatic",
-    direction: "negative",
-    derived: true,
-    derivedFrom: "q_charismatic_001",
-    text: "I rarely use personal energy or presence to inspire commitment from others."
-  },
-  {
-    id: "derived_democratic_001",
-    style: "Democratic",
-    direction: "negative",
-    derived: true,
-    derivedFrom: "q_democratic_001",
-    text: "I usually make decisions without inviting input from people affected by them."
-  },
-  {
-    id: "derived_laissez_faire_001",
-    style: "Laissez-Faire",
-    direction: "negative",
-    derived: true,
-    derivedFrom: "q_laissez_faire_001",
-    text: "I tend to stay closely involved in how capable team members complete their work."
-  },
-  {
-    id: "derived_situational_001",
-    style: "Situational",
-    direction: "negative",
-    derived: true,
-    derivedFrom: "q_situational_001",
-    text: "I use the same leadership approach regardless of the person, task, or context."
-  },
-  {
-    id: "derived_contrast_transformational_001",
-    style: "Transformational",
-    direction: "positive",
-    derived: true,
-    derivedFrom: "Final Output.docx",
-    text: "When short-term tasks compete with long-term growth, I usually emphasize vision, purpose, and development."
-  },
-  {
-    id: "derived_contrast_transactional_001",
-    style: "Transactional",
-    direction: "positive",
-    derived: true,
-    derivedFrom: "Final Output.docx",
-    text: "When performance matters, I usually emphasize clear goals, standards, follow-up, and measurable outcomes over broad inspiration."
-  },
-  {
-    id: "derived_contrast_servant_001",
-    style: "Servant",
-    direction: "positive",
-    derived: true,
-    derivedFrom: "Final Output.docx",
-    text: "When leadership requires a tradeoff, I usually place the growth and well-being of others ahead of asserting authority."
-  },
-  {
-    id: "derived_contrast_autocratic_001",
-    style: "Autocratic",
-    direction: "positive",
-    derived: true,
-    derivedFrom: "Final Output.docx",
-    text: "When speed, risk, or clarity matters, I usually make firm decisions without waiting for group agreement."
-  },
-  {
-    id: "derived_contrast_charismatic_001",
-    style: "Charismatic",
-    direction: "positive",
-    derived: true,
-    derivedFrom: "Final Output.docx",
-    text: "When people need momentum, I usually rely on personal energy, communication, and influence to build enthusiasm."
-  },
-  {
-    id: "derived_contrast_democratic_001",
-    style: "Democratic",
-    direction: "positive",
-    derived: true,
-    derivedFrom: "Final Output.docx",
-    text: "When a decision affects the team, I usually slow down enough to include people and build shared ownership."
-  },
-  {
-    id: "derived_contrast_laissez_faire_001",
-    style: "Laissez-Faire",
-    direction: "positive",
-    derived: true,
-    derivedFrom: "Final Output.docx",
-    text: "When capable people own the work, I usually set expectations and give them room to decide how to complete it."
-  },
-  {
-    id: "derived_contrast_situational_001",
-    style: "Situational",
-    direction: "positive",
-    derived: true,
-    derivedFrom: "Final Output.docx",
-    text: "When team members need different kinds of support, I usually change my leadership approach rather than using one consistent style."
-  }
-];
-
-const sourceQuestions = sourceData.questions.filter((question) => question.style !== "Autocratic");
-const questionBank = [...sourceQuestions, ...correctedAutocraticQuestions, ...derivedQuestions];
+const questionBank = sourceData.questions;
 const state = {
   currentQuestion: null,
   selectedValue: null,
@@ -619,10 +391,11 @@ function polishSelfAssessmentText(text) {
 }
 
 function scoreAnswer(question, value) {
+  const weightedScore = ANSWER_WEIGHTS[value] ?? 0;
   if (question.direction === "negative") {
-    return 6 - value;
+    return -weightedScore;
   }
-  return value;
+  return weightedScore;
 }
 
 function getAnswersByStyle(style) {
@@ -641,8 +414,15 @@ function calculateScores() {
     const answers = getAnswersByStyle(style);
     const total = answers.reduce((sum, answer) => sum + answer.score, 0);
     const average = answers.length ? total / answers.length : 0;
-    scores[style] = Math.round((average / 5) * 100);
-    raw[style] = { count: answers.length, average, values: answers.map((answer) => answer.score) };
+    const percentage = Math.round(((total - MIN_STYLE_SCORE) / (MAX_STYLE_SCORE - MIN_STYLE_SCORE)) * 100);
+    scores[style] = total;
+    raw[style] = {
+      count: answers.length,
+      total,
+      average,
+      percentage: Math.max(0, Math.min(100, percentage)),
+      values: answers.map((answer) => answer.score)
+    };
   });
 
   const ranked = Object.entries(scores).sort((a, b) => b[1] - a[1]);
@@ -666,12 +446,6 @@ function responseQuality() {
   const maxSame = Math.max(...Object.values(counts), 0);
   const straightLineRatio = values.length ? maxSame / values.length : 0;
   const variance = standardDeviation(values);
-  const totalDerivedCount = completeAnswers.filter((answer) => answer.derived).length;
-  const measurementSafeguardCount = completeAnswers.filter((answer) => (
-    answer.derived && !String(answer.questionId).startsWith("corrected_autocratic_")
-  )).length;
-  const derivedRatio = completeAnswers.length ? totalDerivedCount / completeAnswers.length : 0;
-  const measurementSafeguardRatio = completeAnswers.length ? measurementSafeguardCount / completeAnswers.length : 0;
   const neutralRatio = values.length ? (counts[3] || 0) / values.length : 0;
   const extremeRatio = values.length ? ((counts[1] || 0) + (counts[5] || 0)) / values.length : 0;
 
@@ -693,110 +467,35 @@ function responseQuality() {
     flags.push("Responses relied almost entirely on one extreme answer pattern.");
     invalid = true;
   }
-  if (measurementSafeguardRatio > MAX_DERIVED_RATIO) {
-    flags.push("Too many derived check questions were used.");
-  }
-
   return {
     flags,
     invalid,
     straightLineRatio,
     variance,
-    derivedRatio,
-    measurementSafeguardRatio,
-    totalDerivedCount,
+    derivedRatio: 0,
     neutralRatio,
     extremeRatio
   };
 }
 
-function confidenceLevel(scoresData) {
-  const top = scoresData.ranked[0];
-  const second = scoresData.ranked[1];
-  const gap = top[1] - second[1];
-  const topCount = scoresData.raw[top[0]].count;
-  const quality = responseQuality();
-
-  if (quality.invalid) return "Invalid response pattern";
-  if (quality.flags.length) return "Lower";
-  if (gap >= 12 && topCount >= MIN_TOP_STYLE_ANSWERS) return "High";
-  if (gap >= MIN_LEAD_GAP && topCount >= 3) return "Moderate";
-  return "Developing";
-}
-
-function highScoreCluster(scoresData) {
-  const topScore = scoresData.ranked[0]?.[1] || 0;
-  return scoresData.ranked.filter(([, score]) => (
-    score >= HIGH_SCORE_CLUSTER_THRESHOLD && topScore - score <= HIGH_SCORE_CLUSTER_GAP
-  ));
-}
-
-function styleEvidence(style, scoresData) {
-  const values = scoresData.raw[style]?.values || [];
-  return {
-    style,
-    score: scoresData.scores[style] || 0,
-    count: values.length,
-    highSupport: values.filter((value) => value >= 4).length,
-    lowContradiction: values.filter((value) => value <= 2).length,
-    average: values.length ? values.reduce((sum, value) => sum + value, 0) / values.length : 0,
-    spread: values.length ? Math.max(...values) - Math.min(...values) : 0
-  };
-}
-
-function rankedStylesWithEvidence(scoresData) {
-  return styles
-    .map((style) => styleEvidence(style, scoresData))
-    .sort((a, b) => (
-      b.score - a.score
-      || b.highSupport - a.highSupport
-      || a.lowContradiction - b.lowContradiction
-      || b.average - a.average
-      || b.count - a.count
-      || a.style.localeCompare(b.style)
-    ));
-}
-
 function classificationDecision(scoresData, quality) {
-  const [first, second, third] = rankedStylesWithEvidence(scoresData);
-  const gap = first.score - second.score;
-  const thirdGap = second.score - (third?.score || 0);
-  const cluster = highScoreCluster(scoresData);
+  const [first, second] = scoresData.ranked;
   const flags = [...quality.flags];
 
   if (quality.invalid) {
     return { primaryStyles: [], isInterpretable: false, flags };
   }
 
-  if (cluster.length > 2) {
-    flags.push("Several leadership styles scored closely together; classification used relative strength indicators.");
+  if (second && first[1] === second[1]) {
+    return { primaryStyles: [first[0], second[0]], isInterpretable: true, flags };
   }
 
-  const validTwoStyleResult = gap <= 3
-    && thirdGap >= CLOSE_SCORE_GAP
-    && first.count >= MIN_TOP_STYLE_ANSWERS
-    && second.count >= MIN_TOP_STYLE_ANSWERS;
-
-  if (validTwoStyleResult) {
-    return { primaryStyles: [first.style, second.style], isInterpretable: true, flags };
-  }
-
-  const validSingleStyleResult = first.count >= MIN_TOP_STYLE_ANSWERS;
-
-  if (validSingleStyleResult) {
-    return { primaryStyles: [first.style], isInterpretable: true, flags };
-  }
-
-  flags.push("Additional questions are needed before assigning a leadership style.");
-  return { primaryStyles: [], isInterpretable: false, flags };
+  return { primaryStyles: [first[0]], isInterpretable: true, flags };
 }
 
 function buildBaselineQueue() {
   const perStyle = styles.flatMap((style) => {
-    const sourceItems = questionBank.filter((question) => (
-      question.style === style
-      && (!question.derived || String(question.id).startsWith("corrected_autocratic_"))
-    ));
+    const sourceItems = questionBank.filter((question) => question.style === style);
     return shuffle(sourceItems).slice(0, BASELINE_PER_STYLE);
   });
 
@@ -822,60 +521,8 @@ function interleaveByStyle(questions) {
   return result;
 }
 
-function getUnusedQuestions(style, includeDerived = false) {
-  const askedIds = new Set(state.questionHistory.map((question) => question.id));
-  return questionBank.filter((question) => {
-    if (question.style !== style || askedIds.has(question.id)) return false;
-    if (!includeDerived && question.derived) return false;
-    return true;
-  });
-}
-
 function shouldStop() {
   return answeredCount() >= MAX_QUESTIONS;
-}
-
-function nextAdaptiveQuestion() {
-  const scoresData = calculateScores();
-  const ranked = rankedStylesWithEvidence(scoresData);
-  const topStyles = ranked.slice(0, 3).map((item) => item.style);
-  const lowestCoverage = styles
-    .map((style) => ({ style, count: scoresData.raw[style].count }))
-    .sort((a, b) => a.count - b.count)[0];
-
-  if (lowestCoverage.count < 1) {
-    return shuffle(getUnusedQuestions(lowestCoverage.style))[0];
-  }
-
-  const inconsistent = styles
-    .map((style) => {
-      const values = scoresData.raw[style].values;
-      return { style, spread: values.length ? Math.max(...values) - Math.min(...values) : 0 };
-    })
-    .filter((item) => item.spread >= 4)
-    .sort((a, b) => b.spread - a.spread)[0];
-
-  if (inconsistent) {
-    const derived = getUnusedQuestions(inconsistent.style, true).find((question) => question.derived);
-    if (derived && responseQuality().derivedRatio < 0.18) return derived;
-    return shuffle(getUnusedQuestions(inconsistent.style))[0];
-  }
-
-  const clusteredStyles = highScoreCluster(scoresData).map(([style]) => style);
-  if (clusteredStyles.length > 2 && responseQuality().derivedRatio < 0.22) {
-    const contrastCandidates = clusteredStyles
-      .flatMap((style) => getUnusedQuestions(style, true))
-      .filter((question) => question.derived && question.id.includes("derived_contrast"));
-    if (contrastCandidates.length) return shuffle(contrastCandidates)[0];
-  }
-
-  const closeStyles = topStyles.filter((style) => getUnusedQuestions(style).length);
-  const targetStyle = closeStyles.find((style) => scoresData.raw[style].count < 5) || closeStyles[0];
-  if (targetStyle) {
-    return shuffle(getUnusedQuestions(targetStyle))[0];
-  }
-
-  return null;
 }
 
 function advanceQuestion() {
@@ -884,8 +531,7 @@ function advanceQuestion() {
     return;
   }
 
-  const queued = state.pendingQueue.shift();
-  const next = queued || nextAdaptiveQuestion();
+  const next = state.pendingQueue.shift();
 
   if (!next || state.answers.length >= MAX_QUESTIONS) {
     renderResults();
@@ -946,9 +592,21 @@ function answerCurrent(value) {
 }
 
 function tendencyFor(score) {
-  if (score >= 75) return "high";
-  if (score >= 45) return "moderate";
+  if (score >= 8) return "high";
+  if (score >= 2) return "moderate";
   return "low";
+}
+
+function strengthLabel(score) {
+  if (score <= -8) return "Low correlation";
+  if (score <= -2) return "Low tendency";
+  if (score <= 4) return "Moderate tendency";
+  if (score <= 10) return "High tendency";
+  return "Strong tendency";
+}
+
+function barWidthForScore(score) {
+  return Math.max(4, Math.min(100, Math.round(((score - MIN_STYLE_SCORE) / (MAX_STYLE_SCORE - MIN_STYLE_SCORE)) * 100)));
 }
 
 function styleSummary(style, score) {
@@ -958,13 +616,12 @@ function styleSummary(style, score) {
 function resultPayload() {
   const scoresData = calculateScores();
   const quality = responseQuality();
-  const confidence = confidenceLevel(scoresData);
   const decision = classificationDecision(scoresData, quality);
   const resultSummary = !decision.isInterpretable
     ? "Your response pattern does not provide enough evidence to assign a leadership style. This can happen when answers are too evenly distributed, too inconsistent, or do not provide enough differentiation between styles."
     : decision.primaryStyles.length === 2
-    ? `Your leadership profile shows both ${decision.primaryStyles[0]} and ${decision.primaryStyles[1]} leadership. The sections below describe the strengths, possible challenges, coaching guidance, and development focus connected to those styles.`
-    : `Your leadership style is ${decision.primaryStyles[0]}. The sections below describe the strengths, possible challenges, coaching guidance, and development focus connected to this style.`;
+    ? `Your strongest tendencies are ${decision.primaryStyles[0]} and ${decision.primaryStyles[1]}. The bars below show how strongly your answers aligned with each leadership style.`
+    : `Your strongest tendency is ${decision.primaryStyles[0]}. The bars below show how strongly your answers aligned with each leadership style.`;
 
   return {
     id: crypto.randomUUID(),
@@ -976,7 +633,9 @@ function resultPayload() {
     respondentLabel: state.respondent.name,
     primaryStyles: decision.primaryStyles,
     scores: scoresData.scores,
-    confidence,
+    scoreLabels: Object.fromEntries(Object.entries(scoresData.scores).map(([style, score]) => [style, strengthLabel(score)])),
+    scoreBars: Object.fromEntries(Object.entries(scoresData.scores).map(([style, score]) => [style, barWidthForScore(score)])),
+    confidence: quality.invalid ? "Invalid response pattern" : "Arithmetic scoring",
     quality: {
       ...quality,
       classificationFlags: decision.flags,
@@ -1055,7 +714,7 @@ function renderAttemptsView() {
     const created = new Date(attempt.createdAt).toLocaleString();
     const scoreRows = Object.entries(attempt.scores)
       .sort((a, b) => b[1] - a[1])
-      .map(([style, score]) => `<span>${style}: <strong>${score}</strong></span>`)
+      .map(([style, score]) => `<span>${style}: <strong>${strengthLabel(score)}</strong></span>`)
       .join("");
     const answerRows = attempt.answers
       .map((answer, index) => `
@@ -1063,7 +722,6 @@ function renderAttemptsView() {
           <td>${index + 1}</td>
           <td>${answer.text}</td>
           <td>${answerLabel(answer.value)}</td>
-          <td>${answer.score}</td>
           <td>${answer.derived ? "Derived" : "Source"}</td>
         </tr>
       `)
@@ -1088,7 +746,6 @@ function renderAttemptsView() {
                   <th>#</th>
                   <th>Question shown</th>
                   <th>Answer</th>
-                  <th>Score</th>
                   <th>Source</th>
                 </tr>
               </thead>
@@ -1172,9 +829,7 @@ function renderResults() {
 
   const ranked = Object.entries(payload.scores).sort((a, b) => b[1] - a[1]);
   const primaryLabel = payload.primaryStyles.join(" + ");
-  const primaryScore = payload.primaryStyles.length
-    ? Math.round(payload.primaryStyles.reduce((sum, style) => sum + payload.scores[style], 0) / payload.primaryStyles.length)
-    : 0;
+  const topLabel = payload.primaryStyles.length ? strengthLabel(payload.scores[payload.primaryStyles[0]]) : "Review";
 
   identityView.classList.add("hidden");
   startView.classList.add("hidden");
@@ -1185,18 +840,18 @@ function renderResults() {
   progressPercent.textContent = "100%";
   progressBar.style.width = "100%";
   const hasClassification = payload.primaryStyles.length > 0 && payload.quality.isInterpretable;
-  profileTitle.textContent = hasClassification ? `${primaryLabel} Leadership` : "No Leadership Style Assigned";
+  profileTitle.textContent = hasClassification ? `Strongest tendency: ${primaryLabel}` : "No Leadership Style Assigned";
   profileSummary.textContent = payload.resultSummary;
-  overallScore.textContent = hasClassification ? primaryScore : "!";
+  overallScore.textContent = hasClassification ? topLabel.replace(" tendency", "") : "Review";
 
   dimensionScores.innerHTML = ranked
     .map(([style, score]) => `
       <article class="score-card ${payload.primaryStyles.includes(style) ? "primary-style" : ""} ${hasClassification ? "" : "muted-score"}">
         <header>
           <span>${style}</span>
-          <strong>${score}</strong>
+          <strong>${strengthLabel(score)}</strong>
         </header>
-        <div class="meter" aria-hidden="true"><span style="width: ${score}%"></span></div>
+        <div class="meter" aria-hidden="true"><span style="width: ${barWidthForScore(score)}%"></span></div>
       </article>
     `)
     .join("");
@@ -1283,7 +938,7 @@ function copySummary() {
 
   const scoreLines = Object.entries(payload.scores)
     .sort((a, b) => b[1] - a[1])
-    .map(([style, score]) => `${style}: ${score}/100`)
+    .map(([style, score]) => `${style}: ${strengthLabel(score)}`)
     .join("\n");
 
   const title = payload.primaryStyles.length
