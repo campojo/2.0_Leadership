@@ -61,6 +61,12 @@ Then verify Supabase rows were created in:
 
 Each completed attempt should create one `assessment_attempts` row and one `assessment_answers` row per question answered.
 
+If `respondents` and `assessment_attempts` receive rows but `assessment_answers` stays empty, run:
+
+`SUPABASE_FIX_SCORED_VALUE_CONSTRAINT.sql`
+
+This updates older databases created before weighted answer scores were changed to `-3`, `-1`, `0`, `1`, and `3`.
+
 If Resend is configured, the respondent should also receive a result email.
 
 ## 5. Temporary API Review

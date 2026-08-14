@@ -49,7 +49,7 @@ create table if not exists public.assessment_answers (
   question_text text not null,
   leadership_style text not null,
   answer_value integer not null check (answer_value between 1 and 5),
-  scored_value integer not null check (scored_value between 1 and 5),
+  scored_value integer not null check (scored_value between -3 and 3),
   direction text not null check (direction in ('positive', 'negative')),
   is_derived boolean not null default false,
   derived_from text,

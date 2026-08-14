@@ -380,7 +380,7 @@ Stores one completed assessment attempt. This is the primary admin row for repor
 
 `assessment_answers`
 
-Stores one row per answered question. This enables full audit trails, exact question review, answer review, item analysis, and question-level statistics.
+Stores one row per answered question. This enables full audit trails, exact question review, answer review, item analysis, and question-level statistics. `answer_value` stores the raw Likert choice from `1` to `5`; `scored_value` stores the weighted score from `-3` to `3`.
 
 ### Why Use Both Columns And JSON
 
