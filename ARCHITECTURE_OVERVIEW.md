@@ -4,7 +4,7 @@
 
 This application is a research-informed leadership style self-assessment built from dissertation-derived leadership assessment materials. The current deployed prototype is a browser application hosted on Vercel. It uses JavaScript in the browser to present 40 randomized questions, score responses with weighted arithmetic, detect low-quality response patterns, generate respondent-facing results, save local review logs, and post completed attempts to a server-side API route for database persistence when configured.
 
-The persistence architecture uses a Vercel serverless function and Supabase Postgres so every completed attempt can be reviewed by the owner and analyzed over time once the required environment variables and database schema are configured.
+The persistence architecture uses Vercel serverless functions and Supabase Postgres so every completed attempt can be reviewed by the owner and analyzed over time. A separate, unlinked admin interface reads protected aggregate data through `/api/analytics`; participant assessment pages do not load the analytics code or data.
 
 ## Current Deployment
 
@@ -28,6 +28,7 @@ The persistence architecture uses a Vercel serverless function and Supabase Post
 | Source Control | GitHub | Versioning and Vercel deployment source |
 | Local Persistence | `localStorage` | Backup saved attempts and debug review logs |
 | Database Persistence | Supabase Postgres | Permanent attempts, answers, scores, and review records |
+| Admin Analytics | Separate HTML/CSS/JavaScript interface | Protected aggregate trends, attempt review, respondent history, and question analysis |
 
 ## Production Stack Target
 
@@ -57,6 +58,9 @@ flowchart TD
   G --> J["Server API route /api/attempts"]
   J --> K["Supabase Postgres"]
   J --> O["Resend Email API"]
+  P["Admin opens unlinked /admin.html"] --> Q["Admin token gate"]
+  Q --> R["Server API route /api/analytics"]
+  R --> K
 
   subgraph CurrentPrototype["Current Prototype"]
     B
@@ -71,7 +75,7 @@ flowchart TD
     J
   end
 
-  K --> L["Admin dashboard"]
+  R --> L["Admin dashboard"]
   L --> M["Attempt review, trend analysis, item analysis"]
 ```
 
@@ -105,7 +109,10 @@ sequenceDiagram
     Email->>R: Delivers result email
   end
   API->>A: Confirms any completed delivery path or logs setup errors
-  Admin->>DB: Reviews attempts and analytics
+  Admin->>API: Requests analytics with admin token
+  API->>DB: Reads protected attempt and answer records
+  DB->>API: Returns paginated records
+  API->>Admin: Returns calculated admin analytics
 ```
 
 ## Source Data Pipeline
@@ -237,7 +244,7 @@ If a response pattern is not interpretable because of straight-lining, very low 
 
 ## Mock Output Preview
 
-For development and output validation, the start screen includes a mock result preview button. This path builds a complete 40-answer payload from real active questions and renders the same result screen without saving the attempt locally or posting it to the API.
+For development and output validation, the app retains a mock result preview path that builds a complete 40-answer payload from real active questions and renders the same result screen without saving the attempt locally or posting it to the API. Its participant-facing buttons are commented out in `index.html`; they can be restored temporarily during development without changing the mock-data logic.
 
 ## Current Review Logs
 
@@ -464,6 +471,10 @@ The browser should not write directly to the database with privileged credential
 | `styles.css` | Responsive UI and visual styling |
 | `app.js` | Assessment engine, scoring, result rendering, local review logs |
 | `api/attempts.js` | Vercel serverless route that validates attempts, saves to Supabase when configured, generates a PNG leadership map, and sends a branded HTML result report with a plain-text fallback through Resend when configured |
+| `admin.html` | Unlinked admin analytics interface and token gate |
+| `admin.css` | Responsive operational styling used only by the admin interface |
+| `admin.js` | Admin dashboard rendering, filtering, trend charts, and protected analytics requests |
+| `api/analytics.js` | Token-protected Vercel route that paginates Supabase data and calculates aggregate, respondent, quality, and question statistics |
 | `data/leadership-assessment.json` | Extracted assessment data |
 | `data/leadership-assessment.js` | Browser-loadable assessment data |
 | `QUESTION_BANK_REVIEW.md` | Human-readable inventory of every active question, category, direction, provenance, and selection status |
@@ -475,6 +486,7 @@ The browser should not write directly to the database with privileged credential
 | `SUPABASE_SETUP.md` | Step-by-step Supabase and Vercel environment setup |
 | `benchmark/respondents.json` | Synthetic respondent fixture for scoring regression testing |
 | `benchmark/run-benchmark.js` | Node benchmark runner that loads the current app scoring code |
+| `benchmark/run-analytics-smoke-test.js` | Synthetic authorization and aggregation smoke test for the protected analytics API |
 | `benchmark/export-question-bank.js` | Regenerates the active question-bank review from the current app code |
 
 ## Benchmark Workflow
@@ -492,10 +504,9 @@ The benchmark uses 15 controlled synthetic respondent patterns to confirm that c
 - Permanent database saves require a Supabase project and Vercel environment variables.
 - Supabase server-side API access supports the newer `sb_secret_` secret key and legacy `service_role` key, both stored only in Vercel.
 - Result emails require Resend environment variables.
-- Admin analytics are planned but not yet implemented.
 - Local review logs exist only in the browser that completed the assessment.
 - Respondent name and email are required.
-- No authentication exists yet for admin-only views.
+- Admin access currently uses a single `ADMIN_REVIEW_TOKEN`; multi-admin accounts and role management still require Supabase Auth or an equivalent identity provider.
 - Timing metrics are not yet collected.
 
 ## Recommended Next Build Steps
@@ -507,6 +518,6 @@ The benchmark uses 15 controlled synthetic respondent patterns to confirm that c
 5. Redeploy the Vercel project.
 6. Complete a test assessment and verify the result email plus rows in `respondents`, `assessment_attempts`, and `assessment_answers`.
 7. Run `node benchmark/run-benchmark.js` before releasing scoring changes.
-8. Add admin authentication.
-9. Build the admin attempts table.
-10. Build the admin analytics dashboard.
+8. Add `ADMIN_REVIEW_TOKEN` to Vercel and redeploy to activate `/admin.html`.
+9. Replace the shared admin token with account-based authentication before adding multiple administrators.
+10. Add response-time collection and cohort management when those workflows are defined.

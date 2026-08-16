@@ -2,6 +2,22 @@
 
 The admin panel is separate from the public assessment experience. Respondents should not see aggregate analytics, response-quality diagnostics, or trend analysis.
 
+## Current Foundation
+
+The first admin analytics release is implemented as an unlinked `/admin.html` application. It requests protected data from `/api/analytics` using `ADMIN_REVIEW_TOKEN`, while Supabase credentials remain server-side. The participant assessment does not link to, load, or depend on the admin files.
+
+Currently implemented views include:
+
+- Overview metrics and weekly assessment activity.
+- Primary-style distribution with dual-style allocation.
+- Average arithmetic tendency scores by style.
+- Response-quality and unassigned-profile summaries.
+- Searchable recent attempts with score and flag detail.
+- Repeat-respondent history.
+- Likert response distribution and descriptive question statistics.
+
+The shared token is appropriate for an owner-only prototype. Replace it with account-based authentication and roles before giving multiple administrators access.
+
 ## Admin Goals
 
 - Review every completed assessment attempt.

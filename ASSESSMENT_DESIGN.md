@@ -154,7 +154,7 @@ Respondent-facing output must not reveal technical save status, database configu
 
 ## Mock Result Preview
 
-The app includes a mock result preview button for output validation during development.
+The app retains a mock result preview path for output validation during development. Its UI buttons are commented out so participants do not see development controls.
 
 The mock preview uses 40 real questions from the active question bank and scores them through the same arithmetic scoring functions as a completed respondent attempt.
 

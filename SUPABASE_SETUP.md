@@ -45,6 +45,10 @@ API key from Resend for sending participant result emails.
 
 Verified sender address used for result emails, such as `Leadership Assessment <results@yourdomain.com>`.
 
+`ADMIN_REVIEW_TOKEN`
+
+A long, unique secret used to unlock the separate `/admin.html` analytics interface. Store it only in Vercel and your password manager. This owner-only token is a prototype access control and should be replaced with account-based authentication before adding multiple administrators.
+
 ## 3. Redeploy
 
 Redeploy the Vercel project after adding the environment variables.
