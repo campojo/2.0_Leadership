@@ -220,6 +220,87 @@ function textResultEmail(payload) {
   ].join("\n");
 }
 
+function escapeHtml(value) {
+  return String(value ?? "")
+    .replace(/&/g, "&amp;")
+    .replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;")
+    .replace(/\"/g, "&quot;")
+    .replace(/'/g, "&#39;");
+}
+
+function emailRadarSvg(payload) {
+  const styles = [
+    "Autocratic",
+    "Charismatic",
+    "Democratic",
+    "Laissez-Faire",
+    "Servant",
+    "Situational",
+    "Transactional",
+    "Transformational"
+  ];
+  const center = 180;
+  const maxRadius = 108;
+  const scores = payload.scores || {};
+  const ratio = (score) => Math.max(0.08, Math.min(1, (Number(score || 0) + 15) / 30));
+  const point = (radius, index) => {
+    const angle = (-Math.PI / 2) + ((Math.PI * 2 * index) / styles.length);
+    return {
+      x: center + Math.cos(angle) * radius,
+      y: center + Math.sin(angle) * radius,
+      angle
+    };
+  };
+  const points = styles.map((style, index) => ({
+    style,
+    value: point(maxRadius * ratio(scores[style]), index),
+    outer: point(maxRadius, index),
+    label: point(maxRadius + 29, index)
+  }));
+  const polygon = points.map(({ value }) => `${value.x.toFixed(1)},${value.y.toFixed(1)}`).join(" ");
+  const overall = points.reduce((vector, item) => {
+    vector.x += Math.cos(item.outer.angle) * ratio(scores[item.style]);
+    vector.y += Math.sin(item.outer.angle) * ratio(scores[item.style]);
+    return vector;
+  }, { x: 0, y: 0 });
+  const magnitude = Math.hypot(overall.x, overall.y) / styles.length;
+  const angle = Math.atan2(overall.y, overall.x);
+  const landing = {
+    x: center + Math.cos(angle) * maxRadius * Math.min(1, magnitude * 1.8),
+    y: center + Math.sin(angle) * maxRadius * Math.min(1, magnitude * 1.8)
+  };
+
+  return `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 360 360" width="360" height="360" role="img" aria-label="Leadership style map">
+    <rect width="360" height="360" fill="#fbfcfa"/>
+    <circle cx="180" cy="180" r="27" fill="none" stroke="#dfe8e4" stroke-width="1.5"/>
+    <circle cx="180" cy="180" r="54" fill="none" stroke="#dfe8e4" stroke-width="1.5"/>
+    <circle cx="180" cy="180" r="81" fill="none" stroke="#dfe8e4" stroke-width="1.5"/>
+    <circle cx="180" cy="180" r="108" fill="none" stroke="#8ebdb8" stroke-width="2"/>
+    ${points.map(({ outer, label }) => `<line x1="180" y1="180" x2="${outer.x.toFixed(1)}" y2="${outer.y.toFixed(1)}" stroke="#e1e9e6" stroke-width="1.2"/><text x="${label.x.toFixed(1)}" y="${label.y.toFixed(1)}" fill="#142522" font-family="Arial,sans-serif" font-size="9" font-weight="700" text-anchor="middle">${escapeHtml(points.find((item) => item.label === label)?.style || "")}</text>`).join("")}
+    <polygon points="${polygon}" fill="#0f7c7828" stroke="#0f7c78" stroke-width="3" stroke-linejoin="round"/>
+    ${points.map(({ value }) => `<circle cx="${value.x.toFixed(1)}" cy="${value.y.toFixed(1)}" r="4" fill="#0b6562" stroke="#fff" stroke-width="2"/>`).join("")}
+    <circle cx="180" cy="180" r="4" fill="#dba124"/>
+    <circle cx="${landing.x.toFixed(1)}" cy="${landing.y.toFixed(1)}" r="9" fill="#dba124" stroke="#fff" stroke-width="4"/>
+  </svg>`;
+}
+
+function htmlResultEmail(payload) {
+  const respondentName = escapeHtml(payload.respondent?.name || payload.respondentLabel || "there");
+  const primaryStyles = payload.primaryStyles || [];
+  const resultTitle = primaryStyles.length
+    ? `${primaryStyles.map(escapeHtml).join(" + ")} Leadership`
+    : "Leadership Profile Review";
+  const ranked = Object.entries(payload.scores || {}).sort((a, b) => b[1] - a[1]);
+  const cards = ranked.map(([style, score], index) => {
+    const label = payload.scoreLabels?.[style] || strengthLabel(score);
+    const highlighted = primaryStyles.includes(style);
+    return `<tr><td style="padding:0 0 10px;"><table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="border:1px solid ${highlighted ? "#8dcac4" : "#dbe5e1"};background:${highlighted ? "#eef8f5" : "#ffffff"};border-radius:8px;"><tr><td style="padding:16px 18px;font-family:Arial,sans-serif;font-size:16px;font-weight:700;color:#142522;">${index + 1}. ${escapeHtml(style)}</td><td align="right" style="padding:16px 18px;font-family:Arial,sans-serif;font-size:14px;font-weight:700;color:#0b6562;white-space:nowrap;">${escapeHtml(label)}</td></tr></table></td></tr>`;
+  }).join("");
+
+  return `<!doctype html><html><body style="margin:0;background:#f2f6f3;color:#142522;font-family:Arial,sans-serif;"><table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="background:#f2f6f3;padding:28px 12px;"><tr><td align="center"><table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="max-width:720px;background:#ffffff;border:1px solid #dbe5e1;border-radius:12px;overflow:hidden;"><tr><td style="padding:42px 44px 18px;"><div style="font-size:13px;letter-spacing:2px;font-weight:700;color:#63cec6;text-transform:uppercase;">Your Leadership Profile</div><h1 style="margin:16px 0 14px;font-size:38px;line-height:1.08;color:#101b19;">${resultTitle}</h1><p style="margin:0;color:#61736e;font-size:17px;line-height:1.55;">${escapeHtml(payload.resultSummary || "Your leadership profile is ready.")}</p></td></tr><tr><td style="padding:10px 44px 26px;"><table role="presentation" width="100%" cellpadding="0" cellspacing="0"><tr><td width="48%" valign="top" style="padding-right:12px;"><h2 style="margin:0 0 8px;font-size:20px;color:#142522;">Leadership Style Map</h2><p style="margin:0;color:#61736e;font-size:14px;line-height:1.5;">The marker shows how your overall responses are distributed across styles.</p></td><td width="52%" align="center" valign="middle">${emailRadarSvg(payload)}</td></tr></table></td></tr><tr><td style="padding:8px 44px 30px;"><h2 style="margin:0 0 14px;font-size:20px;color:#142522;">Your tendencies</h2><table role="presentation" width="100%" cellpadding="0" cellspacing="0">${cards}</table></td></tr><tr><td style="padding:22px 44px;background:#f6faf8;border-top:1px solid #dbe5e1;color:#61736e;font-size:12px;line-height:1.55;">This assessment is intended for leadership reflection and development. No leadership style is inherently better than another; effective leadership depends on context, adaptability, and the needs of the people being led.</td></tr></table></td></tr></table></body></html>`;
+}
+
 async function emailResult(payload) {
   if (!isEmailConfigured()) {
     throw new Error("Result email environment variables are not configured.");
@@ -235,7 +316,8 @@ async function emailResult(payload) {
       from: RESULT_EMAIL_FROM,
       to: payload.respondent.email,
       subject: "Your leadership assessment results",
-      text: textResultEmail(payload)
+      text: textResultEmail(payload),
+      html: htmlResultEmail(payload)
     })
   });
 

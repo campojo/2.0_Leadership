@@ -12,7 +12,7 @@ Production persistence stack:
 - Database: Supabase/Postgres
 - Public assessment URL for respondents
 - Server-side API route `/api/attempts` for saving attempts
-- Email provider: Resend for sending participant result emails
+- Email provider: Resend for sending participant result emails. Each email contains a self-contained HTML report that mirrors the result screen with the leadership map and tendency cards, plus a plain-text fallback.
 - Private admin view for reviewing results
 
 ## Why Server-Side Saving
