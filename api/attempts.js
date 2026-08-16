@@ -4,6 +4,7 @@ const ADMIN_REVIEW_TOKEN = process.env.ADMIN_REVIEW_TOKEN;
 const RESEND_API_KEY = process.env.RESEND_API_KEY;
 const RESULT_EMAIL_FROM = process.env.RESULT_EMAIL_FROM;
 const { randomUUID } = require("crypto");
+const { deflateSync } = require("zlib");
 
 function json(response, statusCode, payload) {
   response.statusCode = statusCode;
@@ -229,7 +230,27 @@ function escapeHtml(value) {
     .replace(/'/g, "&#39;");
 }
 
-function emailRadarSvg(payload) {
+function crc32(buffer) {
+  let crc = 0xffffffff;
+  for (const byte of buffer) {
+    crc ^= byte;
+    for (let bit = 0; bit < 8; bit += 1) {
+      crc = (crc >>> 1) ^ ((crc & 1) ? 0xedb88320 : 0);
+    }
+  }
+  return (crc ^ 0xffffffff) >>> 0;
+}
+
+function pngChunk(type, data) {
+  const typeBuffer = Buffer.from(type);
+  const length = Buffer.alloc(4);
+  length.writeUInt32BE(data.length);
+  const checksum = Buffer.alloc(4);
+  checksum.writeUInt32BE(crc32(Buffer.concat([typeBuffer, data])));
+  return Buffer.concat([length, typeBuffer, data, checksum]);
+}
+
+function emailRadarPng(payload) {
   const styles = [
     "Autocratic",
     "Charismatic",
@@ -240,9 +261,96 @@ function emailRadarSvg(payload) {
     "Transactional",
     "Transformational"
   ];
-  const center = 180;
-  const maxRadius = 108;
+  const width = 600;
+  const height = 600;
+  const center = 300;
+  const maxRadius = 178;
   const scores = payload.scores || {};
+  const pixels = Buffer.alloc(width * height * 4);
+  for (let offset = 0; offset < pixels.length; offset += 4) {
+    pixels[offset] = 251;
+    pixels[offset + 1] = 252;
+    pixels[offset + 2] = 250;
+    pixels[offset + 3] = 255;
+  }
+
+  const blendPixel = (x, y, color, alpha = 1) => {
+    const px = Math.round(x);
+    const py = Math.round(y);
+    if (px < 0 || py < 0 || px >= width || py >= height) return;
+    const offset = ((py * width) + px) * 4;
+    pixels[offset] = Math.round((pixels[offset] * (1 - alpha)) + (color[0] * alpha));
+    pixels[offset + 1] = Math.round((pixels[offset + 1] * (1 - alpha)) + (color[1] * alpha));
+    pixels[offset + 2] = Math.round((pixels[offset + 2] * (1 - alpha)) + (color[2] * alpha));
+  };
+  const fillCircle = (cx, cy, radius, color, alpha = 1) => {
+    const radiusSquared = radius * radius;
+    for (let y = Math.floor(cy - radius); y <= Math.ceil(cy + radius); y += 1) {
+      for (let x = Math.floor(cx - radius); x <= Math.ceil(cx + radius); x += 1) {
+        if (((x - cx) ** 2) + ((y - cy) ** 2) <= radiusSquared) blendPixel(x, y, color, alpha);
+      }
+    }
+  };
+  const drawLine = (from, to, color, thickness = 2, alpha = 1) => {
+    const distance = Math.max(Math.abs(to.x - from.x), Math.abs(to.y - from.y));
+    for (let step = 0; step <= distance; step += 1) {
+      const progress = distance ? step / distance : 0;
+      fillCircle(from.x + ((to.x - from.x) * progress), from.y + ((to.y - from.y) * progress), thickness / 2, color, alpha);
+    }
+  };
+  const drawRing = (radius, color, thickness = 2) => {
+    const steps = Math.ceil(Math.PI * radius * 2);
+    for (let step = 0; step < steps; step += 1) {
+      const angle = (Math.PI * 2 * step) / steps;
+      fillCircle(center + (Math.cos(angle) * radius), center + (Math.sin(angle) * radius), thickness / 2, color);
+    }
+  };
+  const fillPolygon = (polygon, color, alpha) => {
+    const minY = Math.max(0, Math.floor(Math.min(...polygon.map((item) => item.y))));
+    const maxY = Math.min(height - 1, Math.ceil(Math.max(...polygon.map((item) => item.y))));
+    for (let y = minY; y <= maxY; y += 1) {
+      const intersections = [];
+      polygon.forEach((item, index) => {
+        const next = polygon[(index + 1) % polygon.length];
+        if ((item.y <= y && next.y > y) || (next.y <= y && item.y > y)) {
+          intersections.push(item.x + (((y - item.y) / (next.y - item.y)) * (next.x - item.x)));
+        }
+      });
+      intersections.sort((a, b) => a - b);
+      for (let index = 0; index < intersections.length; index += 2) {
+        for (let x = Math.ceil(intersections[index]); x <= Math.floor(intersections[index + 1]); x += 1) {
+          blendPixel(x, y, color, alpha);
+        }
+      }
+    }
+  };
+  const digitPatterns = {
+    1: ["010", "110", "010", "010", "111"],
+    2: ["110", "001", "010", "100", "111"],
+    3: ["110", "001", "010", "001", "110"],
+    4: ["101", "101", "111", "001", "001"],
+    5: ["111", "100", "110", "001", "110"],
+    6: ["011", "100", "111", "101", "111"],
+    7: ["111", "001", "010", "010", "010"],
+    8: ["111", "101", "111", "101", "111"]
+  };
+  const drawDigit = (value, cx, cy) => {
+    const pattern = digitPatterns[value];
+    const scale = 5;
+    const startX = Math.round(cx - ((3 * scale) / 2));
+    const startY = Math.round(cy - ((5 * scale) / 2));
+    pattern.forEach((row, rowIndex) => {
+      [...row].forEach((cell, columnIndex) => {
+        if (cell === "1") {
+          for (let y = 0; y < scale; y += 1) {
+            for (let x = 0; x < scale; x += 1) {
+              blendPixel(startX + (columnIndex * scale) + x, startY + (rowIndex * scale) + y, [255, 255, 255]);
+            }
+          }
+        }
+      });
+    });
+  };
   const ratio = (score) => Math.max(0.08, Math.min(1, (Number(score || 0) + 15) / 30));
   const point = (radius, index) => {
     const angle = (-Math.PI / 2) + ((Math.PI * 2 * index) / styles.length);
@@ -256,9 +364,9 @@ function emailRadarSvg(payload) {
     style,
     value: point(maxRadius * ratio(scores[style]), index),
     outer: point(maxRadius, index),
-    label: point(maxRadius + 29, index)
+    label: point(maxRadius + 52, index)
   }));
-  const polygon = points.map(({ value }) => `${value.x.toFixed(1)},${value.y.toFixed(1)}`).join(" ");
+  const polygon = points.map(({ value }) => value);
   const overall = points.reduce((vector, item) => {
     vector.x += Math.cos(item.outer.angle) * ratio(scores[item.style]);
     vector.y += Math.sin(item.outer.angle) * ratio(scores[item.style]);
@@ -271,22 +379,41 @@ function emailRadarSvg(payload) {
     y: center + Math.sin(angle) * maxRadius * Math.min(1, magnitude * 1.8)
   };
 
-  return `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 360 360" width="360" height="360" role="img" aria-label="Leadership style map">
-    <rect width="360" height="360" fill="#fbfcfa"/>
-    <circle cx="180" cy="180" r="27" fill="none" stroke="#dfe8e4" stroke-width="1.5"/>
-    <circle cx="180" cy="180" r="54" fill="none" stroke="#dfe8e4" stroke-width="1.5"/>
-    <circle cx="180" cy="180" r="81" fill="none" stroke="#dfe8e4" stroke-width="1.5"/>
-    <circle cx="180" cy="180" r="108" fill="none" stroke="#8ebdb8" stroke-width="2"/>
-    ${points.map(({ outer, label }) => `<line x1="180" y1="180" x2="${outer.x.toFixed(1)}" y2="${outer.y.toFixed(1)}" stroke="#e1e9e6" stroke-width="1.2"/><text x="${label.x.toFixed(1)}" y="${label.y.toFixed(1)}" fill="#142522" font-family="Arial,sans-serif" font-size="9" font-weight="700" text-anchor="middle">${escapeHtml(points.find((item) => item.label === label)?.style || "")}</text>`).join("")}
-    <polygon points="${polygon}" fill="#0f7c7828" stroke="#0f7c78" stroke-width="3" stroke-linejoin="round"/>
-    ${points.map(({ value }) => `<circle cx="${value.x.toFixed(1)}" cy="${value.y.toFixed(1)}" r="4" fill="#0b6562" stroke="#fff" stroke-width="2"/>`).join("")}
-    <circle cx="180" cy="180" r="4" fill="#dba124"/>
-    <circle cx="${landing.x.toFixed(1)}" cy="${landing.y.toFixed(1)}" r="9" fill="#dba124" stroke="#fff" stroke-width="4"/>
-  </svg>`;
+  [maxRadius * 0.25, maxRadius * 0.5, maxRadius * 0.75].forEach((radius) => drawRing(radius, [223, 232, 228], 2));
+  drawRing(maxRadius, [142, 189, 184], 4);
+  points.forEach(({ outer }) => drawLine({ x: center, y: center }, outer, [225, 233, 230], 2));
+  fillPolygon(polygon, [15, 124, 120], 0.16);
+  polygon.forEach((item, index) => drawLine(item, polygon[(index + 1) % polygon.length], [15, 124, 120], 6));
+  points.forEach(({ value, label }, index) => {
+    fillCircle(value.x, value.y, 9, [255, 255, 255]);
+    fillCircle(value.x, value.y, 6, [11, 101, 98]);
+    fillCircle(label.x, label.y, 22, [11, 101, 98]);
+    drawDigit(index + 1, label.x, label.y);
+  });
+  fillCircle(center, center, 7, [219, 161, 36]);
+  fillCircle(landing.x, landing.y, 20, [255, 255, 255]);
+  fillCircle(landing.x, landing.y, 14, [219, 161, 36]);
+
+  const raw = Buffer.alloc((width * 4 + 1) * height);
+  for (let y = 0; y < height; y += 1) {
+    const rowOffset = y * ((width * 4) + 1);
+    raw[rowOffset] = 0;
+    pixels.copy(raw, rowOffset + 1, y * width * 4, (y + 1) * width * 4);
+  }
+  const header = Buffer.alloc(13);
+  header.writeUInt32BE(width, 0);
+  header.writeUInt32BE(height, 4);
+  header[8] = 8;
+  header[9] = 6;
+  return Buffer.concat([
+    Buffer.from([137, 80, 78, 71, 13, 10, 26, 10]),
+    pngChunk("IHDR", header),
+    pngChunk("IDAT", deflateSync(raw)),
+    pngChunk("IEND", Buffer.alloc(0))
+  ]);
 }
 
 function htmlResultEmail(payload) {
-  const respondentName = escapeHtml(payload.respondent?.name || payload.respondentLabel || "there");
   const primaryStyles = payload.primaryStyles || [];
   const resultTitle = primaryStyles.length
     ? `${primaryStyles.map(escapeHtml).join(" + ")} Leadership`
@@ -297,8 +424,18 @@ function htmlResultEmail(payload) {
     const highlighted = primaryStyles.includes(style);
     return `<tr><td style="padding:0 0 10px;"><table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="border:1px solid ${highlighted ? "#8dcac4" : "#dbe5e1"};background:${highlighted ? "#eef8f5" : "#ffffff"};border-radius:8px;"><tr><td style="padding:16px 18px;font-family:Arial,sans-serif;font-size:16px;font-weight:700;color:#142522;">${index + 1}. ${escapeHtml(style)}</td><td align="right" style="padding:16px 18px;font-family:Arial,sans-serif;font-size:14px;font-weight:700;color:#0b6562;white-space:nowrap;">${escapeHtml(label)}</td></tr></table></td></tr>`;
   }).join("");
+  const axisLegend = [
+    "1 Autocratic",
+    "2 Charismatic",
+    "3 Democratic",
+    "4 Laissez-Faire",
+    "5 Servant",
+    "6 Situational",
+    "7 Transactional",
+    "8 Transformational"
+  ].join(" &nbsp;&middot;&nbsp; ");
 
-  return `<!doctype html><html><body style="margin:0;background:#f2f6f3;color:#142522;font-family:Arial,sans-serif;"><table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="background:#f2f6f3;padding:28px 12px;"><tr><td align="center"><table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="max-width:720px;background:#ffffff;border:1px solid #dbe5e1;border-radius:12px;overflow:hidden;"><tr><td style="padding:42px 44px 18px;"><div style="font-size:13px;letter-spacing:2px;font-weight:700;color:#63cec6;text-transform:uppercase;">Your Leadership Profile</div><h1 style="margin:16px 0 14px;font-size:38px;line-height:1.08;color:#101b19;">${resultTitle}</h1><p style="margin:0;color:#61736e;font-size:17px;line-height:1.55;">${escapeHtml(payload.resultSummary || "Your leadership profile is ready.")}</p></td></tr><tr><td style="padding:10px 44px 26px;"><table role="presentation" width="100%" cellpadding="0" cellspacing="0"><tr><td width="48%" valign="top" style="padding-right:12px;"><h2 style="margin:0 0 8px;font-size:20px;color:#142522;">Leadership Style Map</h2><p style="margin:0;color:#61736e;font-size:14px;line-height:1.5;">The marker shows how your overall responses are distributed across styles.</p></td><td width="52%" align="center" valign="middle">${emailRadarSvg(payload)}</td></tr></table></td></tr><tr><td style="padding:8px 44px 30px;"><h2 style="margin:0 0 14px;font-size:20px;color:#142522;">Your tendencies</h2><table role="presentation" width="100%" cellpadding="0" cellspacing="0">${cards}</table></td></tr><tr><td style="padding:22px 44px;background:#f6faf8;border-top:1px solid #dbe5e1;color:#61736e;font-size:12px;line-height:1.55;">This assessment is intended for leadership reflection and development. No leadership style is inherently better than another; effective leadership depends on context, adaptability, and the needs of the people being led.</td></tr></table></td></tr></table></body></html>`;
+  return `<!doctype html><html><body style="margin:0;background:#f2f6f3;color:#142522;font-family:Arial,sans-serif;"><table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="background:#f2f6f3;"><tr><td align="center" style="padding:24px 10px;"><table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="max-width:720px;background:#ffffff;border:1px solid #dbe5e1;border-radius:12px;overflow:hidden;"><tr><td style="padding:36px 28px 18px;"><div style="font-size:13px;letter-spacing:2px;font-weight:700;color:#63cec6;text-transform:uppercase;">Your Leadership Profile</div><h1 style="margin:16px 0 14px;font-size:34px;line-height:1.1;color:#101b19;">${resultTitle}</h1><p style="margin:0;color:#61736e;font-size:17px;line-height:1.55;">${escapeHtml(payload.resultSummary || "Your leadership profile is ready.")}</p></td></tr><tr><td style="padding:18px 28px 28px;"><h2 style="margin:0 0 8px;font-size:20px;color:#142522;">Leadership Style Map</h2><p style="margin:0 0 16px;color:#61736e;font-size:14px;line-height:1.5;">The marker shows how your overall responses are distributed across styles.</p><div style="text-align:center;"><img src="cid:leadership-style-map" width="520" alt="Leadership style map" style="display:block;width:100%;max-width:520px;height:auto;margin:0 auto;border:0;"></div><p style="margin:14px 0 0;color:#61736e;font-size:12px;line-height:1.7;text-align:center;">${axisLegend}</p></td></tr><tr><td style="padding:8px 28px 30px;"><h2 style="margin:0 0 14px;font-size:20px;color:#142522;">Your tendencies</h2><table role="presentation" width="100%" cellpadding="0" cellspacing="0">${cards}</table></td></tr><tr><td style="padding:22px 28px;background:#f6faf8;border-top:1px solid #dbe5e1;color:#61736e;font-size:12px;line-height:1.55;">This assessment is intended for leadership reflection and development. No leadership style is inherently better than another; effective leadership depends on context, adaptability, and the needs of the people being led.</td></tr></table></td></tr></table></body></html>`;
 }
 
 async function emailResult(payload) {
@@ -317,7 +454,13 @@ async function emailResult(payload) {
       to: payload.respondent.email,
       subject: "Your leadership assessment results",
       text: textResultEmail(payload),
-      html: htmlResultEmail(payload)
+      html: htmlResultEmail(payload),
+      attachments: [{
+        content: emailRadarPng(payload).toString("base64"),
+        filename: "leadership-style-map.png",
+        content_id: "leadership-style-map",
+        content_type: "image/png"
+      }]
     })
   });
 

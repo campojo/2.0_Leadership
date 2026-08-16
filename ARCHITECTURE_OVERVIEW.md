@@ -463,7 +463,7 @@ The browser should not write directly to the database with privileged credential
 | `index.html` | App structure and screens |
 | `styles.css` | Responsive UI and visual styling |
 | `app.js` | Assessment engine, scoring, result rendering, local review logs |
-| `api/attempts.js` | Vercel serverless route that validates attempts, saves to Supabase when configured, and sends a branded HTML result report with a plain-text fallback through Resend when configured |
+| `api/attempts.js` | Vercel serverless route that validates attempts, saves to Supabase when configured, generates a PNG leadership map, and sends a branded HTML result report with a plain-text fallback through Resend when configured |
 | `data/leadership-assessment.json` | Extracted assessment data |
 | `data/leadership-assessment.js` | Browser-loadable assessment data |
 | `QUESTION_BANK_REVIEW.md` | Human-readable inventory of every active question, category, direction, provenance, and selection status |
