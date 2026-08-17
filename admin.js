@@ -318,11 +318,11 @@ async function renderQuestionDetail(questionId) {
     const detail = await fetchDetail("question", questionId);
     const alerts = detail.alerts.length
       ? `<ul class="flag-list">${detail.alerts.map((alert) => `<li>${escapeHtml(alert)}</li>`).join("")}</ul>`
-      : `<p class="sample-note">${detail.responses < 30 ? `At least 30 responses are required before effectiveness alerts are evaluated. Current sample: ${detail.responses}.` : "No review signals currently meet the alert thresholds."}</p>`;
+      : `<p class="sample-note">No review signals currently meet the alert thresholds.</p>`;
     host.innerHTML = `
       <header><div><h3>${escapeHtml(detail.text)}</h3><span class="subtle">${escapeHtml(detail.style)} | ${detail.responses} responses</span></div><button id="closeQuestionDetail" type="button">Close</button></header>
       <div class="quality-summary"><article><span>Average</span><strong>${detail.average}</strong></article><article><span>Variation</span><strong>${detail.standardDeviation}</strong></article><article><span>Neutral</span><strong>${formatPercent(detail.neutralRate)}</strong></article><article><span>Corrected item-total relationship</span><strong>${detail.correctedItemTotalCorrelation === null ? "Not available" : detail.correctedItemTotalCorrelation}</strong></article></div>
-      <p class="sample-note">The corrected item-total relationship compares this answer with the remaining score for its assigned style. Values below 0.20 are flagged for expert review after the sample threshold is met.</p>
+      <p class="sample-note">The corrected item-total relationship compares this answer with the remaining score for its assigned style. Values below 0.20 are flagged for expert review. Treat all signals as preliminary while response counts are small.</p>
       ${alerts}
       <div class="detail-section"><h4>Response history</h4><div class="table-frame"><table class="answer-history"><thead><tr><th>Date</th><th>Respondent</th><th>Answer</th><th>Score</th><th>Time</th></tr></thead><tbody>${detail.responseHistory.map((response) => `<tr><td>${formatDate(response.date, true)}</td><td>${escapeHtml(response.name)}<span class="subtle">${escapeHtml(response.email)}</span></td><td>${answerLabel(response.answerValue)}</td><td>${Number(response.scoredValue) > 0 ? "+" : ""}${response.scoredValue}</td><td>${response.responseTimeMs === null ? "Not recorded" : formatDuration(response.responseTimeMs / 1000)}</td></tr>`).join("")}</tbody></table></div></div>`;
   } catch (error) {

@@ -289,13 +289,11 @@ function aggregateAnswers(answers, attempts) {
     }).filter(Boolean);
     const correlation = pearsonCorrelation(correlationPairs);
     const alerts = [];
-    if (count >= 30) {
-      if (standardDeviation <= 0.65) alerts.push("Low response variation");
-      if (neutralRate >= 40) alerts.push("High neutral response rate");
-      if (highEndRate >= 85) alerts.push("Possible agreement ceiling effect");
-      if (lowEndRate >= 85) alerts.push("Possible disagreement floor effect");
-      if (correlation !== null && correlation < 0.2) alerts.push("Weak corrected item-total relationship");
-    }
+    if (standardDeviation <= 0.65) alerts.push("Low response variation");
+    if (neutralRate >= 40) alerts.push("High neutral response rate");
+    if (highEndRate >= 85) alerts.push("Possible agreement ceiling effect");
+    if (lowEndRate >= 85) alerts.push("Possible disagreement floor effect");
+    if (correlation !== null && correlation < 0.2) alerts.push("Weak corrected item-total relationship");
     return {
       questionId: question.questionId,
       text: question.text,
@@ -305,7 +303,7 @@ function aggregateAnswers(answers, attempts) {
       standardDeviation: round(standardDeviation, 2),
       neutralRate,
       correctedItemTotalCorrelation: correlation === null ? null : round(correlation, 2),
-      reviewStatus: count < 30 ? "Insufficient sample" : alerts.length ? "Review suggested" : "Monitoring",
+      reviewStatus: alerts.length ? "Review suggested" : "Monitoring",
       alerts
     };
   }).sort((a, b) => b.responses - a.responses || a.style.localeCompare(b.style));

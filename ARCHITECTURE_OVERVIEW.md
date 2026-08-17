@@ -279,6 +279,7 @@ Planned admin capabilities:
 - Track individual trends over time.
 - Analyze aggregate trends by date, group, or respondent label.
 - Identify confusing or low-discrimination questions.
+- Evaluate preliminary question review signals at any response count while displaying the sample size; a formal minimum-sample threshold is deferred until more production data exists.
 
 Admin-only metrics should include:
 

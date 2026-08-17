@@ -19,7 +19,7 @@ Currently implemented views include:
 - Likert response distribution and descriptive question statistics.
 - Click-through respondent histories with every stored attempt, question, answer, style score, and recorded completion time.
 - Click-through question histories with respondent-level response records and weekly context.
-- Question review alerts after a minimum of 30 responses, based on response variation, neutral use, ceiling/floor effects, and corrected item-total relationship.
+- Preliminary question review alerts at any response count, based on response variation, neutral use, ceiling/floor effects, and corrected item-total relationship. Response counts remain visible so small-sample signals can be interpreted cautiously.
 
 The shared token is appropriate for an owner-only prototype. Replace it with account-based authentication and roles before giving multiple administrators access.
 
@@ -104,7 +104,7 @@ Once enough data exists, evaluate individual question performance:
 - Questions with confusing or overly obvious wording.
 - Questions that repeatedly appear in low-quality attempts.
 
-The dashboard does not issue effectiveness alerts before 30 responses to an item. Alerts are expert-review prompts, not automatic removal decisions.
+The dashboard currently evaluates review signals at every response count because early cohorts may be small. These signals are preliminary expert-review prompts, not automatic findings that a question is ineffective or automatic removal decisions. A formal minimum-sample threshold can be restored once the assessment has accumulated enough production data.
 
 ## Admin Views
 

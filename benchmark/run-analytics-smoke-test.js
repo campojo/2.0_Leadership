@@ -131,11 +131,11 @@ async function run() {
   if (questionPayload.detail.responses !== 2 || questionPayload.detail.responseHistory.length !== 2) {
     throw new Error("Question history detail is incomplete.");
   }
-  if (questionPayload.detail.reviewStatus !== "Insufficient sample") {
-    throw new Error("Question alert minimum sample was not enforced.");
+  if (questionPayload.detail.reviewStatus !== "Review suggested") {
+    throw new Error("Question review signals were not evaluated for a small sample.");
   }
 
-  for (let index = 0; index < 30; index += 1) {
+  for (let index = 0; index < 3; index += 1) {
     const attemptId = `alert-attempt-${index}`;
     attempts.push({
       ...attempts[0],
@@ -160,7 +160,7 @@ async function run() {
   }, alertResponse);
   const alertPayload = JSON.parse(alertResponse.body);
   if (alertPayload.detail.reviewStatus !== "Review suggested") {
-    throw new Error("Question review alert was not issued at the minimum sample.");
+    throw new Error("Question review alert was not issued for a small sample.");
   }
   if (!alertPayload.detail.alerts.includes("Low response variation") || !alertPayload.detail.alerts.includes("Possible agreement ceiling effect")) {
     throw new Error("Question review alert reasons are incomplete.");
