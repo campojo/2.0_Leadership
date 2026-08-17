@@ -45,10 +45,14 @@ const answers = [
   { attempt_id: "attempt-2", question_id: "q2", question_text: "I invite input before decisions.", leadership_style: "Democratic", answer_value: 4, scored_value: 1 }
 ];
 
-global.fetch = async (url) => ({
+const requestedUrls = [];
+global.fetch = async (url) => {
+  requestedUrls.push(url);
+  return {
   ok: true,
   text: async () => JSON.stringify(url.includes("assessment_attempts") ? attempts : answers)
-});
+  };
+};
 
 const handler = require("../api/analytics.js");
 
@@ -86,6 +90,81 @@ async function run() {
   }
   const transformational = payload.styleDistribution.find((item) => item.style === "Transformational");
   if (transformational.allocatedAttempts !== 1) throw new Error("Primary style allocation is incorrect.");
+
+  requestedUrls.length = 0;
+  const customResponse = responseRecorder();
+  await handler({
+    method: "GET",
+    headers: { "x-admin-token": "test-admin-token" },
+    url: "/api/analytics?from=2026-08-10T04%3A00%3A00.000Z&to=2026-08-14T04%3A00%3A00.000Z"
+  }, customResponse);
+  const customPayload = JSON.parse(customResponse.body);
+  const attemptRequest = decodeURIComponent(requestedUrls.find((url) => url.includes("assessment_attempts")) || "");
+  if (customResponse.statusCode !== 200 || !attemptRequest.includes("created_at=gte.2026-08-10T04:00:00.000Z")) {
+    throw new Error("Custom analytics start boundary was not applied.");
+  }
+  if (!attemptRequest.includes("created_at=lt.2026-08-14T04:00:00.000Z")) {
+    throw new Error("Custom analytics end boundary was not applied.");
+  }
+  if (customPayload.filter.from !== "2026-08-10T04:00:00.000Z") {
+    throw new Error("Custom analytics range was not returned.");
+  }
+
+  const respondentResponse = responseRecorder();
+  await handler({
+    method: "GET",
+    headers: { "x-admin-token": "test-admin-token" },
+    url: "/api/analytics?days=all&detail=respondent&id=respondent-1"
+  }, respondentResponse);
+  const respondentPayload = JSON.parse(respondentResponse.body);
+  if (respondentPayload.detail.attempts.length !== 2 || respondentPayload.detail.attempts[0].answers.length !== 2) {
+    throw new Error("Respondent history detail is incomplete.");
+  }
+
+  const questionResponse = responseRecorder();
+  await handler({
+    method: "GET",
+    headers: { "x-admin-token": "test-admin-token" },
+    url: "/api/analytics?days=all&detail=question&id=q1"
+  }, questionResponse);
+  const questionPayload = JSON.parse(questionResponse.body);
+  if (questionPayload.detail.responses !== 2 || questionPayload.detail.responseHistory.length !== 2) {
+    throw new Error("Question history detail is incomplete.");
+  }
+  if (questionPayload.detail.reviewStatus !== "Insufficient sample") {
+    throw new Error("Question alert minimum sample was not enforced.");
+  }
+
+  for (let index = 0; index < 30; index += 1) {
+    const attemptId = `alert-attempt-${index}`;
+    attempts.push({
+      ...attempts[0],
+      id: attemptId,
+      respondent_id: `alert-respondent-${index}`,
+      scores: { Transactional: 15 }
+    });
+    answers.push({
+      attempt_id: attemptId,
+      question_id: "q-alert",
+      question_text: "I use clear rewards for performance.",
+      leadership_style: "Transactional",
+      answer_value: 5,
+      scored_value: 3
+    });
+  }
+  const alertResponse = responseRecorder();
+  await handler({
+    method: "GET",
+    headers: { "x-admin-token": "test-admin-token" },
+    url: "/api/analytics?days=all&detail=question&id=q-alert"
+  }, alertResponse);
+  const alertPayload = JSON.parse(alertResponse.body);
+  if (alertPayload.detail.reviewStatus !== "Review suggested") {
+    throw new Error("Question review alert was not issued at the minimum sample.");
+  }
+  if (!alertPayload.detail.alerts.includes("Low response variation") || !alertPayload.detail.alerts.includes("Possible agreement ceiling effect")) {
+    throw new Error("Question review alert reasons are incomplete.");
+  }
 
   console.log("Analytics smoke test passed.");
 }

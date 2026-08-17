@@ -187,6 +187,8 @@ Persisted data should include:
 - Answer selected for each question.
 - Whether each question came from the original source pool.
 - Per-style scores.
+- Assessment start, completion, and total duration for newly completed attempts.
+- Initial response time per question for newly completed attempts; older attempts may show timing as not recorded.
 - Response-quality indicators.
 - Final style result.
 - Full response text shown to the respondent.

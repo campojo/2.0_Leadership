@@ -67,7 +67,7 @@ async function fetchAll(path, pageSize = 1000) {
 async function fetchAnswersForAttempts(attempts, chunkSize = 100) {
   const answers = [];
   const ids = attempts.map((attempt) => attempt.id).filter(Boolean);
-  const answerSelect = "attempt_id,question_id,question_text,leadership_style,answer_value,scored_value";
+  const answerSelect = "attempt_id,question_id,question_text,leadership_style,answer_value,scored_value,direction,asked_order,answered_at,response_time_ms";
 
   for (let index = 0; index < ids.length; index += chunkSize) {
     const chunk = ids.slice(index, index + chunkSize);
@@ -94,12 +94,37 @@ function percent(value, total) {
   return total ? round((value / total) * 100, 1) : 0;
 }
 
+function pearsonCorrelation(pairs) {
+  if (pairs.length < 3) return null;
+  const xMean = pairs.reduce((sum, pair) => sum + pair[0], 0) / pairs.length;
+  const yMean = pairs.reduce((sum, pair) => sum + pair[1], 0) / pairs.length;
+  let numerator = 0;
+  let xSum = 0;
+  let ySum = 0;
+  pairs.forEach(([x, y]) => {
+    const xDelta = x - xMean;
+    const yDelta = y - yMean;
+    numerator += xDelta * yDelta;
+    xSum += xDelta ** 2;
+    ySum += yDelta ** 2;
+  });
+  const denominator = Math.sqrt(xSum * ySum);
+  return denominator ? numerator / denominator : null;
+}
+
 function mondayKey(value) {
   const date = new Date(value);
   const day = date.getUTCDay();
   const difference = day === 0 ? -6 : 1 - day;
   date.setUTCDate(date.getUTCDate() + difference);
   return date.toISOString().slice(0, 10);
+}
+
+function parseDateParameter(value, label) {
+  if (!value) return null;
+  const date = new Date(value);
+  if (Number.isNaN(date.getTime())) throw new Error(`${label} is not a valid date.`);
+  return date;
 }
 
 function respondentKey(attempt) {
@@ -210,21 +235,25 @@ function aggregateAttempts(attempts) {
     respondents,
     recentAttempts: attempts.slice().sort((a, b) => new Date(b.created_at) - new Date(a.created_at)).slice(0, 100).map((attempt) => ({
       id: attempt.id,
+      respondentId: attempt.respondent_id,
       createdAt: attempt.created_at,
+      completedAt: attempt.completed_at,
       name: attempt.respondent_label || "Unknown respondent",
       email: attempt.email || "",
       primaryStyles: attempt.primary_styles || [],
       isInterpretable: Boolean(attempt.is_interpretable),
       questionsAsked: attempt.questions_asked,
+      durationSeconds: attempt.duration_seconds,
       scores: attempt.scores || {},
       flags: qualityFlags(attempt)
     }))
   };
 }
 
-function aggregateAnswers(answers) {
+function aggregateAnswers(answers, attempts) {
   const likert = Object.fromEntries([1, 2, 3, 4, 5].map((value) => [value, 0]));
   const questions = new Map();
+  const attemptsById = new Map(attempts.map((attempt) => [attempt.id, attempt]));
 
   answers.forEach((answer) => {
     const value = number(answer.answer_value);
@@ -235,24 +264,49 @@ function aggregateAnswers(answers) {
         questionId: key,
         text: answer.question_text,
         style: answer.leadership_style,
-        values: []
+        rows: []
       });
     }
-    questions.get(key).values.push(value);
+    questions.get(key).rows.push({ ...answer, value });
   });
 
   const itemStats = [...questions.values()].map((question) => {
-    const count = question.values.length;
-    const average = question.values.reduce((sum, value) => sum + value, 0) / (count || 1);
-    const variance = question.values.reduce((sum, value) => sum + ((value - average) ** 2), 0) / (count || 1);
+    const values = question.rows.map((row) => row.value);
+    const count = values.length;
+    const average = values.reduce((sum, value) => sum + value, 0) / (count || 1);
+    const variance = values.reduce((sum, value) => sum + ((value - average) ** 2), 0) / (count || 1);
+    const standardDeviation = Math.sqrt(variance);
+    const neutralRate = percent(values.filter((value) => value === 3).length, count);
+    const highEndRate = percent(values.filter((value) => value >= 4).length, count);
+    const lowEndRate = percent(values.filter((value) => value <= 2).length, count);
+    const correlationPairs = question.rows.map((row) => {
+      const attempt = attemptsById.get(row.attempt_id);
+      const styleTotal = Number(attempt?.scores?.[question.style]);
+      const itemScore = Number(row.scored_value);
+      return Number.isFinite(styleTotal) && Number.isFinite(itemScore)
+        ? [itemScore, styleTotal - itemScore]
+        : null;
+    }).filter(Boolean);
+    const correlation = pearsonCorrelation(correlationPairs);
+    const alerts = [];
+    if (count >= 30) {
+      if (standardDeviation <= 0.65) alerts.push("Low response variation");
+      if (neutralRate >= 40) alerts.push("High neutral response rate");
+      if (highEndRate >= 85) alerts.push("Possible agreement ceiling effect");
+      if (lowEndRate >= 85) alerts.push("Possible disagreement floor effect");
+      if (correlation !== null && correlation < 0.2) alerts.push("Weak corrected item-total relationship");
+    }
     return {
       questionId: question.questionId,
       text: question.text,
       style: question.style,
       responses: count,
       average: round(average, 2),
-      standardDeviation: round(Math.sqrt(variance), 2),
-      neutralRate: percent(question.values.filter((value) => value === 3).length, count)
+      standardDeviation: round(standardDeviation, 2),
+      neutralRate,
+      correctedItemTotalCorrelation: correlation === null ? null : round(correlation, 2),
+      reviewStatus: count < 30 ? "Insufficient sample" : alerts.length ? "Review suggested" : "Monitoring",
+      alerts
     };
   }).sort((a, b) => b.responses - a.responses || a.style.localeCompare(b.style));
 
@@ -264,6 +318,84 @@ function aggregateAnswers(answers) {
       percent: percent(count, answers.length)
     })),
     itemStats
+  };
+}
+
+function answerDetail(answer) {
+  return {
+    questionId: answer.question_id,
+    text: answer.question_text,
+    style: answer.leadership_style,
+    answerValue: answer.answer_value,
+    scoredValue: answer.scored_value,
+    direction: answer.direction,
+    askedOrder: answer.asked_order,
+    answeredAt: answer.answered_at,
+    responseTimeMs: answer.response_time_ms
+  };
+}
+
+function attemptDetail(attempt, answers) {
+  return {
+    id: attempt.id,
+    createdAt: attempt.created_at,
+    completedAt: attempt.completed_at,
+    durationSeconds: attempt.duration_seconds,
+    primaryStyles: attempt.primary_styles || [],
+    isInterpretable: Boolean(attempt.is_interpretable),
+    scores: attempt.scores || {},
+    flags: qualityFlags(attempt),
+    answers: answers
+      .filter((answer) => answer.attempt_id === attempt.id)
+      .sort((a, b) => number(a.asked_order) - number(b.asked_order))
+      .map(answerDetail)
+  };
+}
+
+function respondentDetail(id, attempts, answers) {
+  const respondentAttempts = attempts
+    .filter((attempt) => attempt.respondent_id === id)
+    .sort((a, b) => new Date(b.created_at) - new Date(a.created_at));
+  const latest = respondentAttempts[0];
+  if (!latest) return null;
+  return {
+    respondentId: id,
+    name: latest.respondent_label || "Unknown respondent",
+    email: latest.email || "",
+    attempts: respondentAttempts.map((attempt) => attemptDetail(attempt, answers))
+  };
+}
+
+function questionDetail(id, attempts, answers) {
+  const attemptsById = new Map(attempts.map((attempt) => [attempt.id, attempt]));
+  const matching = answers.filter((answer) => answer.question_id === id);
+  if (!matching.length) return null;
+  const stats = aggregateAnswers(matching, attempts).itemStats[0];
+  const weekly = new Map();
+  const responses = matching.map((answer) => {
+    const attempt = attemptsById.get(answer.attempt_id);
+    const week = mondayKey(attempt?.created_at || answer.answered_at);
+    if (!weekly.has(week)) weekly.set(week, { week, values: [] });
+    weekly.get(week).values.push(number(answer.answer_value));
+    return {
+      attemptId: answer.attempt_id,
+      date: attempt?.created_at || answer.answered_at,
+      respondentId: attempt?.respondent_id,
+      name: attempt?.respondent_label || "Unknown respondent",
+      email: attempt?.email || "",
+      answerValue: answer.answer_value,
+      scoredValue: answer.scored_value,
+      responseTimeMs: answer.response_time_ms
+    };
+  }).sort((a, b) => new Date(b.date) - new Date(a.date));
+  return {
+    ...stats,
+    weeklyTrend: [...weekly.values()].sort((a, b) => a.week.localeCompare(b.week)).map((item) => ({
+      week: item.week,
+      responses: item.values.length,
+      average: round(item.values.reduce((sum, value) => sum + value, 0) / item.values.length, 2)
+    })),
+    responseHistory: responses
   };
 }
 
@@ -282,20 +414,42 @@ module.exports = async function handler(request, response) {
     }
 
     const url = new URL(request.url, "https://leadership-assessment.local");
+    const from = parseDateParameter(url.searchParams.get("from"), "Start date");
+    const to = parseDateParameter(url.searchParams.get("to"), "End date");
+    if ((from && !to) || (!from && to)) throw new Error("Custom ranges require both start and end dates.");
+    if (from && to && from >= to) throw new Error("The start date must be before the end date.");
+
     const days = url.searchParams.get("days") || "90";
     const parsedDays = days === "all" ? null : Math.max(1, Math.min(3650, number(days, 90)));
-    const createdFilter = parsedDays
-      ? `&created_at=gte.${encodeURIComponent(new Date(Date.now() - (parsedDays * 86400000)).toISOString())}`
-      : "";
-    const attemptSelect = "id,created_at,completed_at,respondent_id,respondent_label,email,primary_styles,is_interpretable,questions_asked,scores,response_quality,straight_line_ratio,neutral_ratio,extreme_ratio,response_variance";
+    const createdFilter = from && to
+      ? `&created_at=gte.${encodeURIComponent(from.toISOString())}&created_at=lt.${encodeURIComponent(to.toISOString())}`
+      : parsedDays
+        ? `&created_at=gte.${encodeURIComponent(new Date(Date.now() - (parsedDays * 86400000)).toISOString())}`
+        : "";
+    const attemptSelect = "id,created_at,completed_at,respondent_id,respondent_label,email,primary_styles,is_interpretable,questions_asked,duration_seconds,scores,response_quality,straight_line_ratio,neutral_ratio,extreme_ratio,response_variance";
     const attempts = await fetchAll(`assessment_attempts?select=${attemptSelect}${createdFilter}&order=created_at.desc`);
     const answers = attempts.length ? await fetchAnswersForAttempts(attempts) : [];
 
+    const detailType = url.searchParams.get("detail");
+    const detailId = url.searchParams.get("id");
+    if (detailType === "respondent" && detailId) {
+      const detail = respondentDetail(detailId, attempts, answers);
+      json(response, detail ? 200 : 404, detail ? { detail } : { error: "Respondent not found in this period." });
+      return;
+    }
+    if (detailType === "question" && detailId) {
+      const detail = questionDetail(detailId, attempts, answers);
+      json(response, detail ? 200 : 404, detail ? { detail } : { error: "Question not found in this period." });
+      return;
+    }
+
     json(response, 200, {
       generatedAt: new Date().toISOString(),
-      filter: { days: parsedDays || "all" },
+      filter: from && to
+        ? { from: from.toISOString(), throughExclusive: to.toISOString() }
+        : { days: parsedDays || "all" },
       ...aggregateAttempts(attempts),
-      ...aggregateAnswers(answers)
+      ...aggregateAnswers(answers, attempts)
     });
   } catch (error) {
     console.error("Analytics request failed.", error);

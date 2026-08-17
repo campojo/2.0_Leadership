@@ -134,8 +134,8 @@ function attemptRow(payload, respondentId) {
   const quality = payload.quality || {};
   return {
     id: payload.id,
-    created_at: payload.createdAt || new Date().toISOString(),
-    completed_at: new Date().toISOString(),
+    created_at: payload.startedAt || payload.createdAt || new Date().toISOString(),
+    completed_at: payload.completedAt || new Date().toISOString(),
     respondent_id: respondentId,
     respondent_label: payload.respondent?.name || payload.respondentLabel || null,
     email: payload.respondent?.email || null,
@@ -143,6 +143,7 @@ function attemptRow(payload, respondentId) {
     confidence: payload.confidence || "Unclassified",
     is_interpretable: Boolean(quality.isInterpretable && payload.primaryStyles?.length),
     questions_asked: payload.questionsAsked || payload.answers?.length || 0,
+    duration_seconds: Number.isFinite(payload.durationSeconds) ? payload.durationSeconds : null,
     scores: payload.scores || {},
     response_quality: quality,
     straight_line_ratio: quality.straightLineRatio ?? null,
@@ -175,7 +176,8 @@ function answerRows(payload) {
     is_derived: Boolean(answer.derived),
     derived_from: answer.derivedFrom || null,
     asked_order: index + 1,
-    answered_at: payload.createdAt || new Date().toISOString()
+    answered_at: answer.answeredAt || payload.completedAt || payload.createdAt || new Date().toISOString(),
+    response_time_ms: Number.isFinite(answer.responseTimeMs) ? answer.responseTimeMs : null
   }));
 }
 

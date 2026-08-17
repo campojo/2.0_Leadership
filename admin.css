@@ -53,7 +53,7 @@ button { cursor: pointer; }
 .login-panel h1, .admin-header h1 { margin: 0; letter-spacing: 0; }
 .login-panel > p:not(.admin-eyebrow):not(.admin-error) { color: var(--muted); line-height: 1.5; }
 .login-panel label { display: block; margin: 24px 0 8px; font-size: 0.85rem; font-weight: 750; }
-.login-panel input, .search-control input, .header-controls select {
+.login-panel input, .search-control input, .header-controls select, .custom-date-controls input {
   width: 100%;
   border: 1px solid var(--line);
   border-radius: 6px;
@@ -85,6 +85,8 @@ button { cursor: pointer; }
 .header-controls { display: flex; align-items: center; gap: 10px; }
 .header-controls label { color: var(--muted); font-size: 0.8rem; font-weight: 750; }
 .header-controls select { width: auto; min-height: 40px; padding: 0 34px 0 10px; }
+.custom-date-controls { display: flex; align-items: center; gap: 8px; }
+.custom-date-controls input { width: 145px; min-height: 40px; padding: 0 8px; }
 .secondary-command {
   min-height: 40px;
   padding: 0 14px;
@@ -115,7 +117,7 @@ button { cursor: pointer; }
 
 .metric-grid {
   display: grid;
-  grid-template-columns: repeat(5, minmax(0, 1fr));
+  grid-template-columns: repeat(6, minmax(0, 1fr));
   border: 1px solid var(--line);
   background: var(--surface);
 }
@@ -187,6 +189,13 @@ tbody tr:last-child td { border-bottom: 0; }
 .detail-score-grid span { padding: 9px; background: #f4f7f5; font-size: 0.75rem; }
 .detail-score-grid strong { float: right; }
 .flag-list { margin: 16px 0 0; padding-left: 18px; color: #84570b; }
+.detail-section { margin-top: 20px; }
+.detail-section h4 { margin: 0 0 10px; }
+.detail-attempt { margin-top: 14px; padding-top: 14px; border-top: 1px solid var(--line); }
+.answer-history { width: 100%; margin-top: 10px; border: 1px solid var(--line); }
+.answer-history td, .answer-history th { padding: 9px 10px; }
+.review-signal { color: #8a5a08; font-weight: 800; }
+.sample-note { color: var(--muted); }
 
 .likert-strip { display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); margin-bottom: 16px; border: 1px solid var(--line); background: #fff; }
 .likert-strip article { padding: 14px; border-right: 1px solid var(--line); }
@@ -209,6 +218,9 @@ tbody tr:last-child td { border-bottom: 0; }
   .header-controls { display: grid; grid-template-columns: 1fr 1fr; }
   .header-controls label { grid-column: 1 / -1; }
   .header-controls select { grid-column: 1 / -1; width: 100%; }
+  .custom-date-controls { display: grid; grid-column: 1 / -1; grid-template-columns: auto 1fr; }
+  .custom-date-controls input { width: 100%; }
+  .custom-date-controls .secondary-command { grid-column: 1 / -1; }
   .admin-tabs { overflow-x: auto; }
   .admin-tabs button { white-space: nowrap; }
   .metric-grid { grid-template-columns: 1fr 1fr; }

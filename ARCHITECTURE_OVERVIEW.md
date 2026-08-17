@@ -76,7 +76,8 @@ flowchart TD
   end
 
   R --> L["Admin dashboard"]
-  L --> M["Attempt review, trend analysis, item analysis"]
+  L --> M["Attempt review, respondent history, item alerts"]
+  M --> S["On-demand person and question detail"]
 ```
 
 ## Database Save Flow
@@ -95,6 +96,7 @@ sequenceDiagram
   R->>A: Provides name and email
   A->>R: Shows instructions
   R->>A: Answers 40 randomized questions
+  A->>A: Records total duration and initial item response times
   A->>A: Scores styles and checks response quality
   A->>R: Shows result or response-quality warning
   A->>API: Sends completed attempt payload to /api/attempts
@@ -113,6 +115,9 @@ sequenceDiagram
   API->>DB: Reads protected attempt and answer records
   DB->>API: Returns paginated records
   API->>Admin: Returns calculated admin analytics
+  Admin->>API: Requests a person or question history
+  API->>DB: Reads protected drill-down records
+  API->>Admin: Returns attempts, answers, timing, and review signals
 ```
 
 ## Source Data Pipeline
@@ -473,8 +478,8 @@ The browser should not write directly to the database with privileged credential
 | `api/attempts.js` | Vercel serverless route that validates attempts, saves to Supabase when configured, generates a PNG leadership map, and sends a branded HTML result report with a plain-text fallback through Resend when configured |
 | `admin.html` | Unlinked admin analytics interface and token gate |
 | `admin.css` | Responsive operational styling used only by the admin interface |
-| `admin.js` | Admin dashboard rendering, filtering, trend charts, and protected analytics requests |
-| `api/analytics.js` | Token-protected Vercel route that paginates Supabase data and calculates aggregate, respondent, quality, and question statistics |
+| `admin.js` | Admin dashboard rendering, calendar filtering, respondent and item drill-downs, trend charts, and protected analytics requests |
+| `api/analytics.js` | Token-protected Vercel route that enforces date windows, paginates Supabase data, returns on-demand histories, and calculates aggregate, respondent, quality, and question statistics |
 | `data/leadership-assessment.json` | Extracted assessment data |
 | `data/leadership-assessment.js` | Browser-loadable assessment data |
 | `QUESTION_BANK_REVIEW.md` | Human-readable inventory of every active question, category, direction, provenance, and selection status |

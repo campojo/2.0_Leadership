@@ -6,6 +6,8 @@ The admin panel is separate from the public assessment experience. Respondents s
 
 The first admin analytics release is implemented as an unlinked `/admin.html` application. It requests protected data from `/api/analytics` using `ADMIN_REVIEW_TOKEN`, while Supabase credentials remain server-side. The participant assessment does not link to, load, or depend on the admin files.
 
+Admins can use rolling period presets or an inclusive custom calendar range. Custom ranges are converted to exact local-day boundaries in the browser and enforced by the server query, allowing a seminar or cohort window to exclude development and test attempts without deleting them.
+
 Currently implemented views include:
 
 - Overview metrics and weekly assessment activity.
@@ -15,6 +17,9 @@ Currently implemented views include:
 - Searchable recent attempts with score and flag detail.
 - Repeat-respondent history.
 - Likert response distribution and descriptive question statistics.
+- Click-through respondent histories with every stored attempt, question, answer, style score, and recorded completion time.
+- Click-through question histories with respondent-level response records and weekly context.
+- Question review alerts after a minimum of 30 responses, based on response variation, neutral use, ceiling/floor effects, and corrected item-total relationship.
 
 The shared token is appropriate for an owner-only prototype. Replace it with account-based authentication and roles before giving multiple administrators access.
 
@@ -32,11 +37,12 @@ The shared token is appropriate for an owner-only prototype. Replace it with acc
 Each attempt should expose:
 
 - Primary style or two-style tie.
-- Per-style normalized scores.
+- Per-style weighted arithmetic scores.
 - Confidence level.
 - Questions asked.
 - Completion timestamp.
-- Response duration once timing is implemented.
+- Total assessment duration for newly completed attempts.
+- Initial question response time for newly completed attempts.
 - Answer distribution across the Likert scale.
 - Straight-line ratio: highest single answer count divided by total answers.
 - Neutral ratio: proportion of `Neutral` responses.
@@ -93,9 +99,12 @@ Once enough data exists, evaluate individual question performance:
 - Standard deviation by question.
 - Percent neutral by question.
 - Item-total correlation within its leadership style.
+- Corrected item-total correlation that removes the current item's score from its style total.
 - Questions that do not help differentiate styles.
 - Questions with confusing or overly obvious wording.
 - Questions that repeatedly appear in low-quality attempts.
+
+The dashboard does not issue effectiveness alerts before 30 responses to an item. Alerts are expert-review prompts, not automatic removal decisions.
 
 ## Admin Views
 

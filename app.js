@@ -261,7 +261,9 @@ const state = {
   answers: [],
   pendingQueue: [],
   mockPreview: false,
-  complete: false
+  complete: false,
+  startedAt: null,
+  questionShownAt: []
 };
 
 const identityView = document.querySelector("#identityView");
@@ -564,6 +566,9 @@ function renderQuestion() {
   const progress = Math.min(Math.round((answeredCount() / MAX_QUESTIONS) * 100), 100);
 
   state.currentQuestion = question;
+  if (!state.questionShownAt[state.currentIndex]) {
+    state.questionShownAt[state.currentIndex] = Date.now();
+  }
   state.selectedValue = existingAnswer ? existingAnswer.value : null;
   progressText.textContent = `Question ${state.currentIndex + 1} of ${MAX_QUESTIONS}`;
   progressPercent.textContent = `${progress}%`;
@@ -590,6 +595,7 @@ function renderQuestion() {
 function answerCurrent(value) {
   const question = state.currentQuestion;
   const score = scoreAnswer(question, value);
+  const existingAnswer = state.answers[state.currentIndex];
 
   state.answers[state.currentIndex] = {
     questionId: question.id,
@@ -599,7 +605,9 @@ function answerCurrent(value) {
     score,
     direction: question.direction,
     derived: Boolean(question.derived),
-    derivedFrom: question.derivedFrom || null
+    derivedFrom: question.derivedFrom || null,
+    answeredAt: new Date().toISOString(),
+    responseTimeMs: existingAnswer?.responseTimeMs ?? Math.max(0, Date.now() - (state.questionShownAt[state.currentIndex] || Date.now()))
   };
 
   state.selectedValue = value;
@@ -717,6 +725,7 @@ function renderLeadershipMap(payload, ranked, hasClassification) {
 }
 
 function resultPayload() {
+  const completedAt = new Date().toISOString();
   const scoresData = calculateScores();
   const quality = responseQuality();
   const decision = classificationDecision(scoresData, quality);
@@ -728,7 +737,12 @@ function resultPayload() {
 
   return {
     id: crypto.randomUUID(),
-    createdAt: new Date().toISOString(),
+    createdAt: completedAt,
+    startedAt: state.startedAt,
+    completedAt,
+    durationSeconds: state.startedAt
+      ? Math.max(0, Math.round((new Date(completedAt).getTime() - new Date(state.startedAt).getTime()) / 1000))
+      : null,
     respondent: {
       name: state.respondent.name,
       email: state.respondent.email
@@ -977,6 +991,8 @@ function restartAssessment() {
   state.pendingQueue = [];
   state.mockPreview = false;
   state.complete = false;
+  state.startedAt = null;
+  state.questionShownAt = [];
   identityView.classList.remove("hidden");
   startView.classList.add("hidden");
   resultsView.classList.add("hidden");
@@ -1024,6 +1040,8 @@ function continueToInstructions(event) {
 
 function startAssessment() {
   state.started = true;
+  state.startedAt = new Date().toISOString();
+  state.questionShownAt = [];
   state.mockPreview = false;
   startView.classList.add("hidden");
   assessmentView.classList.remove("hidden");
@@ -1074,6 +1092,8 @@ function previewMockResult() {
   state.pendingQueue = [];
   state.mockPreview = true;
   state.complete = false;
+  state.startedAt = null;
+  state.questionShownAt = [];
   state.answers = mockQuestions.map((question) => {
     const index = styleCounts[question.style] || 0;
     styleCounts[question.style] = index + 1;
